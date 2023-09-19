@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+  <div class="login-container">
+    <div class="login-content">
+      <form method="POST" class="login-form">
+        <h3 class="login-title">Welcome Back</h3>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Log In</button>
+        <div class="sign-up-here">
+          <a class="nav-item nav-link" id="signUp" href="/sign-up">Don't have an account? Sign up here</a>
+        </div>
+      </form>
+      <div class="image-container">
+        <img src="../static/logo.png" alt="Login Image" class="login-image" />
+      </div>
+    </div>
+  </div>
+
+<style>
+  
+input[type=text]:focus, input[type=password]:focus{
+  outline: 2px solid #efe1f96b;
+  background-color: #efe1f96b;
+}
+
+.login-container {
+  max-width: 100%;
+  margin: auto;
+  margin-bottom: 10;
+  margin-top: 70px;
+  display: flex;
+  padding-left: 40px;
+  border: 1px solid rgba(137, 68, 171, 0.5);
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 50px rgba(137, 68, 171, 0.5);
+  border-radius: 30px;
+}
+
+.login-content {
+  display: flex;
+  align-items: center;
+}
+
+.login-title {
+  text-align: center;
+  padding-bottom: 80px;
+  padding-right: 40px;
+  font-size: 40px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.form-control {
+  width: 350px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  border: 1px solid #629DB4;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-right: 50px;
+}
+
+.btn-primary {
+  display: block;
+  width: 350px;
+  margin-right: 20px;
+  padding: 10px;
+  background-color: #8b7cb3;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 40px;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #ffb700ad;
+  color: black;
+}
+
+
+.login-image {
+  max-width: 100%; 
+  height: auto;
+  align-self: flex-end;
+  border-radius: 30px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  
+}
+
+.image-container {
+  margin-left: 10px;
+  /*margin-right: 1px;*/
+}
+
+.sign-up-here {
+  font-size: 12px;
+  text-align: center;
+  padding-right: 30px;
+  margin-top: 20px;
+}
+</style>
+{% endblock %}
