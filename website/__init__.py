@@ -27,7 +27,7 @@ def create_app():
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
-    login_manager.login_message = 'Welcome to ProEmPo. Please log in or make a new account to continue.'
+    login_manager.login_message = ''
 
     @login_manager.user_loader
     def load_user(id):
