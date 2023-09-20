@@ -20,9 +20,9 @@ def login():
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
-                flash('Invalid P', category='error')
+                flash('Invalid Password', category='error')
         else:
-                flash('Invalid U', category='error')
+                flash('Invalid Username', category='error')
     return render_template("login.html", user=current_user)
 
 @auth.route('/logout')
