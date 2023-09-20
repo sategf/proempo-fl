@@ -10,6 +10,7 @@ class Task(db.Model):
     data = db.Column(db.String(1000))
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    status = db.Column(db.Boolean, default=False)
 
 class Journal(db.Model):
     id = db.Column(db.Integer, primary_key=True)

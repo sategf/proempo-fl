@@ -21,9 +21,9 @@ def login():
                 login_user(user, remember=remember)
                 return redirect(url_for('views.home'))
             else:
-                flash('Invalid Password', category='error')
+                flash('Invalid Username or Password, Please Try Again.', category='error')
         else:
-                flash('Invalid Username', category='error')
+                flash('Invalid Username or Password, Please Try Again.', category='error')
     return render_template("login.html", user=current_user)
 
 @auth.route('/logout')
