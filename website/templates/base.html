@@ -19,15 +19,15 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light">
-      <button
+      <!--<button
         class="navbar-toggler"
         type="button"
         data-toggle="collapse"
         data-target="#navbar"
       >
         <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar">
+      </button>-->
+      <div class="navbar-expand" id="navbar">
         <div class="navbar-nav mr-auto">
           {% if user.is_authenticated %}
           <a class="nav-item nav-link" id="home" href="/">Home</a>
@@ -94,6 +94,38 @@
         });
       }
     </script>
+    <script type="text/javascript">
+      function markTask(taskId) {
+        fetch("/mark-task", {
+          method: "POST",
+          body: JSON.stringify({ taskId: taskId }),
+        }).then((_res) => {
+          window.location.href = "/tasks";
+        });
+      }
+    </script>
+    <script type="text/javascript">
+      function unMarkTask(finishedTaskId) {
+        fetch("/unmark-task", {
+          method: "POST",
+          body: JSON.stringify({ finishedTaskId: finishedTaskId }),
+        }).then((_res) => {
+          window.location.href = "/tasks";
+        });
+      }
+    </script>
+    <script type="text/javascript">
+      function deleteFinishedTask(taskId) {
+        console.log("Task deleted: " + taskId);
+        fetch("/delete-finished-task", {
+          method: "POST",
+          body: JSON.stringify({ taskId: taskId }),
+        }).then((_res) => {
+          window.location.href = "/tasks";
+        });
+      }
+    </script>
+
     <style>
       body {
         background-color: #e8d6f4d3;

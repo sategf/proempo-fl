@@ -2,7 +2,7 @@
 
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
-from .models import Task
+from .models import Task, FinishedTask
 from . import db
 import json
 
@@ -48,5 +48,56 @@ def delete_task():
         if task.user_id == current_user.id:
             db.session.delete(task)
             db.session.commit()
+
+    return jsonify({})
+
+@views.route('/delete-finished-task', methods=['POST'])
+def delete_finished_task():  
+    task_data = json.loads(request.data)
+    taskId = task_data['taskId']
+    finished_task = FinishedTask.query.get(taskId)
+
+    if finished_task and finished_task.user_id == current_user.id:
+        db.session.delete(finished_task)
+        db.session.commit()
+
+    return jsonify({})
+
+
+@views.route('/mark-task', methods=['POST'])
+@login_required
+def mark_task():
+    task_data = json.loads(request.data)
+    task_id = task_data['taskId']
+
+    task = Task.query.get(task_id)
+
+    if task and task.user_id == current_user.id:
+        # Create a FinishedTask with the same data
+        finished_task = FinishedTask(data=task.data, user_id=current_user.id)
+
+        # Add and commit changes to the database
+        db.session.add(finished_task)
+        db.session.delete(task)
+        db.session.commit()
+
+    return jsonify({})
+
+@views.route('/unmark-task', methods=['POST'])
+@login_required
+def unMark_task():
+    task_data = json.loads(request.data)
+    finished_task_id = task_data['finishedTaskId']
+
+    finished_task = FinishedTask.query.get(finished_task_id)
+
+    if finished_task and finished_task.user_id == current_user.id:
+        # Create a Task with the same data as the FinishedTask
+        task = Task(data=finished_task.data, user_id=current_user.id)
+
+        # Add and commit changes to the database
+        db.session.add(task)
+        db.session.delete(finished_task)
+        db.session.commit()
 
     return jsonify({})
