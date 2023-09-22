@@ -57,7 +57,7 @@ def tasks():
 @views.route('/journal')
 @login_required
 def journal():
-    return "<h1>Future Journaling Page</h1>" 
+    return render_template("journal.html", user=current_user) 
 
 @views.route('/delete-task', methods=['POST'])
 def delete_task():  
