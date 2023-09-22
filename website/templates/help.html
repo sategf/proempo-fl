@@ -1,0 +1,150 @@
+{% extends "base.html" %} {% block title %}Help{% endblock %} {% block content
+%}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        section {
+            margin: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+        .choices {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .choice {
+            flex: 1;
+            border: 1px solid white;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+            border-radius: 20px;
+            background-color: white;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 0 70px rgba(255, 255, 255, 0.644);
+        }
+
+        .choice img {
+            max-width: 100%;
+            height: auto;
+            transition: filter 0.3s ease; /* Add this for smooth image transition */
+        }
+
+        .choice h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .choice p {
+            font-size: 1rem;
+            top: 45%; 
+        }
+        .choice h3,
+        .choice p,
+        .choice a {
+            opacity: 0; /* Initially hide the elements */
+            position: absolute;
+            color: rgb(238, 235, 251);
+            width: 90%;
+            text-align: center;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the elements */
+            z-index: 2; /* Make sure elements appear above the overlay */
+            transition: opacity 0.2s ease-in-out; /* Add this for smooth transition */
+        }
+
+        .choice h3 {
+            top: 20%;
+        }
+
+        .choice a {
+            bottom: 20%;
+            font-style: italic;
+        }
+
+        .choice .regularMeditation {
+            bottom: 15%;
+        }
+
+        .choice:hover img {
+            filter: brightness(20%);
+            border-radius: 20px;
+        }
+
+        .choice:hover h3,
+        .choice:hover p,
+        .choice:hover a {
+            opacity: 1; /* Show the elements on hover */
+            padding: 10px;
+        }
+
+        .choice:hover .regularMeditation {
+            bottom: 5%;
+        }
+
+    </style>
+
+    <section id="study">
+        <h2>Improving my Concentration</h2>
+        <div class="choices">
+            <div class="choice">
+                <img src="../static/pomodoroHelpPic.jpeg" alt="Pomodoro Technique">
+                <h3>Pomodoro</h3>
+                <p>Try the Pomodoro Technique to boost your productivity.</p>
+                <a href="pomodoro.html">Learn More</a>
+            </div>
+            <div class="choice" id="rubberDuck">
+                <img src="../static/rubberDuckPic.jpeg" alt="Rubber Duck method">
+                <h3 id="rubberDuckName">Rubber Duck Method</h3>
+                <p id="feynmanDescription">Master complex subjects by explaining it to a smaller entity in simple terms.</p>
+                <a href="rubberDuck.html">Learn More</a>
+            </div>
+            <div class="choice" id="flashcardsChoice">
+                <img src="flashcards.jpg" alt="Flashcards">
+                <h3 id="flashcardsName">Flashcards</h3>
+                <p id="flashcardsDescription">Use flashcards to memorize information effectively.</p>
+                <a href="flashcards.html">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="relaxation">
+        <h2>Working on My Inner Self</h2>
+        <div class="choices">
+            
+            <div class="choice" id="gratitudeChoice">
+                <img src="../static/gratitudePic.png" alt="Gratitude">
+                <h3 id="gratitudeName">Gratitude</h3>
+                <p id="gratitudeDescription">Cultivate a positive mindset by recalling 3 things that you are grateful for today</p>
+                <a href="gratitude.html">I want to practice gratitude > </a>
+            </div>
+            <div class="choice">
+                <img src="../static/journalPic.png" alt="Journaling">
+                <h3>Journal</h3>
+                <p>Explore your thoughts and feelings through journaling.</p>
+                <a href="journaling.html">Take me to my journal > </a>
+            </div>
+            <div class="choice" id="meditationChoice">
+                <img src="../static/helpMeditation.png" alt="Meditation">
+                <h3 id="meditationName">Meditation</h3>
+                <p id="meditationDescription">Find peace and reduce stress through paced breathing.</p>
+                <a class="bearMeditation" href="/bearMeditation">Young Edition > </a>
+                <a class="regularMeditation" href="/regularMeditation">College Edition > </a>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

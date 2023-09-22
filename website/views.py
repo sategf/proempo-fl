@@ -13,15 +13,30 @@ views = Blueprint('views', __name__)
 def home():
     return render_template("home.html", user=current_user)
 
+@views.route('/help')
+@login_required
+def help():
+    return render_template("help.html", user=current_user)
+
 @views.route('/FAQ')
 @login_required
-def FAQ():
+def faq():
     accordion_items = [
         {"id": "section1", "title": "What is Proempo? What does it stand for?", "content": "Proempo is a mental health and productivity website. Proempo has 3 meanings. Pro for positivity, Em for Empathy, and Po for positivity."},
         {"id": "section2", "title": "How do I get started with the website?", "content": "You can get started by signing up through the blue link below."},
         {"id": "section3", "title": "Is there a tutorial or onboarding process to help me navigate the application for the first time?", "content": "Sorry, the website doesn't offer any process at the moment, come back for future updates."},
     ]
     return render_template("FAQ.html", user=current_user, accordion_items=accordion_items)
+
+@views.route('/bearMeditation')
+@login_required
+def bearMeditation():
+    return render_template("bearMeditation.html", user=current_user)
+
+@views.route('/regularMeditation')
+@login_required
+def regularMeditation():
+    return render_template("regularMeditation.html", user=current_user)
 
 @views.route('/tasks', methods=['GET', 'POST'])
 @login_required
@@ -42,7 +57,7 @@ def tasks():
 @views.route('/journal')
 @login_required
 def journal():
-    return render_template("journal.html", user=current_user)
+    return "<h1>Future Journaling Page</h1>" 
 
 @views.route('/delete-task', methods=['POST'])
 def delete_task():  
