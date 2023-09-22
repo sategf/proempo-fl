@@ -16,7 +16,12 @@ def home():
 @views.route('/help')
 @login_required
 def help():
-    return render_template("help.html", user=current_user)
+    accordion_items = [
+        {"title": "Section 1", "content": "Content for Section 1"},
+        {"title": "Section 2", "content": "Content for Section 2"},
+        {"title": "Section 3", "content": "Content for Section 3"},
+    ]
+    return render_template("help.html", user=current_user, accordion_items=accordion_items)
 
 @views.route('/tasks', methods=['GET', 'POST'])
 @login_required
@@ -37,7 +42,7 @@ def tasks():
 @views.route('/journal')
 @login_required
 def journal():
-    return "<h1>Future Journaling Page</h1>" 
+    return render_template("journal.html", user=current_user)
 
 @views.route('/delete-task', methods=['POST'])
 def delete_task():  
