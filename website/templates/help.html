@@ -2,4 +2,55 @@
 %}
 <h1 align="center">Help</h1>
 
+<style>
+    /* Style for the accordion headers */
+    .accordion-label {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+    }
+
+    /* Style for the active accordion header */
+    .accordion-label.active {
+        background-color: #555;
+    }
+
+    /* Style for the hidden checkbox input */
+    .accordion-input {
+        display: none;
+    }
+
+    /* Style for the accordion content (initially hidden) */
+    .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        background-color: #f1f1f1;
+        padding: 0 18px;
+        transition: max-height 0.5s ease-out;
+    }
+
+    /* Style for the expanded accordion content */
+    .accordion-input:checked + .accordion-label + .accordion-content {
+        max-height: 500px; /* Adjust this value to fit your content */
+    }
+</style>
+
+
+
+{% for item in accordion_items %}
+<input type="checkbox" class="accordion-input" id="{{ item.id }}">
+<label class="accordion-label" for="{{ item.id }}">{{ item.title }}</label>
+<div class="accordion-content">
+    <p>{{ item.content }}</p>
+</div>
+{% endfor %}
+
+
+
+
 {% endblock %}
