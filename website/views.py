@@ -25,6 +25,11 @@ def faq():
         {"id": "section1", "title": "What is Proempo? What does it stand for?", "content": "Proempo is a mental health and productivity website. Proempo has 3 meanings. Pro for positivity, Em for Empathy, and Po for positivity."},
         {"id": "section2", "title": "How do I get started with the website?", "content": "You can get started by signing up through the blue link below."},
         {"id": "section3", "title": "Is there a tutorial or onboarding process to help me navigate the application for the first time?", "content": "Sorry, the website doesn't offer any process at the moment, come back for future updates."},
+        {"id": "section4", "title": "Can I use the website without creating an account or logging in?", "content": "No, you need to create an account or log in in order to access the website."},
+        {"id": "section5", "title": "What is the pricing model for your website? Are there any free or trial versions available?", "content": "This website is free, there is no pricing model nor any trial versions."},
+        {"id": "section6", "title": "What is the pomodoro technique? How can i use it on the website?", "content": "The pomodoro method is a time management method based on 25-minute stretches of focused work broken by five-minute breaks. You can use the technique located in the Self-Help page."},
+        {"id": "section7", "title": "Where can i go to contact support if any of the issues listed above aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."},
+       
     ]
     return render_template("FAQ.html", user=current_user, accordion_items=accordion_items)
 
