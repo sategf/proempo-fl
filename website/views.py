@@ -126,3 +126,8 @@ def unMark_task():
         db.session.commit()
 
     return jsonify({})
+
+@views.route('/About')
+@login_required
+def about():
+    return render_template("About.html", user=current_user)
