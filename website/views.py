@@ -131,3 +131,9 @@ def unMark_task():
 @login_required
 def about():
     return render_template("About.html", user=current_user)
+
+@views.route('/Support')
+@login_required
+def support():
+    return render_template("Support.html", user=current_user)
+
