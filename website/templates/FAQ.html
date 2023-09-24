@@ -5,10 +5,10 @@
 <style>
     /* Style for the accordion headers */
     .accordion-label {
-        background-color: #777;
+        background-color: #9e79c1;
         color: white;
         cursor: pointer;
-        padding: 18px;
+        padding:20px;
         width: 100%;
         border: none;
         text-align: left;
@@ -29,8 +29,8 @@
     .accordion-content {
         max-height: 0;
         overflow: hidden;
-        background-color: #f1f1f1;
-        padding: 0 18px;
+        background-color: #a5a1a1;
+        padding: 0 20px; /* Adjust padding to control gap */
         transition: max-height 0.5s ease-out;
     }
 
@@ -49,7 +49,6 @@
     <p>{{ item.content }}</p>
 </div>
 {% endfor %}
-
 
 
 
