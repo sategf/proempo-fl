@@ -1,12 +1,24 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
 
-<br>
-<h1 align="center"><u>Home</u></h1>
-<br>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h1 align = "center">Welcome!</h1>
+    <br>
+    <h2 align = "center">Quote of the Day</h2>
+    {% if qod %}
+        <p>"{{ qod.quote }}" - {{ qod.author }}</p>
+    {% else %}
+        <p>No quote today.</p>
+    {% endif %}
+    
+    <a href="/qod">Get a New Quote</a>
+</body>
+</html>
+ 
 
-
-
-
-
+</html>
 {% endblock %}

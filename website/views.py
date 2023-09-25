@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
 from .models import Task, FinishedTask
 from . import db
+from quote import quote
 import json
 
 views = Blueprint('views', __name__)
@@ -11,21 +12,19 @@ views = Blueprint('views', __name__)
 @views.route('/')
 @login_required
 def home():
-    return render_template("home.html", user=current_user)
+    qod = generate_quote()
+    return render_template("home.html", user=current_user, qod=qod)
+
+def generate_quote():
+    #generates the quote off the keywork Positive from the quote library.
+    qod = quote('Positive', limit=1) 
+    return qod[0]
+
 
 @views.route('/help')
 @login_required
 def help():
     return render_template("help.html", user=current_user)
-
-@views.route('/pomodoro')
-@login_required
-def pomodoro():
-    task_id = request.args.get('taskId')
-    task_data = request.args.get('taskData')
-    uncompleted_tasks = Task.query.filter_by(user_id=current_user.id).all()
-    return render_template('pomodoro.html', task_id=task_id, task_data=task_data, user=current_user, uncompleted_tasks=uncompleted_tasks)
-
 
 @views.route('/FAQ')
 @login_required
@@ -145,3 +144,7 @@ def about():
 def support():
     return render_template("Support.html", user=current_user)
 
+@views.route('/Flashcards')
+@login_required
+def flascards():
+    return render_template("Flashcards.html", user=current_user)
