@@ -145,6 +145,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     <style>
       body {
         background-color: #f7eefdd3;
+        /*Below fixes the position for the footer*/
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
       }
       .navbar {
         background-color: #e8d6f4d3;
@@ -172,12 +176,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         border: #585a58d5;
         color: rgb(245, 231, 231);
       }
-      /*fixes position for the footer */
       footer {
-        position: fixed;
         bottom: 0;
-        width: 100vw;
+        width: 100%;
+        height: 2.5rem;
       }
+    
 
     </style> 
     {% endblock %}
