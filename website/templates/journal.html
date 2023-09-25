@@ -6,16 +6,30 @@
     <br>
     <div class="journal-container">
         <div class="journal-content">
-          
+          <div class="journal-image">
+            <img src="C:\Users\HP\source\repos\proempo-fl\website\static\journalPic.png" alt="Journal Image">
+            <h3>Pomodoro</h3>
+            <p>What is on your mind?.</p>
+                 
       <form method="Journal">
         <br />
         <h3 class="journal-title">Journal</h3>
         <h3 class="date">Date</h3>
+        <input type="date"
+        placeholder="Enter your password"
+        >
+
         <form method="POST" class="d-flex">
             <div class="flex-grow-1">
-              <textarea name="task" id="task" class="form-control" autofocus></textarea>
+              <textarea name="journal" id="journal" class="form-control" autofocus></textarea>
               <!--placeholder="Journal your thoughts"-->
-              
+              <button
+              type="submit"
+              id="addTaskButton"
+              class="btn btn-primary align-self-center"
+              >
+              Add Journal
+            </button> 
             </div>
         
         
