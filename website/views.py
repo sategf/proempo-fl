@@ -18,6 +18,15 @@ def home():
 def help():
     return render_template("help.html", user=current_user)
 
+@views.route('/pomodoro')
+@login_required
+def pomodoro():
+    task_id = request.args.get('taskId')
+    task_data = request.args.get('taskData')
+    uncompleted_tasks = Task.query.filter_by(user_id=current_user.id).all()
+    return render_template('pomodoro.html', task_id=task_id, task_data=task_data, user=current_user, uncompleted_tasks=uncompleted_tasks)
+
+
 @views.route('/FAQ')
 @login_required
 def faq():
