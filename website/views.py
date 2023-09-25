@@ -30,12 +30,12 @@ def help():
 @login_required
 def faq():
     accordion_items = [
-        {"id": "section1", "title": "How do I get started with the website?", "content": "You can get started by signing up through the blue link below."},
-        {"id": "section2", "title": "Is there a tutorial or onboarding process to help me navigate the application for the first time?", "content": "Sorry, the website doesn't offer any process at the moment, come back for future updates."},
-        {"id": "section3", "title": "Can I use the website without creating an account or logging in?", "content": "No, you need to create an account or log in in order to access the website."},
-        {"id": "section4", "title": "What is the pricing model for your website? Are there any free or trial versions available?", "content": "This website is free, there is no pricing model nor any trial versions."},
-        {"id": "section5", "title": "What is the pomodoro technique? How can i use it on the website?", "content": "The pomodoro method is a time management method based on 25-minute stretches of focused work broken by five-minute breaks. You can use the technique located in the Self-Help page."},
-        {"id": "section6", "title": "Where can i go to contact support if any of the issues listed above aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."},
+        {"id": "section1", "title": "Is there a tutorial or onboarding process to help me navigate the application for the first time?", "content": "Sorry, the website doesn't offer any process at the moment, come back for future updates."},
+        {"id": "section2", "title": "Can I use the website without creating an account or logging in?", "content": "No, you need to create an account or log in in order to access the website."},
+        {"id": "section3", "title": "What is the pricing model for your website? Are there any free or trial versions available?", "content": "This website is free, there is no pricing model nor any trial versions."},
+        {"id": "section4", "title": "What is the pomodoro technique? How can I use it on the website?", "content": "The pomodoro technique is a time management method based on 25-minute stretches of focused work broken by five-minute breaks. You can use the technique located in the Self-Help page."},
+        {"id": "section5", "title": "What is the rubber duck method? How can I use it on the website?", "content": "The rubber duck method is a problem-solving technique commonly used in the programming field. Even though this method is not directly linked to mental health, it does have potential indirect benefits for mental well-being in the context of problem-solving and reducing frustration and stress. You can find this method located in the Self-Help page."},
+        {"id": "section6", "title": "Where can I go to contact support if any of the issues listed above aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."},
        
     ]
     return render_template("FAQ.html", user=current_user, accordion_items=accordion_items)
