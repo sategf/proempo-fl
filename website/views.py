@@ -1,6 +1,7 @@
 #Main Views and URL endpoints to frontend of website
-
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Flask
+from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
+from flask_mail import Mail, Message
 from flask_login import login_required, current_user
 from .models import Task, FinishedTask
 from . import db
@@ -8,6 +9,27 @@ from quote import quote
 import json
 
 views = Blueprint('views', __name__)
+
+
+app = Flask(__name__)
+
+# Flask-Mail configuration
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # Replace with your SMTP server
+app.config['MAIL_PORT'] = 587  #the SMTP port
+app.config['MAIL_USERNAME'] = 'your_username' #To be added
+app.config['MAIL_PASSWORD'] = 'your_password' #To be added
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+
+# Creating the Mail instance
+mail = Mail(app)
+
+
+# Defining the support email address
+support_email = "support@example.com" #In Progress
+
+
+
 
 @views.route('/')
 @login_required
@@ -149,10 +171,42 @@ def unMark_task():
 def about():
     return render_template("About.html", user=current_user)
 
-@views.route('/Support')
+@views.route('/Support', methods=['GET'])
 @login_required
 def support():
     return render_template("Support.html", user=current_user)
+
+@app.route('/submit_support', methods=['POST'])
+def submit_support():
+    if request.method == 'POST':
+        # Get form data
+        title = request.form['title']
+        username = request.form['username']
+        issue_title = request.form['issue_title']
+        description = request.form['description']
+        
+        # Send an email to the support team with the form data
+        send_support_email(title, username, issue_title, description)
+        
+        # You can also save the form data to a database or perform other actions as needed
+        
+        # Redirect back to the support page or a thank you page
+        return redirect(url_for('Support.html'))
+
+def send_support_email(title, username, issue_title, description):
+    # Create a message object for the email
+    msg = Message('Support Request: ' + issue_title, sender=support_email, recipients=[support_email])
+    
+    # Customize the email content with the form data
+    msg.body = f"Title: {title}\nUsername: {username}\nIssue Title: {issue_title}\nDescription: {description}"
+    
+    # Send the email
+    try:
+        mail.send(msg)
+        print("Support email sent successfully")
+    except Exception as e:
+        print(f"Error sending support email: {str(e)}")
+
 
 @views.route('/Flashcards')
 @login_required
