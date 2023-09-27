@@ -14,10 +14,10 @@ views = Blueprint('views', __name__)
 app = Flask(__name__)
 
 # Flask-Mail configuration
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # Replace with your SMTP server
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP server
 app.config['MAIL_PORT'] = 587  #the SMTP port
-app.config['MAIL_USERNAME'] = 'your_username' #To be added
-app.config['MAIL_PASSWORD'] = 'your_password' #To be added
+app.config['MAIL_USERNAME'] = 'your_username' #To be added for Sprint #3
+app.config['MAIL_PASSWORD'] = 'your_password' #To be added for Sprint #3
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
@@ -26,7 +26,7 @@ mail = Mail(app)
 
 
 # Defining the support email address
-support_email = "support@example.com" #In Progress
+support_email = "support@example.com" #In Progress (Sprint 3)
 
 
 
