@@ -14,58 +14,77 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" 
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
 
     <title>{% block title %}Home{% endblock %}</title>
   </head>
+  <link
+    rel="shortcut icon"
+    href="{{ url_for('static', filename='favicon.ico') }}"
+  />
   <body>
     <nav class="navbar navbar-expand-sm navbar-light">
       <div class="container-fluid">
         <div class="navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav" 
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" id="home" href="/">
-                <i class="fa fa-house"></i>&nbsp;Home</a>
+                <i class="fa fa-house"></i>&nbsp;Home</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" id="To do" href="/tasks">
-                <i class="fa fa-list"></i>&nbsp;Tasks</a>
+                <i class="fa fa-list"></i>&nbsp;Tasks</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" id="Journal" href="/journal">
-                <i class="fa fa-book-open"></i>&nbsp;Journal</a>
+                <i class="fa fa-book-open"></i>&nbsp;Journal</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" id="Help" href="/help">
-                <i class="fa fa-brain"></i>&nbsp;Self Help</a>
+                <i class="fa fa-brain"></i>&nbsp;Self Help</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" id="FAQ" href="/FAQ">
-                <i class="fa fa-circle-question"></i>&nbsp;FAQ</a>
+                <i class="fa fa-circle-question"></i>&nbsp;FAQ</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" id="Support" href="/Support">
-                <i class="fa fa-circle-user"></i>&nbsp;Support</a> <!--Support link on nav bar-->
+                <i class="fa fa-circle-user"></i>&nbsp;Support</a
+              >
+              <!--Support link on nav bar-->
             </li>
           </ul>
-          <ul class="navbar-nav ml-auto"> <!-- Align items to the right -->
+          <ul class="navbar-nav ml-auto">
+            <!-- Align items to the right -->
             {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" id="About" href="/About">
-                <i class=" fa fa-circle-info"></i>&nbsp;About</a> <!--About link on nav bar-->
+                <i class="fa fa-circle-info"></i>&nbsp;About</a
+              >
+              <!--About link on nav bar-->
             </li>
             <li class="nav-item">
               <a class="nav-link" id="logout" href="/logout">
-                Logout&nbsp;<i class="fa fa-right-from-bracket"></i></a>
+                Logout&nbsp;<i class="fa fa-right-from-bracket"></i
+              ></a>
             </li>
             {% else %}
-            {% endif %}
+            <br />
+            {% endif %}{% endif %}
           </ul>
         </div>
       </div>
     </nav>
-        
+
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %} {% if category ==
     'error' %} {% if user.is_authenticated %}
@@ -155,7 +174,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         padding: 0;
         border-bottom-left-radius: 50px;
         border-bottom-right-radius: 50px;
-        padding: 10px
+        padding: 10px;
       }
 
       /*.navbar-nav {
@@ -167,8 +186,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
 
       .nav-item {
         margin: 0 6.5px; /* Add spacing between the nav items */
-        /*border-left: 1px solid rgba(0,0,0,.5)*/ /*Separator between items*/ 
-       } 
+        /*border-left: 1px solid rgba(0,0,0,.5)*/ /*Separator between items*/
+      }
 
       .alert {
         background-color: #585a58d5;
@@ -181,13 +200,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         width: 100%;
         height: 2.5rem;
       }
-    
-
-    </style> 
+    </style>
     {% endblock %}
   </body>
   <footer>
-		<p><center>&copy; Copyright 2023. All Rights Reserved.</center></p>
-		<p><center><a href="helpdesk@proempo.com">helpdesk@proempo.com</a></center></p>
-	</footer>
+    <p><center>&copy; Copyright 2023. All Rights Reserved.</center></p>
+    <p>
+      <center><a href="helpdesk@proempo.com">helpdesk@proempo.com</a></center>
+    </p>
+  </footer>
 </html>
