@@ -6,27 +6,36 @@ from flask_login import login_required, current_user
 from .models import Task, FinishedTask
 from . import db
 from quote import quote
-import json
+import json, os
 
 views = Blueprint('views', __name__)
 
 
 app = Flask(__name__)
 
+
+# Get the values of the environment variables
+mail_username = os.environ.get('MAIL_USERNAME')
+mail_password = os.environ.get('MAIL_PASSWORD')
+
+
+
+
 # Flask-Mail configuration
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP server
 app.config['MAIL_PORT'] = 587  #the SMTP port
-app.config['MAIL_USERNAME'] = 'your_username' #To be added for Sprint #3
-app.config['MAIL_PASSWORD'] = 'your_password' #To be added for Sprint #3
+app.config['MAIL_USERNAME'] = mail_username
+app.config['MAIL_PASSWORD'] = mail_password
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
+
 
 # Creating the Mail instance
 mail = Mail(app)
 
 
 # Defining the support email address
-support_email = "support@example.com" #In Progress (Sprint 3)
+support_email = "Proempohelpdesk@gmail.com" 
 
 
 
@@ -176,7 +185,7 @@ def about():
 def support():
     return render_template("Support.html", user=current_user)
 
-@app.route('/submit_support', methods=['POST'])
+@app.route('/submit_support', methods=['POST']) #something about routes isn't submitting the form through here, will be fixed soon
 def submit_support():
     if request.method == 'POST':
         # Get form data
@@ -191,7 +200,15 @@ def submit_support():
         # You can also save the form data to a database or perform other actions as needed
         
         # Redirect back to the support page or a thank you page
-        return redirect(url_for('Support.html'))
+        return redirect(url_for('thank_you'))
+
+
+@app.route('/thank_you')
+def thank_you():
+    return render_template('thank_you.html') # thank you message for the user after submitting form
+
+
+
 
 def send_support_email(title, username, issue_title, description):
     # Create a message object for the email
