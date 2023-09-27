@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+    <title>{% block title %}Login{% endblock %}</title>
+  </head>
+  <link
+    rel="shortcut icon"
+    href="{{ url_for('static', filename='favicon.ico') }}"
+  />
+  <div class="container">
+    <div class="login-container">
+      <div class="login-content">
+        <form method="POST" class="login-form">
+          <h3 class="login-title">Welcome Back</h3>
+          <p class="motto">"Empower Minds, Ignite Productivity"</p>
+          <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %} {%
+            if messages %} {% for category, message in messages %}
+            <div
+              class="alert {% if category == 'error' %}alert-danger{% else %}alert-success{% endif %}"
+            >
+              {{ message }}
+            </div>
+            {% endfor %} {% endif %} {% endwith %}
+          </div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              name="username"
+              placeholder="Enter your username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+            />
+          </div>
+          <div class="form-group">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="rememberMe"
+                name="rememberMe"
+              />
+              <label class="form-check-label" for="rememberMe"
+                >Remember Me</label
+              >
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Log In</button>
+          <div class="sign-up-here">
+            <a class="nav-item nav-link" id="signUp" href="/sign-up"
+              >Don't have an account? Sign up here</a
+            >
+          </div>
+        </form>
+        <div class="image-container">
+          <img src="../static/logo.png" alt="Login Image" class="login-image" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    body {
+      background-color: #e8d6f4d3;
+    }
+    .navbar {
+      background-color: #e8d6f4d3;
+      padding: 0;
+    }
+    .alert {
+      background-color: #ffffff00;
+      text-align: left;
+      border: #585a58d5;
+      color: rgb(255, 0, 0);
+      /*margin-left: auto;
+            border-radius: 20px;*/
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      outline: 2px solid #efe1f96b;
+      background-color: #efe1f96b;
+    }
+
+    .login-container {
+      max-width: 100%;
+      margin: auto;
+      margin-bottom: 10px;
+      margin-top: 80px;
+      display: flex;
+      padding-left: 40px;
+      border: 1px solid rgba(173, 123, 196, 0.5);
+      border-radius: 5px;
+      background-color: white;
+      box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+      border-radius: 30px;
+    }
+
+    .login-content {
+      display: flex;
+      align-items: center;
+    }
+
+    .login-title {
+      text-align: center;
+      padding-bottom: 10px;
+      padding-right: 50px;
+      font-size: 40px;
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+    }
+
+    .motto {
+      padding-left: 35px;
+      padding-bottom: 20px;
+      font-style: italic;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+    /*
+    label {
+      font-weight: bold;
+      font-style: italic;
+    }
+    */
+    .form-control {
+      width: 350px;
+      padding-bottom: 20px;
+      padding-top: 20px;
+      border: 1px solid #629db4;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      margin-right: 30px;
+    }
+
+    .btn-primary {
+      display: block;
+      width: 350px;
+      margin-right: 20px;
+      padding: 10px;
+      background-color: #8b7cb3;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 40px;
+      transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #ffb700ad;
+      color: black;
+    }
+
+    .login-image {
+      max-width: 100%;
+      height: auto;
+      align-self: flex-end;
+      border-radius: 30px;
+    }
+
+    .image-container {
+      margin-left: 10px;
+      /*margin-right: 1px;*/
+    }
+
+    .sign-up-here {
+      font-size: 12px;
+      text-align: center;
+      padding-right: 30px;
+      margin-top: 10px;
+    }
+
+    .nav-item:hover {
+      text-decoration: underline;
+    }
+  </style>
+</html>

@@ -1,0 +1,106 @@
+{% extends "base.html" %} {% block title %}Tasks{% endblock %} {% block content
+%}
+<style>
+  .list-group-flush .list-group-item {
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: #fcfcfc;
+  }
+  #addTaskButton {
+    margin-left: 10px !important;
+  }
+  .dataLine {
+    margin-left: 5px;
+  }
+</style>
+
+<br />
+<h1 align="center"><u>Tasks</u></h1>
+<br />
+<form method="POST" class="d-flex">
+  <div class="flex-grow-1">
+    <textarea name="task" id="task" class="form-control" autofocus></textarea>
+  </div>
+  <button
+    type="submit"
+    id="addTaskButton"
+    class="btn btn-primary align-self-center"
+  >
+    Add Task
+  </button>
+</form>
+{% if user.finished_tasks|length > 0 or user.tasks|length > 0 %}
+<ul class="list-group list-group-flush" id="tasks">
+  {% for task in user.tasks %}
+  <li
+    class="list-group-item"
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <div>
+      <button class="btn btn-success" onClick="markTask({{ task.id }})">
+        <span class="fa fa-check"></span>
+      </button>
+      <span class="dataLine">{{ task.data }}</span>
+    </div>
+    <div style="margin-left: auto; color: grey; padding-right: 5px">
+      {{ task.date.strftime('%H:%M %m/%d/%y') }}
+    </div>
+    <button
+      type="button"
+      class="btn btn-danger"
+      onClick="deleteTask({{ task.id }})"
+    >
+      <span aria-hidden="true" class="fa fa-trash"></span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+
+<br />
+{% if user.finished_tasks|length > 0 %}
+<h3 align="center">Completed Tasks</h3>
+<ul class="list-group list-group-flush" id="completed-tasks">
+  {% for finishedtask in user.finished_tasks %}
+  <li
+    class="list-group-item"
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <div>
+      <button
+        class="btn btn-primary"
+        onClick="unMarkTask({{ finishedtask.id }})"
+      >
+        <span id="" class="fa fa-arrow-up"></span>
+      </button>
+      <span class="dataLine"><s>{{ finishedtask.data }}</s></span>
+    </div>
+    <div style="margin-left: auto; color: grey; padding-right: 5px">
+      {{ finishedtask.date.strftime('%H:%M %m/%d/%y') }}
+    </div>
+    <button
+      type="button"
+      class="btn btn-danger"
+      onClick="deleteFinishedTask({{ finishedtask.id }})"
+    >
+      <span aria-hidden="true" class="fa fa-trash"></span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %} {% else %}
+<br />
+<center>
+  <h2>Congratulations! You have no tasks!</h2>
+  <h3>Make a new task above.</h3>
+  <!--<img src="{{ url_for('static', filename='pic2.png') }}" />-->
+</center>
+{% endif %}
+<script>
+  document.getElementById("task").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("addTaskButton").click();
+    }
+  });
+</script>
+{% endblock %}

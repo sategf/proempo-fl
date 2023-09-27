@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+
+
+<style>
+    /* Define your CSS styles here */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .quote-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background-color: #fcfcfc;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+</style>
+</head>
+<body>
+    <br>
+<div class="quote-container">
+    <br>
+    <h1 align = "center"><u>Welcome!</u></h1>
+    <br>
+    <h2 align = "center"><u>Quote of the Day</u></h2>
+    <br>
+    {% if qod %}
+        <p>"{{ qod.quote }}" - {{ qod.author }}</p>
+    {% else %}
+        <p>No quote today.</p>
+    {% endif %}
+    
+</div>
+</body>
+{% endblock %}
