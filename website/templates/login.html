@@ -16,10 +16,6 @@
     />
     <title>{% block title %}Login{% endblock %}</title>
   </head>
-  <link
-    rel="shortcut icon"
-    href="{{ url_for('static', filename='favicon.ico') }}"
-  />
   <div class="container">
     <div class="login-container">
       <div class="login-content">
@@ -96,7 +92,7 @@
       border: #585a58d5;
       color: rgb(255, 0, 0);
       /*margin-left: auto;
-            border-radius: 20px;*/
+        border-radius: 20px;*/
     }
     input[type="text"]:focus,
     input[type="password"]:focus {
@@ -142,11 +138,11 @@
       margin-bottom: 15px;
     }
     /*
-    label {
-      font-weight: bold;
-      font-style: italic;
-    }
-    */
+label {
+  font-weight: bold;
+  font-style: italic;
+}
+*/
     .form-control {
       width: 350px;
       padding-bottom: 20px;
@@ -182,6 +178,8 @@
       height: auto;
       align-self: flex-end;
       border-radius: 30px;
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
     }
 
     .image-container {

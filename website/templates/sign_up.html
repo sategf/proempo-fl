@@ -1,29 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
-
-    <title>{% block title %}Sign-Up{% endblock %}</title>
-  </head>
-  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-<div class="container">
-  <div class="signup-container">
+{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block
+content %}
+<div class="signup-container">
   <div class="signup-content">
     <div class="image-container">
       <img src="../static/pic4.png" alt="Login Image" class="signup-image" />
@@ -31,16 +8,7 @@
 <form method="POST">
   <br />
   <h3 class="signup-title">Register</h3>
-  <div class="flash-messages">
-    {% with messages = get_flashed_messages(with_categories=true) %} {%
-    if messages %} {% for category, message in messages %}
-    <div
-      class="alert {% if category == 'error' %}alert-danger{% else %}alert-success{% endif %}"
-    >
-      {{ message }}
-    </div>
-    {% endfor %} {% endif %} {% endwith %}
-  </div>
+
   <div class="form-group">
     <label for="username">Username</label>
     <input
@@ -62,7 +30,7 @@
     />
   </div>
   <div class="form-group">
-    <label for="password2">Confirm Password</label>
+    <label for="password2">Confirm</label>
     <input
       type="password"
       class="form-control"
@@ -86,22 +54,8 @@
 </form>
 </div>
 </div>
-</div>
 
 <style>
-  .alert {
-      background-color: #ffffff00;
-      text-align: left;
-      border: #585a58d5;
-      color: rgb(255, 0, 0);
-      /*margin-left: auto;
-        border-radius: 20px;*/
-    }
-
-  /*.navbar {
-    display: none;
-  }*/
-
   .signup-container {
   max-width: 100%;
   margin: auto;
@@ -200,6 +154,6 @@ input[type=text]:focus, input[type=password]:focus{
 }
 
 </style>
-</html>
+{% endblock %}
 
 
