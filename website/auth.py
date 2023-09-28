@@ -43,6 +43,7 @@ def sign_up():
         user = User.query.filter_by(username=username).first()
         if user:
             flash('Username is already taken.', category='error')
+            return redirect(url_for('auth.sign_up'))
         if len(username) < 2:
             flash('Username must be at least 3 characters.', category='error')
         elif password1 != password2:
