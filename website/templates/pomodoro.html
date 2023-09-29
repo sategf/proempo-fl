@@ -28,14 +28,14 @@
         </div>
 
         <div>
-            <label for="taskSelection">Select a Task:</label>
+            <label for="taskSelection">In this session, I will work on:</label>
             <select id="taskSelection">
               <option value="" disabled selected>Select a task</option>
               {% for task in uncompleted_tasks %}
                 <option value="{{ task.id }}">{{ task.data }}</option>
               {% endfor %}
             </select>
-          </div>
+        </div>
 
         <div class="pomodoro-info">
             <a id="pomodoroInfoLink" href="#">What is Pomodoro?</a>
@@ -150,6 +150,11 @@
         color: black;
     }
 
+    #taskSelection {
+            text-align: center;
+            margin-bottom: 15px; 
+        }
+
     </style>
 
 <script>
@@ -245,7 +250,7 @@ startButton.addEventListener('click', () => {
 
   if (!selectedTaskId) {
     // User hasn't selected a task, show an alert or provide feedback
-    alert('Please select a task before starting the Pomodoro timer.');
+    alert('The timer will begin without a concrete set task. It is recommended that you choose a task');
     return;
   }
 
