@@ -189,13 +189,12 @@ def support():
 def submit_support():
     if request.method == 'POST':
         # Get form data
-        title = request.form['title']
-        username = request.form['username']
         issue_title = request.form['issue_title']
+        username = request.form['username']
         description = request.form['description']
         
         # Send an email to the support team with the form data
-        send_support_email(title, username, issue_title, description)
+        send_support_email(issue_title, username, description)
         
         # You can also save the form data to a database or perform other actions as needed
         
@@ -210,12 +209,12 @@ def thank_you():
 
 
 
-def send_support_email(title, username, issue_title, description):
+def send_support_email(issue_title, username, description):
     # Create a message object for the email
     msg = Message('Support Request: ' + issue_title, sender=support_email, recipients=[support_email])
     
     # Customize the email content with the form data
-    msg.body = f"Title: {title}\nUsername: {username}\nIssue Title: {issue_title}\nDescription: {description}"
+    msg.body = f"Issue Title: {issue_title}\nUsername: {username}\nDescription: {description}"
     
     # Send the email
     try:
