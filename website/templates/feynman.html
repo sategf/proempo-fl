@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Help{% endblock %}
+{% block content %}
+<div class="main">
+    <div class="page">
+        <div class="page_content">
+            <div class="text_content">
+                <h2 class="page_title" contenteditable="true" onfocus="clearPlaceholder(this)">Write topic here</h2>
+                <img src="../static/taking-notes.gif" alt="image" class="notes-image">
+                <p class="editable" contenteditable="true" onfocus="clearPlaceholder(this)">Write description here</p>
+    </div>
+    
+</div>
+<style>
+    .main {
+        max-width: 100%;
+        margin: 30px auto;
+        font-family: monospace;
+        font-size: 15px;
+    }
+
+    .notes-image {
+        max-width: 20%;
+        position: absolute;
+        right: 10%;
+        bottom: 5%;
+    }
+
+    .page {
+        background-color: white;
+        border-radius: 5px;
+        flex-direction: column;
+        overflow: hidden;
+        padding-left: 30px;
+        background: repeating-linear-gradient(#0000 0 calc(1.2rem - 1px), #b9ddf4 0 1.2rem) right bottom / 100% 100%, linear-gradient(rgba(108, 55, 242, 0.792) 0 0) 30px 0/2px 100% #fff;
+        background-repeat: no-repeat;
+        line-height: 1.2rem;
+        height: 85vh;
+        -webkit-mask: radial-gradient(circle .8rem at 2px 50%, #0000 98%, #000) 0 0/100% 2.4rem;
+    }
+
+    .page_content {
+        padding: 1.2rem;
+    }
+
+    h2.page_title, p {
+        margin: 1.2rem 0;
+    }
+
+    h2.page_title {
+        font-size: 1.2em;
+    }
+
+</style>
+<script>
+    function clearPlaceholder(element) {
+        if (element.textContent.trim() === "Write topic here" || element.textContent.trim() === "Write description here") {
+            element.textContent = "";
+        }
+    }
+</script>
+
+{% endblock %}

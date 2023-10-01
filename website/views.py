@@ -57,6 +57,10 @@ def generate_quote():
 def help():
     return render_template("help.html", user=current_user)
 
+@views.route('/feynman')
+@login_required
+def feynman():
+    return render_template("feynman.html", user=current_user)
 
 @views.route('/pomodoro')
 @login_required
