@@ -99,6 +99,21 @@ def mentalhealth():
     ]
     return render_template("MentalHealth.html", user=current_user, accordion_items=accordion_items)
 
+@views.route('/Productivity')
+@login_required
+def productivity():
+    accordion_items = [
+        {"id": "section1", "title": "", "content": ""},  #title = header title or question, content = the description of the question or answer
+        {"id": "section2", "title": "", "content": ""},
+        {"id": "section3", "title": "", "content": ""},
+        {"id": "section4", "title": "", "content": ""},
+        {"id": "section5", "title": "", "content": ""},
+        {"id": "section6", "title": "Where can I go to contact support if any of the issues listed above aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."},
+       
+    ]
+    return render_template("Productivity.html", user=current_user, accordion_items=accordion_items)
+
+
 @views.route('/bearMeditation')
 @login_required
 def bearMeditation():
