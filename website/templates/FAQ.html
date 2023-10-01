@@ -59,6 +59,15 @@
 
 
 
+<!-- Links to sub-pages -->
+
+<div align="center">
+    <a href="/MentalHealth">Mental Health</a> | <a href="#subpage2">Productivity</a>
+</div>
+<br>
+
+
+
 {% for item in accordion_items %}
 <input type="checkbox" class="accordion-input" id="{{ item.id }}">
 <label class="accordion-label" for="{{ item.id }}">
@@ -70,6 +79,10 @@
 </div>
 {% endfor %}
 </html>
+
+
+
+
 
 
 {% endblock %}
