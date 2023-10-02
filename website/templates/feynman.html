@@ -1,6 +1,24 @@
 {% extends "base.html" %}
-{% block title %}Help{% endblock %}
+{% block title %}Feynman{% endblock %}
 {% block content %}
+<div>
+    <h2 class="title">Feynman Practice</h2>
+</div>
+<div class="feynman-info">
+    <a id="feynmanInfoLink" href="#">How Do I Begin?</a>
+</div>
+    <div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="close" id="closePopup">&times;</span>
+        <p>The Feynman Method has 4 easy steps:</p>
+        <img src="../static/feynman-description.avif" alt="image" class="feynman-description-img">
+        <p>After studying your topic, begin writing it down in simple language. Think of it as explaining your choosen
+            topic to a toddler. If there are gaps in your understanding, fill them in and try again. The core point 
+            is that if you are unable to explain it simply, you don't understand it well enough and need more practice. 
+        </p>
+        <p>Now, close this popup and begin. </p>
+    </div>
+</div>
 <div class="main">
     <div class="page">
         <div class="page_content">
@@ -12,11 +30,39 @@
     
 </div>
 <style>
+    .title {
+        padding-top: 20px;
+        text-align: center;
+    }
     .main {
-        max-width: 100%;
+        max-width: 90%;
         margin: 30px auto;
         font-family: monospace;
         font-size: 15px;
+    }
+
+    .feynman-info {
+        text-align: center;
+    }
+
+    #feynmanInfoLink {
+        color: #8c83cf;
+    }
+
+    .feynman-description-img {
+        max-width: 80%;
+        max-height: 100%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .popup {
+        background-color: white;
+        border-radius: 10px;
+        color: black;
+        width: 90%;
+        margin: auto;
+        padding: 10px 30px;
     }
 
     .notes-image {
@@ -35,7 +81,7 @@
         background: repeating-linear-gradient(#0000 0 calc(1.2rem - 1px), #b9ddf4 0 1.2rem) right bottom / 100% 100%, linear-gradient(rgba(108, 55, 242, 0.792) 0 0) 30px 0/2px 100% #fff;
         background-repeat: no-repeat;
         line-height: 1.2rem;
-        height: 85vh;
+        height: 75vh;
         -webkit-mask: radial-gradient(circle .8rem at 2px 50%, #0000 98%, #000) 0 0/100% 2.4rem;
     }
 
@@ -58,6 +104,28 @@
             element.textContent = "";
         }
     }
+</script>
+
+<script>
+    // JavaScript for handling the popup
+    const feynmanInfoLink = document.getElementById('feynmanInfoLink');
+    const popup = document.getElementById('popup');
+    const closePopup = document.getElementById('closePopup');
+
+    // Initially hide the popup
+    popup.style.display = 'none';
+
+    // Show the popup when clicking the "What is Pomodoro?" link
+    feynmanInfoLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        popup.style.display = 'block';
+    });
+
+    // Close the popup when clicking the close button (x)
+    closePopup.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+;
 </script>
 
 {% endblock %}
