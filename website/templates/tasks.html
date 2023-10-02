@@ -9,38 +9,62 @@
   #addTaskButton {
     margin-left: 10px !important;
   }
+
   .dataLine {
     margin-left: 5px;
   }
 
   #sleepingAnimal {
-    max-width: 100%; 
+    max-width: 100%;
     height: auto;
+  }
+
+  .form-container {
+    border-radius: 10px;
+    background-color: #fcfcfc;
+    padding: 20px;
   }
 </style>
 
 <br />
 <h1 align="center"><u>Tasks</u></h1>
 <br />
-<form method="POST" class="d-flex">
-  <div class="flex-grow-1">
-    <textarea
-      name="task"
-      id="task"
-      class="form-control"
-      rows="1"
-      style="font-size: 24px"
-      autofocus
-    ></textarea>
-  </div>
-  <button
-    type="submit"
-    id="addTaskButton"
-    class="btn btn-primary align-self-center"
-  >
-    Add Task
-  </button>
-</form>
+
+<div class="form-container">
+  <form method="POST" class="d-flex flex-column">
+    <div class="form-group">
+      <label for="dueDate">Due Date: (Optional)</label>
+      <input
+        type="date"
+        name="dueDate"
+        id="dueDate"
+        class="form-control"
+        style="width: 16%"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="task">Task:</label>
+      <textarea
+        name="task"
+        id="task"
+        class="form-control"
+        rows="1"
+        style="font-size: 24px"
+        autofocus
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      id="addTaskButton"
+      class="btn btn-primary align-self-center"
+    >
+      Add Task
+    </button>
+  </form>
+</div>
+
 {% if user.finished_tasks|length > 0 or user.tasks|length > 0 %}
 <ul class="list-group list-group-flush" id="tasks">
   {% for task in user.tasks %}
@@ -53,6 +77,11 @@
         <span class="fa fa-check"></span>
       </button>
       <span class="dataLine">{{ task.data }}</span>
+      {% if task.due_date %}
+      <span class="dataLine" style="margin-left: 10px; color: grey">
+        Due Date: {{ task.due_date.strftime('%m/%d/%Y') }}
+      </span>
+      {% endif %}
     </div>
     <div style="margin-left: auto; color: grey; padding-right: 5px">
       {{ task.date.strftime('%H:%M %m/%d/%y') }}
@@ -85,6 +114,11 @@
         <span id="" class="fa fa-arrow-up"></span>
       </button>
       <span class="dataLine"><s>{{ finishedtask.data }}</s></span>
+      {% if finishedtask.due_date %}
+      <span class="dataLine" style="margin-left: 10px; color: grey">
+        Due Date: {{ task.due_date.strftime('%m/%d/%Y') }}
+      </span>
+      {% endif %}
     </div>
     <div style="margin-left: auto; color: grey; padding-right: 5px">
       {{ finishedtask.date.strftime('%H:%M %m/%d/%y') }}

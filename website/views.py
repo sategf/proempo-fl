@@ -7,6 +7,7 @@ from .models import Task, FinishedTask
 from . import db
 from quote import quote
 import json, os
+from datetime import datetime
 
 views = Blueprint('views', __name__)
 
@@ -127,18 +128,26 @@ def regularMeditation():
 @views.route('/tasks', methods=['GET', 'POST'])
 @login_required
 def tasks():
-    if request.method == 'POST': 
-        task = request.form.get('task')#Gets the task from the HTML 
+    if request.method == 'POST':
+        task_data = request.form.get('task')  # Gets the task from the HTML
+        due_date_str = request.form.get('dueDate')  # Gets the due date string from the HTML
 
-        if len(task) < 1:
-            flash('Task is too short!', category='error') 
+        if len(task_data) < 1:
+            flash('Task is too short!', category='error')
         else:
-            new_task = Task(data=task, user_id=current_user.id)  #providing the schema for the task 
-            db.session.add(new_task) #adding the task to the database 
+            due_date = None  # Default to None if no due date is provided
+            if due_date_str:
+                due_date = datetime.strptime(due_date_str, '%Y-%m-%d').date()
+
+            new_task = Task(data=task_data, due_date=due_date, user_id=current_user.id)  # Provide the schema for the task
+            db.session.add(new_task)  # Add the task to the database
             db.session.commit()
             flash('Task added!', category='success')
 
     return render_template("tasks.html", user=current_user)
+
+
+
 
 @views.route('/journal')
 @login_required
