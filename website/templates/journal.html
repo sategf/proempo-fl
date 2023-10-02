@@ -1,5 +1,111 @@
 {% extends "base.html" %} {% block title %}Journal{% endblock %} {% block
     content %}
+    
+    <div class="notebook">
+      <div class="left">
+        <div class="page-inner" contenteditable>
+          
+        </div>
+      </div>
+      <div class="right">
+        <div class="page-inner" contenteditable>
+        
+        </div>
+      </div>
+    </div>
+    
+    <style>
+    body {background: rgb(225, 228, 232)}
+    
+    /** Notebook Base **/
+    .notebook {
+      position: absolute;
+      width: 800px; height: 500px;
+      top: 50%; left: 40%;
+      margin: -175px 0 0 -250px;
+        
+      background-color: #444;
+      background-image:
+        -webkit-repeating-radial-gradient(
+          center center,
+          rgba(0,0,0,.5),
+          rgba(0,0,0,.5) 2px,
+          transparent 2px,
+          transparent 100%
+        );
+      background-image:
+        repeating-radial-gradient(
+          center center, 
+          rgba(0,0,0,.5), 
+          rgba(0,0,0,.5) 2px, 
+          transparent 2px, 
+          transparent 100%
+        );
+      background-size: 4px 4px;
+      
+      border-radius: 15px;
+      box-shadow:
+        inset 2px 2px 2px rgba(255,255,255,.2),
+        2px 2px 3px rgba(0,0,0,.2);
+    }
+    
+    /** Left Page **/
+    .left {
+      position: absolute;
+      left: 10px; right: 50%;
+      top: 10px; bottom: 10px;
+      
+      background: rgb(247, 246, 212);
+      
+      border-radius: 10px 0 0 10px;
+      box-shadow:
+        inset -10px 0 30px -10px rgba(0,0,0,.3),
+        -2px 2px 1px rgba(0,0,0,.8);
+    }
+    
+    /** Right Page **/
+    .right {
+      position: absolute;
+      left: 50%; right: 10px;
+      top: 10px; bottom: 10px;
+      
+      background: rgb(247, 246, 212);
+      
+      border-radius: 0 10px 10px 0;
+      box-shadow:
+        inset 10px 0 30px -10px rgba(0,0,0,.3),
+        2px 2px 1px rgba(0,0,0,.8);
+    }
+    
+    /** Page inner **/
+    .page-inner {
+      position: absolute;
+      top: 30px; bottom: 20px;
+      left: 15px; right: 15px;
+      outline: none;
+      overflow: hidden;
+      
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        transparent 19px,
+        rgba(0,0,0,.2),
+        rgba(0,0,0,.2) 1px
+      );
+      background-size: 100% 20px;
+      box-shadow:
+        0 -1px 0 rgba(0,0,0,0.2),
+        0 -5px 0 rgb(247, 246, 212),
+        0 -6px 0 rgba(0,0,0,0.4);
+      
+      font: 11px/20px 'Courgette';
+      color: #555;
+      text-align: left;
+    }
+    .page-inner > div {text-align: left !important}
+    </style>
+    
+    
     <style>
       .list-group-flush .list-group-item {
         margin-top: 10px;
@@ -19,31 +125,12 @@
         <div class="journal-content">
           <div class="journal-image">
             <div style="text-align: center;">
-            <img src="../static/journalPic.png" alt="Journal Image" class="Journal image"/>
-            <h3 align="center"></h3>
-            <p>What is on your mind?</p>
             </div>     
-      <form method="Journal">
         <br />
-        <h3 class="journal-title">Journal Title</h3>
-        <input type="text">
-        <h3 class="date">Date</h3>
-        <input type="date"
-        >
-
-        <form method="POST" class="d-flex">
-            <div class="flex-grow-1">
-              <textarea name="journal" id="journal" class="form-control" autofocus></textarea>
-              <!--placeholder="Journal your thoughts"-->
-              <button
-              type="submit"
-              id="addJournalButton"
-              class="btn btn-primary align-self-center"
-              >
-              Save Journal
-            </button> 
-            </div>
         
+
+        
+            
             
         
 
