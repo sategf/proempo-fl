@@ -38,8 +38,10 @@ mail = Mail(app)
 # Defining the support email address
 support_email = "Proempohelpdesk@gmail.com" 
 
-
-
+import csv
+import random
+import pandas as pb
+import os
 
 @views.route('/')
 @login_required
@@ -48,9 +50,27 @@ def home():
     return render_template("home.html", user=current_user, qod=qod)
 
 def generate_quote():
-    #generates the quote off the keywork Positive from the quote library.
-    qod = quote('Positive', limit=1) 
-    return qod[0]
+    csv_file_path = os.path.join(app.root_path, 'static', 'list.csv')
+    with open(csv_file_path, 'r') as f:
+
+        reader = csv.reader(f, delimiter=',')
+        epoch = datetime(2023, 10, 1)
+        today = datetime.now()
+        currentDay = (today - epoch).days
+        num_lines = sum(1 for _ in reader)
+        index = currentDay % num_lines
+        f.seek(0)
+        
+
+        for i, row in enumerate(reader):
+            if i == index:
+                qod = (row[1], row[0]) 
+                break
+        else:
+            qod = "Error: Quote not found."
+
+    return qod
+
 
 
 @views.route('/help')

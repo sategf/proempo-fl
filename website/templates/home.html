@@ -30,10 +30,12 @@
     <h2 align = "center"><u>Quote of the Day</u></h2>
     <br>
     {% if qod %}
-        <p>"{{ qod.quote }}" - {{ qod.author }}</p>
+    <p>"{{ qod[0] }}" - {{ qod[1] }}</p>
     {% else %}
-        <p>No quote today.</p>
+    <p>No quote today.</p>
     {% endif %}
+
+
     
 </div>
 </body>
