@@ -108,13 +108,13 @@ def faq():
 @login_required
 def mentalhealth():
     accordion_items = [
-        {"id": "section1", "title": "", "content": ""},  #title = header title or question, content = the description of the question or answer
-        {"id": "section2", "title": "", "content": ""},
-        {"id": "section3", "title": "", "content": ""},
-        {"id": "section4", "title": "", "content": ""},
-        {"id": "section5", "title": "", "content": ""},
+        {"id": "section1", "title": "What is the relationship between mental health and productivity?", "content": ""},  #title = header title or question, content = the description of the question or answer
+        {"id": "section2", "title": "How will Proempo help me manage my stress and anxiety?", "content": "As students, here at Proempo, we have a lot of empathy towards people struggling to control their thoughts and are very stressed about deadlines. Organizing your life is a great way to get started with handling your stress and/or anxiety. By keeping all your activities, schoolwork, or just general notes and reminders in one centrally located place that is easily accessible. Having this will layout how much time you have to do these tasks. You will be at ease seeing that your tasks are completed. Proempo also offers a journaling section to help with anxiety delt in your daily life. "},
+        {"id": "section3", "title": "What is the point of journaling", "content": "Journalling is a great activity to help yourself. While journaling there are no outside factors to worry about except “Me, myself and I”. This is a safe space where you can heave all your pent-up thoughts and feelings onto a page. As time goes on you will have many journals telling you how you felt during a particular day and the reason that day followed that outcome. Looking back at these journals will show you how much you have developed as a person and learn from your past self. "},
+        {"id": "section4", "title": "What is burnout and what to do if I experience it?", "content": "Burnout is a state of physical and/or emotional exhaustion that can come to effect someone’s identity and sense of feeling accomplished. Steps to help reduce burnout starts with seeking support from family members or colleagues to help you collaborate and cope with what you are feeling. You could go ahead and try an activity or hobby you really enjoy that gets you relaxed or even exercise. The “cure” to burnout is taking a break from either work or school or other factors that might be causing this."},
+        {"id": "section5", "title": "Where can I go to seek support", "content": "If in need of serious help or support beyond our services here are some resources to look into: Suicide and Crisis lifeline: 988, Therapy"},
         {"id": "section6", "title": "Where can I go to contact support if any of the issues listed above aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."},
-       
+
     ]
     return render_template("MentalHealth.html", user=current_user, accordion_items=accordion_items)
 
@@ -287,5 +287,13 @@ def send_support_email(issue_title, username, description):
 
 @views.route('/Flashcards')
 @login_required
-def flascards():
-    return render_template("Flashcards.html", user=current_user)
+def flashcards():
+    return render_template("createFlashcards.html", user=current_user)
+
+def addflashcard():
+    
+    return 
+
+
+def hideCreatebox():
+    return

@@ -15,13 +15,13 @@
     <div class="create-box">
         <h2 style="text-align: center; color: black;"> Create Flashcard</h2>
         <label for="question">Question</label>
-        <textarea id=""question"></textarea>
+        <textarea id="question"></textarea>
         <br>
         <label for="answer">Question</label>
         <textarea id="answer"></textarea>
     </div>
-    <button onclick="addFlashcard()">Save</button>
-    <button onclick="hideCreateBox()">Close</button>
+    <button onclick="addFlashcard()">Create</button>
+    <button onclick="hideCreateBox()">Close box</button>
 </div>
 
 </body>
@@ -56,6 +56,39 @@
         margin: auto;
         padding: 20px;
 
+    }
+
+    .create-box textarea {
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid lightpink
+    }
+    
+    .create-box button {
+        width: fit-content;
+    }
+
+    .flashcards{
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start; 
+        flex-wrap: wrap;
+        margin: auto;
+        margin-top: 15px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .flashcard{
+        width: 370px;
+        height: 200px;
+        word-wrap: break-word;
+        margin: 15px;
+        background-color: white;
+    }
+
+    .flashcard h2{
+        font-size: 1rem;
     }
 
     /*hover effect would be cool*/
