@@ -122,12 +122,13 @@ def mentalhealth():
 @login_required
 def productivity():
     accordion_items = [
-        {"id": "section1", "title": "", "content": ""},  #title = header title or question, content = the description of the question or answer
-        {"id": "section2", "title": "", "content": ""},
-        {"id": "section3", "title": "", "content": ""},
-        {"id": "section4", "title": "", "content": ""},
-        {"id": "section5", "title": "", "content": ""},
-        {"id": "section6", "title": "Where can I go to contact support if any of the issues listed above aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."},
+        {"id": "section1", "title": "What features does the website offer to enhance productivity?", "content": "The features offered in the website are the pomodoro method, feynman technique, which are both located in the self-help page."},  #title = header title or question, content = the description of the question or answer
+        {"id": "section2", "title": "Can you provide tips for settings and achieving productivity goals?", "content": ""},
+        {"id": "section3", "title": "How does time management play a role in productivity? Can your website assist with this?", "content": ""},
+        {"id": "section4", "title": "What are some strategies for overcoming procrastination and maintaining focus?", "content": ""},
+        {"id": "section5", "title": "how can I effectively priortize tasks and projects to optimize my productivity?", "content": ""},
+        {"id": "section6", "title": "How can I track my progress and measure my productivity gains using the website?", "content": ""},
+        {"id": "section7", "title": "Where can I go to contact support if any of the issues listed above aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."},
        
     ]
     return render_template("Productivity.html", user=current_user, accordion_items=accordion_items)

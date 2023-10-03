@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block title %}Create Flash Cards{% endblock %} {% block content %}
+
+<body> 
+
+<header>
+    <div class="container">
+        <div>
+            <buttonon onclick="showCreateBox()">New Card</button>
+            <button onclick="delFlashcards()">Delete Card</button>
+        </div>
+    </div>
+
+</header>
+<div class="container">
+    <div class="create-box">
+        <h2 style="text-align: center; color: black;"> Create Flashcard</h2>
+        <label for="question">Question</label>
+        <textarea id=""question"></textarea>
+        <br>
+        <label for="answer">Question</label>
+        <textarea id="answer"></textarea>
+    </div>
+    <button onclick="addFlashcard()">Save</button>
+    <button onclick="hideCreateBox()">Close</button>
+</div>
+
+</body>
+
+<style>
+
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    body{
+        background-color: white;
+        font-family: Arial, sans-serif;
+    }
+
+    header {
+        background-color: whitesmoke;
+    }
+
+    button{
+        padding: 8px;
+        outline: black;
+        cursor: pointer;
+        background-color: blueviolet;
+        text-decoration-color: white;
+    }
+
+    .create-box{
+        width: 400px;
+        margin: auto;
+        padding: 20px;
+
+    }
+
+    /*hover effect would be cool*/
+
+</style>

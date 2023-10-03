@@ -1,148 +1,130 @@
-{% extends "base.html" %} {% block title %}Journal{% endblock %} {% block
-    content %}
-    
-    <div class="notebook">
-      <div class="left">
-        <div class="page-inner" contenteditable>
-          
+{% extends "base.html" %}
+{% block title %}Journal{% endblock %}
+{% block content %}
+<div class="main">
+  <ul class="section">
+    <li class="item">
+      <div class="card">
+        <div class="card_content">
+          <h2 class="card_title">Dear Journal,</h2>
+          <div class="card_text">
+            <p contenteditable="true">Today, I spent my day thinking about... </p>
+          </div>
         </div>
       </div>
-      <div class="right">
-        <div class="page-inner" contenteditable>
-        
+    </li>
+    <li class="item">
+      <div class="card">
+        <div class="card_content">
+          <h2 class="card_title">3 things I am grateful for today are:</h2>
+          <div class="card_text">
+            <p contenteditable="true">1. </p>
+            <p contenteditable="true">2. </p>
+            <p contenteditable="true">3. </p>
+          </div>
         </div>
       </div>
-    </div>
-    
-    <style>
-    body {background: rgb(225, 228, 232)}
-    
-    /** Notebook Base **/
-    .notebook {
-      position: absolute;
-      width: 800px; height: 500px;
-      top: 50%; left: 40%;
-      margin: -175px 0 0 -250px;
-        
-      background-color: #444;
-      background-image:
-        -webkit-repeating-radial-gradient(
-          center center,
-          rgba(0,0,0,.5),
-          rgba(0,0,0,.5) 2px,
-          transparent 2px,
-          transparent 100%
-        );
-      background-image:
-        repeating-radial-gradient(
-          center center, 
-          rgba(0,0,0,.5), 
-          rgba(0,0,0,.5) 2px, 
-          transparent 2px, 
-          transparent 100%
-        );
-      background-size: 4px 4px;
-      
-      border-radius: 15px;
-      box-shadow:
-        inset 2px 2px 2px rgba(255,255,255,.2),
-        2px 2px 3px rgba(0,0,0,.2);
-    }
-    
-    /** Left Page **/
-    .left {
-      position: absolute;
-      left: 10px; right: 50%;
-      top: 10px; bottom: 10px;
-      
-      background: rgb(247, 246, 212);
-      
-      border-radius: 10px 0 0 10px;
-      box-shadow:
-        inset -10px 0 30px -10px rgba(0,0,0,.3),
-        -2px 2px 1px rgba(0,0,0,.8);
-        
-    }
-    
-    /** Right Page **/
-    .right {
-      position: absolute;
-      left: 50%; right: 10px;
-      top: 10px; bottom: 10px;
-      
-      background: rgb(247, 246, 212);
-      
-      border-radius: 0 10px 10px 0;
-      box-shadow:
-        inset 10px 0 30px -10px rgba(0,0,0,.3),
-        2px 2px 1px rgba(0,0,0,.8);
-    }
-    
-    /** Page inner **/
-    .page-inner {
-      position: absolute;
-      top: 30px; bottom: 20px;
-      left: 15px; right: 15px;
-      outline: none;
-      overflow: hidden;
-      
-      background: linear-gradient(
-        to bottom,
-        transparent,
-        transparent 19px,
-        rgba(0,0,0,.2),
-        rgba(0,0,0,.2) 1px
-      );
-      background-size: 100% 20px;
-      box-shadow:
-        0 -1px 0 rgba(0,0,0,0.2),
-        0 -5px 0 rgb(247, 246, 212),
-        0 -6px 0 rgba(0,0,0,0.4);
-      
-      font: 11px/20px 'Courgette';
-      color: #555;
-      text-align: left;
-    }
-    .page-inner > div {text-align: left !important}
+    </li>
+    <li class="item">
+      <div class="card">
+        <div class="card_content">
+          <h2 class="card_title">My day was...</h2>
+          <div class="card_text">
+            <form>
+              <div>
+                <label>
+                  <input type="radio" name="dayRating" value="excellent"> <img src="../static/veryWell.png" alt=""> Excellent 
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input type="radio" name="dayRating" value="good"> <img src="../static/well.png" alt="" > Well
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input type="radio" name="dayRating" value="average"> <img src="../static/bad.png" alt=""> Bad
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input type="radio" name="dayRating" value="poor"> <img src="../static/horrible.png" alt=""> Horrible
+                </label>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 
-    .list-group-flush .list-group-item {
-        margin-top: 10px;
-        border-radius: 10px;
-      }
-      #saveJournalButton {
-        margin-left: 10px !important;
-      }
-      .dataLine {
-        margin-left: 5px;
-      }
-    </style>
-    
-    
-    
-      
-    
-    <br>
-    <h1 align="center"><u>Journal</u></h1>
-    <br>
-    <button
-              type="submit"
-              id="saveJournalButton"
-              class="btn btn-primary align-self-center"
-              >
-              Save Journal
-            </button>
-    <div class="journal-container">
-        <div class="journal-content">
-          <div class="journal-image">
-            <div style="text-align: center;">
-            </div>     
-        <br />
-        
+<style>
+  .main {
+    max-width: 1400px;
+    margin: 50px auto;
+  }
 
-        
-            
-            
-        
+  .section {
+    display: grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+  }
 
-          
-    {% endblock %}
+  .item {
+    display: flex;
+    padding: 1rem;
+    filter:drop-shadow(0 0 5px rgb(255, 255, 255));
+  }
+
+  .card {
+    background-color: white;
+    border-radius: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-left: 30px;
+    background: repeating-linear-gradient(#0000 0 calc(1.2rem - 1px),#acd3ed 0 1.2rem) right bottom /100% 100%,linear-gradient(rgb(255, 0, 128) 0 0) 30px 0/2px 100% #fff;
+    background-repeat: no-repeat;
+    line-height: 1.2rem;
+    width: 500px;
+  }
+
+  .card_content {
+    padding: 1.2rem;
+  }
+
+  h2.card_title,p {
+    margin: 1rem 0;
+  }
+  h2.card_title {
+      font-size: 1.4em;
+  }
+
+  img {
+    width: 50px;
+  }
+</style>
+
+
+<script>
+  // Function to handle user input and update the content
+  function updateContent(element) {
+    element.contentEditable = "true";
+    element.focus();
+  }
+</script>
+
+<script>
+    // Event listeners to make paragraphs editable on click
+  document.querySelectorAll('.card_text p').forEach(function (paragraph) {
+    paragraph.addEventListener('click', function () {
+      updateContent(this);
+    });
+  });
+</script>
+
+</script>
+{% endblock %}
