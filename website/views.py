@@ -5,9 +5,9 @@ from flask_mail import Mail, Message
 from flask_login import login_required, current_user
 from .models import Task, FinishedTask
 from . import db
-from quote import quote
 import json, os
 from datetime import datetime
+import csv
 
 views = Blueprint('views', __name__)
 
@@ -38,10 +38,8 @@ mail = Mail(app)
 # Defining the support email address
 support_email = "Proempohelpdesk@gmail.com" 
 
-import csv
-import random
-import pandas as pb
-import os
+
+
 
 @views.route('/')
 @login_required
