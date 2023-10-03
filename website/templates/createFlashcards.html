@@ -1,71 +1,47 @@
 {% extends "base.html" %} {% block title %}Create Flash Cards{% endblock %} {% block content %}
 
 <body> 
-
-<header>
-    <div class="container">
-        <div>
-            <buttonon onclick="showCreateBox()">New Card</button>
-            <button onclick="delFlashcards()">Delete Card</button>
-        </div>
+    <div class="ui container">
+        <form action="/CreateFlashcards" method="POST" class="ui form">
+            <div class="field1">
+                <label for="lesson">Lesson</label>
+                <input type="text" name="lesson">
+            </div>
+            <div class="field">
+                <label for="question">Question</label>
+                <input type="text" name="question">
+            </div>
+            <div class="field"> 
+                <label for="answer">Answer</label>
+                <textarea name="answer" id="" cols="50" rows="10"></textarea>
+            </div>
+            <button type="submit" class="ui button">Submit</button>
+        </form>
     </div>
-
-</header>
-<div class="container">
-    <div class="create-box">
-        <h2 style="text-align: center; color: black;"> Create Flashcard</h2>
-        <label for="question">Question</label>
-        <textarea id="question"></textarea>
-        <br>
-        <label for="answer">Question</label>
-        <textarea id="answer"></textarea>
-    </div>
-    <button onclick="addFlashcard()">Create</button>
-    <button onclick="hideCreateBox()">Close box</button>
-</div>
-
-</body>
+</body> 
 
 <style>
 
     *{
         padding: 0;
-        margin: 0;
+        margin-top: 0px;
         box-sizing: border-box;
     }
 
     body{
         background-color: white;
         font-family: Arial, sans-serif;
+        
     }
-
-    header {
-        background-color: whitesmoke;
+    .field1{
+        margin-top: 10px;
     }
-
     button{
         padding: 8px;
         outline: black;
         cursor: pointer;
         background-color: blueviolet;
         text-decoration-color: white;
-    }
-
-    .create-box{
-        width: 400px;
-        margin: auto;
-        padding: 20px;
-
-    }
-
-    .create-box textarea {
-        width: 100%;
-        border-radius: 5px;
-        border: 1px solid lightpink
-    }
-    
-    .create-box button {
-        width: fit-content;
     }
 
     .flashcards{
@@ -94,6 +70,4 @@
     /*hover effect would be cool*/
 
 </style>
-
-
 {% endblock %}

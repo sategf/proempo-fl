@@ -1,7 +1,45 @@
 {% extends "base.html" %} {% block title %}View Flashcards{% endblock %} {% block content %}
 
-<body>
+    <div class="container">
+        {% for card in cards %}
+        <div class="column">
+        <div class="ui card">
+            <div class="content">
+                <div class="lesson">
+                    {{card.question}}
+                </div>
+                <div class="question">
+                    {{card.lesson}}
+                </div>
+                <div class="description">
+                </div>
+            </div>
+            <div class="showmore" onmouseover="showDescription(this)" onmouseout="showDescription(this)">
+                <div class="column">
+                    <div class="left button" onclick="showModal(this)">Show Card</div>
+                    <a class="right button" href="/cards/{{ card.id }}">Edit Card</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="modal">
+        <i class="close icon"></i>
+        <div class="modaltitle header">
+            Test
+        </div>
+        <div class="modalcontent content"> 
+        </div>
+        <div class="actions">
+            <div class="red button">
+            Review again
+            </div>
+            <div class="green button">
+            Know it
+            <i class="checkmark"></i>
+            </div>
+        </div>
+    </div>
 
-    <p>hi</p>
-
-</body>
+{% endblock %}

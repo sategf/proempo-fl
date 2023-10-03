@@ -3,7 +3,7 @@ from flask import Flask
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_mail import Mail, Message
 from flask_login import login_required, current_user
-from .models import Task, FinishedTask
+from .models import Task, FinishedTask, Card
 from . import db
 import json, os
 from datetime import datetime
@@ -108,11 +108,11 @@ def faq():
 @login_required
 def mentalhealth():
     accordion_items = [
-        {"id": "section1", "title": "What is the relationship between mental health and productivity?", "content": "The relationship between mental health and productivity is strong. Good mental health positively impacts productivity by enhancing focus, motivation, and overall well-being, while poor mental health can hinder productivity due to stress, anxiety, and reduced concentration."},  #title = header title or question, content = the description of the question or answer
-        {"id": "section2", "title": "How will Proempo help me manage my stress and anxiety?", "content": "As students, here at Proempo, we have a lot of empathy towards people struggling to control their thoughts and are very stressed about deadlines. Organizing your life is a great way to get started with handling your stress and/or anxiety. By keeping all your activities, schoolwork, or just general notes and reminders in one centrally located place that is easily accessible. Having this will layout how much time you have to do these tasks. You will be at ease seeing that your tasks are completed. Proempo also offers a journaling section to help with anxiety delt in your daily life."},
-        {"id": "section3", "title": "What is the point of journaling?", "content": "Journalling is a great activity to help yourself. While journaling there are no outside factors to worry about except “Me, myself and I”. This is a safe space where you can heave all your pent-up thoughts and feelings onto a page. As time goes on you will have many journals telling you how you felt during a particular day and the reason that day followed that outcome. Looking back at these journals will show you how much you have developed as a person and learn from your past self."},
+        {"id": "section1", "title": "What is the relationship between mental health and productivity?", "content": ""},  #title = header title or question, content = the description of the question or answer
+        {"id": "section2", "title": "How will Proempo help me manage my stress and anxiety?", "content": "As students, here at Proempo, we have a lot of empathy towards people struggling to control their thoughts and are very stressed about deadlines. Organizing your life is a great way to get started with handling your stress and/or anxiety. By keeping all your activities, schoolwork, or just general notes and reminders in one centrally located place that is easily accessible. Having this will layout how much time you have to do these tasks. You will be at ease seeing that your tasks are completed. Proempo also offers a journaling section to help with anxiety delt in your daily life. "},
+        {"id": "section3", "title": "What is the point of journaling", "content": "Journalling is a great activity to help yourself. While journaling there are no outside factors to worry about except “Me, myself and I”. This is a safe space where you can heave all your pent-up thoughts and feelings onto a page. As time goes on you will have many journals telling you how you felt during a particular day and the reason that day followed that outcome. Looking back at these journals will show you how much you have developed as a person and learn from your past self. "},
         {"id": "section4", "title": "What is burnout and what to do if I experience it?", "content": "Burnout is a state of physical and/or emotional exhaustion that can come to effect someone’s identity and sense of feeling accomplished. Steps to help reduce burnout starts with seeking support from family members or colleagues to help you collaborate and cope with what you are feeling. You could go ahead and try an activity or hobby you really enjoy that gets you relaxed or even exercise. The “cure” to burnout is taking a break from either work or school or other factors that might be causing this."},
-        {"id": "section5", "title": "Where can I go to seek support for mental issues?", "content": "If in need of serious help or support, here are some resources to look into: Suicide and Crisis lifeline: 988, Therapy."},
+        {"id": "section5", "title": "Where can I go to seek support", "content": "If in need of serious help or support beyond our services here are some resources to look into: Suicide and Crisis lifeline: 988, Therapy"},
         {"id": "section6", "title": "Where can I go to contact support if any of the issues listed above aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."},
 
     ]
@@ -122,12 +122,13 @@ def mentalhealth():
 @login_required
 def productivity():
     accordion_items = [
-        {"id": "section1", "title": "What features does the website offer to enhance productivity?", "content": "The features offered in the website are the pomodoro method, feynman technique, and flashcards, which are located in the self-help page."},  #title = header title or question, content = the description of the question or answer
-        {"id": "section2", "title": "Can you provide tips for setting and achieving productivity goals?", "content": "Our tips to utilizing this website for setting and achieving goals are creating tasks, using the pomodoro method, creating flashcards, and taking a break to prevent burnout."},
-        {"id": "section3", "title": "How does time management play a role in productivity? Can your website assist with this?", "content": "Time management plays a crucial role in productivity by helping individuals prioritize tasks, allocate time efficiently, and minimize distractions. Effective time management enables better organization and allows individuals to accomplish more in less time, leading to increased productivity. Our website can offer users with creating a task withing the tasks page, using the pomodoro method to set a timer along with completing the tasks created from the task page, creating flashcards in the self-help page, etc. Please check the self-help page if you want to enhance your productivity."},
-        {"id": "section4", "title": "What are some strategies for overcoming procrastination and maintaining focus?", "content": "Our website can list some strategies. Break tasks into smaller steps. Set specific, achievable goals. Use a timer for focused work like the pomodoro method. Minimize distractions with our built-in white noise player. Reward yourself for completing tasks. Create a dedicated workspace. Prioritize tasks based on importance and urgency."},
-        {"id": "section5", "title": "How can I track my progress and measure my productivity gains using the website?", "content": "You can track progress in the website with the provided graphs and charts to measure your current productivity progress."},
-        {"id": "section6", "title": "Where can I go to contact support if any of the issues listed above aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."},
+        {"id": "section1", "title": "What features does the website offer to enhance productivity?", "content": "The features offered in the website are the pomodoro method, feynman technique, which are both located in the self-help page."},  #title = header title or question, content = the description of the question or answer
+        {"id": "section2", "title": "Can you provide tips for settings and achieving productivity goals?", "content": ""},
+        {"id": "section3", "title": "How does time management play a role in productivity? Can your website assist with this?", "content": ""},
+        {"id": "section4", "title": "What are some strategies for overcoming procrastination and maintaining focus?", "content": ""},
+        {"id": "section5", "title": "how can I effectively priortize tasks and projects to optimize my productivity?", "content": ""},
+        {"id": "section6", "title": "How can I track my progress and measure my productivity gains using the website?", "content": ""},
+        {"id": "section7", "title": "Where can I go to contact support if any of the issues listed above aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."},
        
     ]
     return render_template("Productivity.html", user=current_user, accordion_items=accordion_items)
@@ -286,13 +287,13 @@ def send_support_email(issue_title, username, description):
 
 @views.route('/Flashcards')
 @login_required
-def flashcards():
+def show_flashcards():
+   
+    ##cards = sorted(u.posts.all(), key=lambda card:card.lesson)
     return render_template("createFlashcards.html", user=current_user)
 
-def addflashcard():
-    
-    return 
 
+##@views.route('/Flashcards', methods=["GET", "POST"])
+##@login_required
+##def new_flashcard():
 
-def hideCreatebox():
-    return
