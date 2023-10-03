@@ -37,3 +37,11 @@ class User(db.Model, UserMixin):
     tasks = db.relationship('Task')
     finished_tasks = db.relationship('FinishedTask')
     journals = db.relationship('Journal')
+
+class Card(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    lesson = db.Column(db.String(100))
+    question = db.Column(db.String(1000))
+    answer = db.Column(db.String(100000))
+    timestamp = db.Column(db.DateTime(timezone=True), index=True, default=get_current_time_in_et)
+
