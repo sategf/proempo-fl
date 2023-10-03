@@ -38,17 +38,17 @@
               </div>
               <div>
                 <label>
-                  <input type="radio" name="dayRating" value="good"> <img src="../static/well.png" alt="" > Well
+                  <input type="radio" name="dayRating" value="well"> <img src="../static/well.png" alt="" > Well
                 </label>
               </div>
               <div>
                 <label>
-                  <input type="radio" name="dayRating" value="average"> <img src="../static/bad.png" alt=""> Bad
+                  <input type="radio" name="dayRating" value="bad"> <img src="../static/bad.png" alt=""> Bad
                 </label>
               </div>
               <div>
                 <label>
-                  <input type="radio" name="dayRating" value="poor"> <img src="../static/horrible.png" alt=""> Horrible
+                  <input type="radio" name="dayRating" value="horrible"> <img src="../static/horrible.png" alt=""> Horrible
                 </label>
               </div>
             </form>
@@ -57,6 +57,9 @@
       </div>
     </li>
   </ul>
+  <div class="save-btn">
+    <button class="save-button">Save Entry</button>
+  </div>
 </div>
 
 <style>
@@ -106,6 +109,26 @@
   img {
     width: 50px;
   }
+
+  .save-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+  
+  .save-button {
+    background-color: #8b7cb3;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 15px;
+    border: none;
+  }
+
+  .save-button:hover {
+      background-color: #ffb700ad;
+      color: black;
+    }
 </style>
 
 
@@ -115,6 +138,39 @@
     element.contentEditable = "true";
     element.focus();
   }
+
+  // Variables to store the card contents
+  let dearJournalContent = "";
+  let gratefulContent = ["", "", ""];
+  let dayRating = "";
+
+  // Event listeners to make paragraphs editable on click and capture content
+  document.querySelectorAll('.card_text p').forEach(function (paragraph, index) {
+    paragraph.addEventListener('input', function () {
+      // Update the variables based on the card being edited
+      if (index === 0) {
+        dearJournalContent = paragraph.textContent;
+      } else if (index >= 1 && index <= 3) {
+        gratefulContent[index - 1] = paragraph.textContent;
+      }
+    });
+  });
+
+  // Event listener for radio buttons to capture day rating
+  document.querySelectorAll('input[name="dayRating"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      dayRating = this.value;
+    });
+  });
+
+  // Event listener for the "Save Entry" button
+  document.querySelector('.save-button').addEventListener('click', function () {
+    // Use the captured content to output to the console
+    // TO-DO: Must change this to save to the database instead of outputting to console !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+    console.log("Dear Journal Content:", dearJournalContent);
+    console.log("Grateful Content:", gratefulContent);
+    console.log("Day Rating:", dayRating);
+  });
 </script>
 
 <script>
