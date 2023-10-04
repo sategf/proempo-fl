@@ -99,7 +99,15 @@
 
 <br />
 {% if user.finished_tasks|length > 0 %}
-<h3 align="center">Completed Tasks</h3>
+
+<h3 align="center">
+  Completed Tasks&nbsp;<button
+    class="btn btn-danger"
+    onClick="confirmClearAll()"
+  >
+    <span id="" class="">Clear All</span>
+  </button>
+</h3>
 <ul class="list-group list-group-flush" id="completed-tasks">
   {% for finishedtask in user.finished_tasks %}
   <li
@@ -149,4 +157,23 @@
     }
   });
 </script>
+<script>
+  function confirmClearAll() {
+    if (confirm("Are you sure you want to clear all completed tasks?")) {
+      // If the user confirms, perform the clear all action
+      clearAllCompletedTasks();
+    }
+  }
+
+  function clearAllCompletedTasks() {
+    // Perform the action to clear all completed tasks, e.g., via a fetch request
+    fetch("/clear-all-completed-tasks", {
+      method: "POST",
+    }).then((_res) => {
+      // Optionally, you can refresh the page or update the task list here
+      window.location.reload();
+    });
+  }
+</script>
+
 {% endblock %}
