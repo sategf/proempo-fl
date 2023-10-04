@@ -2,10 +2,13 @@
 {% block title %}Journal{% endblock %}
 {% block content %}
 
-<br />
 <h1 align="center"><u>Journal</u></h1>
-<br />
 <div class="main">
+  <div class="date-filter-top">
+    <button class="arrow-button" id="prev-date-button">&#8592;</button>
+    <span id="current-date"></span>
+    <button class="arrow-button" id="next-date-button">&#8594;</button>
+  </div>
   <ul class="section">
     <li class="item">
       <div class="card">
@@ -65,17 +68,15 @@
     <button class="save-button">Save Entry</button>
   </div>
 </div>
-<div class="date-filter">
-  <label for="journal-date">See previous entries:</label>
-  <input type="date" id="journal-date">
-  <button class="filter-button">Filter</button>
-</div>
 
 
 <style>
+  h1 {
+    margin: 30px;
+  }
   .main {
     max-width: 1400px;
-    margin: 50px auto;
+    margin: 0 auto;
   }
 
   .section {
@@ -134,6 +135,7 @@
     color: white;
     border-radius: 15px;
     border: none;
+    margin-bottom: 50px;
   }
 
   .save-button:hover {
@@ -141,22 +143,68 @@
       color: black;
     }
 
-  .date-filter {
+  .date-filter-top {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
   }
 
-  .filter-button {
-    background-color: rgb(29, 27, 27);
-    color: rgb(251, 239, 239);
-    border-radius: 5px;
+  .arrow-button {
+    background: none;
     border: none;
-    margin-left: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    outline: none;
+  }
+
+  #current-date {
+    font-size: 20px;
+    margin: 0 10px;
   }
 </style>
 
+<script>
+// Function to update the displayed date
+function updateDate(date) {
+    document.getElementById("current-date").textContent = date.toLocaleDateString();
+    updateArrowVisibility(date);
+  }
+
+  // Function to handle clicking the previous date button
+  document.getElementById("prev-date-button").addEventListener("click", function () {
+    const currentDate = new Date(document.getElementById("current-date").textContent);
+    // Go one day back in time
+    currentDate.setDate(currentDate.getDate() - 1);
+    updateDate(currentDate);
+  });
+
+  // Function to handle clicking the next date button
+  document.getElementById("next-date-button").addEventListener("click", function () {
+    const currentDate = new Date(document.getElementById("current-date").textContent);
+    // Get the current actual date
+    const today = new Date();
+    // Check if currentDate is not the same as today
+    if (currentDate.toDateString() !== today.toDateString()) {
+      // Go forward in time
+      currentDate.setDate(currentDate.getDate() + 1);
+      updateDate(currentDate);
+    }
+  });
+
+  // Function to update the visibility of the right arrow button
+  function updateArrowVisibility(date) {
+    const today = new Date();
+    const nextDateButton = document.getElementById("next-date-button");
+    if (date.toDateString() === today.toDateString()) {
+      nextDateButton.style.visibility = "hidden"; 
+    } else {
+      nextDateButton.style.visibility = "visible"; 
+    }
+  }
+
+  updateDate(new Date());
+</script>
 
 <script>
   // Function to handle user input and update the content
@@ -200,9 +248,7 @@
     // Show a popup message to indicate that the content was saved
     window.alert("Content saved successfully!");
 
-  });
-
-  
+  });  
 </script>
 
 <script>
