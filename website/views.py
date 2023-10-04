@@ -41,7 +41,7 @@ support_email = "Proempohelpdesk@gmail.com"
 
 
 
-@views.route("/")
+@views.route('/')
 @login_required
 def home():
     qod = generate_quote()
@@ -72,39 +72,14 @@ def todays_date():
     currentDay = today.strftime('%A, %B ' + day + ', %Y')
 
     return currentDay
-
-@app.route('/toggle_white_noise', methods=['POST'])
-@login_required
-def toggle_white_noise():
-    print("Form submitted")
-    # Handle the white noise play/pause action based on the form submission (your implementation)
-    return redirect(url_for('views.home'))  # Redirect back to the home page after handling the action
-
-
-
-
-
-
-@app.route('/toggle_white_noise', methods=['POST'])
-@login_required
-def toggle_white_noise():
-    print("Form submitted")
-    # Handle the white noise play/pause action based on the form submission (your implementation)
-    return redirect(url_for('views.home'))  # Redirect back to the home page after handling the action
-
-
-
-
-
-
 def generate_quote():
     csv_file_path = os.path.join(app.root_path, 'static', 'list.csv')
     with open(csv_file_path, 'r') as f:
 
         reader = csv.reader(f, delimiter=',')
         epoch = datetime(2023, 10, 1)
-        aujourdhui = datetime.now()
-        currentDay = (aujourdhui - epoch).days
+        today = datetime.now()
+        currentDay = (today - epoch).days
         num_lines = sum(1 for _ in reader)
         index = currentDay % num_lines
         f.seek(0)
@@ -118,6 +93,20 @@ def generate_quote():
             qod = "Error: Quote not found."
 
     return qod
+
+@app.route('/toggle_white_noise', methods=['POST'])
+@login_required
+def toggle_white_noise():
+    print("Form submitted")
+    # Handle the white noise play/pause action based on the form submission (your implementation)
+    return redirect(url_for('views.home'))  # Redirect back to the home page after handling the action
+
+
+
+
+
+
+
 
 
 
@@ -352,6 +341,7 @@ def show_flashcards():
 @views.route('/clear-all-completed-tasks', methods=['POST'])
 @login_required
 def clear_all_completed_tasks():
+    # Perform the action to clear all completed tasks
     completed_tasks = FinishedTask.query.filter_by(user_id=current_user.id).all()
     for task in completed_tasks:
         db.session.delete(task)
