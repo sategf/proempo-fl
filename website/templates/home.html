@@ -1,6 +1,6 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
-
-
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
 <style>
     /* Define your CSS styles here */
     body {
@@ -19,24 +19,57 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
+    /* Style the white noise player button container */
+    .white-noise-button {
+        position: absolute;
+        top: 70px; /* Adjust the top position as needed */
+        left: 10px; /* Adjust the left position as needed */
+        text-align: left;
+    }
+
+    /* Add any additional styles you need */
 </style>
 </head>
 <body>
-    <br>
+<br>
 <div class="quote-container">
     <br>
-    <h1 align = "center"><u>Welcome!</u></h1>
+    <h1 align="center"><u>Welcome!</u></h1>
     <br>
-    <h2 align = "center"><u>Quote of the Day</u></h2>
+    <h2 align="center"><u>Quote of the Day</u></h2>
     <br>
     {% if qod %}
-    <p>"{{ qod[0] }}" - {{ qod[1] }}</p>
+        <p>"{{ qod[0] }}" - {{ qod[1] }}</p>
     {% else %}
-    <p>No quote today.</p>
+        <p>No quote today.</p>
     {% endif %}
-
-
-    
 </div>
+
+<!-- White Noise Player Toggle Buttons -->
+<div class="white-noise-button">
+    <form method="post" onsubmit="handleAudioAction('play'); return false;">
+        <button type="submit" name="white_noise_action" value="play">Play White Noise</button>
+    </form>
+    <form method="post" onsubmit="handleAudioAction('pause'); return false;">
+        <button type="submit" name="white_noise_action" value="pause">Pause White Noise</button>
+    </form>
+</div>
+
+<!-- White Noise Player -->
+<audio controls id="white-noise" style="display: none;">
+    <source src="{{ url_for('static', filename='White_noise_player.mp3') }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<script>
+    function handleAudioAction(action) {
+        var audio = document.getElementById('white-noise');
+        if (action === 'play') {
+            audio.play();
+        } else if (action === 'pause') {
+            audio.pause();
+        }
+    }
+</script>
 </body>
 {% endblock %}
