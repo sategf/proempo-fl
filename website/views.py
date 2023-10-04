@@ -85,6 +85,18 @@ def toggle_white_noise():
 
 
 
+@app.route('/toggle_white_noise', methods=['POST'])
+@login_required
+def toggle_white_noise():
+    print("Form submitted")
+    # Handle the white noise play/pause action based on the form submission (your implementation)
+    return redirect(url_for('views.home'))  # Redirect back to the home page after handling the action
+
+
+
+
+
+
 def generate_quote():
     csv_file_path = os.path.join(app.root_path, 'static', 'list.csv')
     with open(csv_file_path, 'r') as f:
