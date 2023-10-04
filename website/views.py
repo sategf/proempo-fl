@@ -6,7 +6,7 @@ from flask_login import login_required, current_user
 from .models import Task, FinishedTask, Card
 from . import db
 import json, os
-from datetime import datetime
+from datetime import date, datetime
 import csv
 
 views = Blueprint('views', __name__)
@@ -41,11 +41,37 @@ support_email = "Proempohelpdesk@gmail.com"
 
 
 
-@views.route('/')
+@views.route("/")
 @login_required
 def home():
     qod = generate_quote()
-    return render_template("home.html", user=current_user, qod=qod)
+    currentDay = todays_date()
+    return render_template("home.html", user=current_user, qod=qod, currentDay=currentDay)
+
+today = date.today()
+
+def todays_date():
+    day_str = today.strftime('%d')
+    day_int = int(day_str)
+    
+    
+    if day_int < 10:
+        day = (today.strftime('%d')).lstrip('0')
+    else:
+        day = (today.strftime('%d'))
+    
+    if (day_int % 10 == 1):
+        day = day + 'st'
+    elif (day_int % 10 == 2):
+        day = day + 'nd'
+    elif (day_int % 10 == 3):
+        day = day + 'rd'
+    else:
+        day = day + 'th'
+
+    currentDay = today.strftime('%A, %B ' + day + ', %Y')
+
+    return currentDay
 
 def generate_quote():
     csv_file_path = os.path.join(app.root_path, 'static', 'list.csv')
@@ -53,8 +79,8 @@ def generate_quote():
 
         reader = csv.reader(f, delimiter=',')
         epoch = datetime(2023, 10, 1)
-        today = datetime.now()
-        currentDay = (today - epoch).days
+        aujourdhui = datetime.now()
+        currentDay = (aujourdhui - epoch).days
         num_lines = sum(1 for _ in reader)
         index = currentDay % num_lines
         f.seek(0)
@@ -300,7 +326,6 @@ def show_flashcards():
 @views.route('/clear-all-completed-tasks', methods=['POST'])
 @login_required
 def clear_all_completed_tasks():
-    # Perform the action to clear all completed tasks
     completed_tasks = FinishedTask.query.filter_by(user_id=current_user.id).all()
     for task in completed_tasks:
         db.session.delete(task)
