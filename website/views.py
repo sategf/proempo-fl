@@ -313,3 +313,12 @@ def show_flashcards():
 ##@login_required
 ##def new_flashcard():
 
+@views.route('/clear-all-completed-tasks', methods=['POST'])
+@login_required
+def clear_all_completed_tasks():
+    # Perform the action to clear all completed tasks
+    completed_tasks = FinishedTask.query.filter_by(user_id=current_user.id).all()
+    for task in completed_tasks:
+        db.session.delete(task)
+    db.session.commit()
+    return jsonify({})
