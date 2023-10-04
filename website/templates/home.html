@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 {% extends "base.html" %} 
 {% block title %}Home{% endblock %} 
 {% block content %}
 
+=======
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+>>>>>>> de901086246913543e7c96f9b31b913ef67a7eaa
 <style>
     /* Define your CSS styles here */
     body {
@@ -15,6 +21,7 @@
         display: flex;
     }
 
+<<<<<<< HEAD
     #clock-box {
         flex: 1; 
         background-color: #fcfcfc;
@@ -100,6 +107,60 @@
             {% endif %}
         </div>
     </div>
+=======
+    /* Style the white noise player button container */
+    .white-noise-button {
+        position: absolute;
+        top: 70px; /* Adjust the top position as needed */
+        left: 10px; /* Adjust the left position as needed */
+        text-align: left;
+    }
+
+    /* Add any additional styles you need */
+</style>
+</head>
+<body>
+<br>
+<div class="quote-container">
+    <br>
+    <h1 align="center"><u>Welcome!</u></h1>
+    <br>
+    <h2 align="center"><u>Quote of the Day</u></h2>
+    <br>
+    {% if qod %}
+        <p>"{{ qod[0] }}" - {{ qod[1] }}</p>
+    {% else %}
+        <p>No quote today.</p>
+    {% endif %}
+</div>
+
+<!-- White Noise Player Toggle Buttons -->
+<div class="white-noise-button">
+    <form method="post" onsubmit="handleAudioAction('play'); return false;">
+        <button type="submit" name="white_noise_action" value="play">Play White Noise</button>
+    </form>
+    <form method="post" onsubmit="handleAudioAction('pause'); return false;">
+        <button type="submit" name="white_noise_action" value="pause">Pause White Noise</button>
+    </form>
+</div>
+
+<!-- White Noise Player -->
+<audio controls id="white-noise" style="display: none;">
+    <source src="{{ url_for('static', filename='White_noise_player.mp3') }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<script>
+    function handleAudioAction(action) {
+        var audio = document.getElementById('white-noise');
+        if (action === 'play') {
+            audio.play();
+        } else if (action === 'pause') {
+            audio.pause();
+        }
+    }
+</script>
+>>>>>>> de901086246913543e7c96f9b31b913ef67a7eaa
 </body>
 <script>
     function updateClock() {
