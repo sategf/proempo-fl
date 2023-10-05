@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% block title %}Help{% endblock %} {% block content
-%}
+{% extends "base.html" %} 
+{% block title %}Help{% endblock %} 
+{% block content %}
 <br>
 <h1 align="center"><u>Getting Started</u></h1>
 <br>
@@ -7,19 +8,11 @@
 <br>
 <h5 align="center">If you have other questions, please check out the other sections below.</h5>
 
-
-
-
-
 <!-- Links to sub-pages -->
-
 <div align="center">
     <a href="/MentalHealth">Mental Health</a> | <a href="/Productivity">Productivity</a>
 </div>
 <br>
-
-
-
 
 <style>
     /* Style for the accordion headers */
@@ -72,12 +65,44 @@
     .accordion-input:checked + .accordion-label .accordion-button {
         transform: translateY(-50%) rotate(180deg);
     }
+
+    /* Style for the nested accordion headers */
+    .nested-accordion-label {
+        background-color: #63a69f;
+        color: white;
+        cursor: pointer;
+        padding: 20px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        margin-top: 10px; /* Add margin to separate nested accordions */
+    }
+
+    /* Style for the active nested accordion header */
+    .nested-accordion-label.active {
+        background-color: #3c7a73;
+    }
+
+    /* Style for the hidden nested checkbox input */
+    .nested-accordion-input {
+        display: none;
+    }
+
+    /* Style for the nested accordion content (initially hidden) */
+    .nested-accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        background-color: #86c3bc;
+        padding: 0 20px; /* Adjust padding to control gap */
+        transition: max-height 0.5s ease-out;
+    }
+
+    /* Style for the expanded nested accordion content */
+    .nested-accordion-input:checked + .nested-accordion-label + .nested-accordion-content {
+        max-height: 300px; /* Adjust this value to fit your content */
+    }
 </style>
-
-
-
-
-
 
 {% for item in accordion_items %}
 <input type="checkbox" class="accordion-input" id="{{ item.id }}">
@@ -87,13 +112,23 @@
 </label>
 <div class="accordion-content">
     <p>{{ item.content }}</p>
+    {% if item.nested_items %}
+        <!-- Nested Accordions -->
+        {% for nested_item in item.nested_items %}
+            <input type="checkbox" class="nested-accordion-input" id="{{ nested_item.id }}">
+            <label class="nested-accordion-label" for="{{ nested_item.id }}">
+                {{ nested_item.title }}
+                <span class="accordion-button">▼</span> <!-- Button icon for nested accordion -->
+            </label>
+            <div class="nested-accordion-content">
+                <p>{{ nested_item.content }}</p>
+            </div>
+        {% endfor %}
+        <!-- End of Nested Accordions -->
+    {% endif %}
 </div>
 {% endfor %}
 </html>
 
-
-
-
-
-
 {% endblock %}
+
