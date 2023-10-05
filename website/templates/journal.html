@@ -26,6 +26,7 @@
         <div class="card_content">
           <h2 class="card_title">3 things I am grateful for today are:</h2>
           <div class="card_text">
+            <p></p>
             <p contenteditable="true">1. </p><br>
             <p contenteditable="true">2. </p><br>
             <p contenteditable="true">3. </p><br>
@@ -65,8 +66,8 @@
       </div>
     </li>
   </ul>
-  <div class="save-btn">
-    <button class="save-button">Save Entry</button>
+  <div class="save-btn" id="save-button-container">
+    <button class="save-button" onclick="saveJournalEntry()">Save Entry</button>
   </div>
 </div>
 
@@ -74,7 +75,6 @@
 <style>
   h1 {
     margin: 30px;
-    font-family: cursive;
   }
   .main {
     max-width: 1400px;
@@ -167,11 +167,25 @@
 </style>
 
 <script>
+// Function to update the visibility of the "Save" button based on the date
+function updateSaveButtonVisibility() {
+    const currentDate = new Date(document.getElementById("current-date").textContent);
+    const today = new Date();
+    const saveButton = document.getElementById("save-button-container");
+    
+    if (currentDate.toDateString() === today.toDateString()) {
+      saveButton.style.display = "flex";
+    } else {
+      saveButton.style.display = "none";
+    }
+}
+
 // Function to update the displayed date
 function updateDate(date) {
     document.getElementById("current-date").textContent = date.toLocaleDateString();
     updateArrowVisibility(date);
-  }
+    updateSaveButtonVisibility();
+}
 
   // Function to handle clicking the previous date button
   document.getElementById("prev-date-button").addEventListener("click", function () {
@@ -209,7 +223,51 @@ function updateDate(date) {
 </script>
 
 <script>
-  // Function to handle user input and update the content
+  var user_id = { user_id };
+  // Function to handle the "Save Entry" button click event
+  function saveJournalEntry() {
+    const dearJournalContent = document.querySelector('.card_text p:nth-child(1)').textContent;
+    const gratitudeContentNodes = document.querySelectorAll('.card_text p:nth-child(n+2)');
+    const gratitudeContentArray = Array.from(gratitudeContentNodes); 
+    const gratitudeContent = gratitudeContentArray.map(p => p.textContent);
+    const dayRating = document.querySelector('input[name="dayRating"]:checked').value;
+
+    const data = {
+        dearJournalContent: dearJournalContent,
+        gratitudeContent: gratitudeContent,
+        dayRating: dayRating
+    };
+
+    fetch('/save-journal-entry', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(result => {
+      if (result.message === "Journal entry saved successfully") {
+        alert("Journal entry saved successfully!");
+      } else {
+        alert("Failed to save journal entry.");
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert("An error occurred while saving the journal entry.");
+    });
+}
+</script>
+
+
+<script>
+  // Function to edit user input and update
   function updateContent(element) {
     element.contentEditable = "true";
     element.focus();

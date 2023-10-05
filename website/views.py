@@ -3,7 +3,7 @@ from flask import Flask
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_mail import Mail, Message
 from flask_login import login_required, current_user
-from .models import Task, FinishedTask, Card
+from .models import Journal, Task, FinishedTask, Card
 from . import db
 import json, os
 from datetime import date, datetime
@@ -372,3 +372,29 @@ def clear_all_completed_tasks():
         db.session.delete(task)
     db.session.commit()
     return jsonify({})
+
+
+
+@views.route('/save-journal-entry', methods=['POST'])
+def save_journal_entry():
+    try:
+        data = request.json
+        user_id = current_user.id
+        dear_journal_content = data['dearJournalContent']
+        grateful_content = ', '.join(data['gratitudeContent'])
+        day_rating = data['dayRating']
+
+        journal_entry = Journal(
+            user_id= user_id,
+            dear_journal_content=dear_journal_content,
+            grateful_content=grateful_content,
+            day_rating=day_rating
+        )
+
+        db.session.add(journal_entry)
+        db.session.commit()
+
+        return jsonify({'message': 'Journal entry saved successfully'})
+    except Exception as e:
+        print(str(e))
+        return jsonify({'message': 'Failed to save journal entry'}), 500

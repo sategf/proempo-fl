@@ -26,9 +26,11 @@ class FinishedTask(db.Model):
 
 class Journal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    data = db.Column(db.String(10000))
     date = db.Column(db.DateTime(timezone=True), default=get_current_time_in_et)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    dear_journal_content = db.Column(db.String(1000)) 
+    grateful_content = db.Column(db.String(500))  
+    day_rating = db.Column(db.String(20))
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
