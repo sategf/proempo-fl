@@ -2,16 +2,11 @@
 {% block title %}Help{% endblock %} 
 {% block content %}
 <br>
-<h1 align="center"><u>Getting Started</u></h1>
+<h1 align="center"><u>Frequently Ask Questions</u></h1>
 <br>
-
 <br>
 <h5 align="center">If you have other questions, please check out the other sections below.</h5>
 
-<!-- Links to sub-pages -->
-<div align="center">
-    <a href="/MentalHealth">Mental Health</a> | <a href="/Productivity">Productivity</a>
-</div>
 <br>
 
 <style>
@@ -42,9 +37,10 @@
     .accordion-content {
         max-height: 0;
         overflow: hidden;
-        background-color: #a5a1a1;
+        background-color: #e8d6f4d3;
         padding: 0 20px; /* Adjust padding to control gap */
         transition: max-height 0.5s ease-out;
+        
     }
 
     /* Style for the expanded accordion content */
@@ -60,6 +56,13 @@
         transform: translateY(-50%);
         transition: transform 0.6s ease;
     }
+    .nested-accordion-button {
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        transition: transform 0.6s ease;
+    }
 
     /* Rotate the button icon when content is expanded */
     .accordion-input:checked + .accordion-label .accordion-button {
@@ -68,7 +71,7 @@
 
     /* Style for the nested accordion headers */
     .nested-accordion-label {
-        background-color: #63a69f;
+        background-color: #400765d3;
         color: white;
         cursor: pointer;
         padding: 20px;
@@ -76,12 +79,13 @@
         border: none;
         text-align: left;
         outline: none;
-        margin-top: 10px; /* Add margin to separate nested accordions */
+        margin-top: 0px; /* Add margin to separate nested accordions */
+        
     }
 
     /* Style for the active nested accordion header */
     .nested-accordion-label.active {
-        background-color: #3c7a73;
+        background-color: #fcf882;
     }
 
     /* Style for the hidden nested checkbox input */
@@ -118,7 +122,7 @@
             <input type="checkbox" class="nested-accordion-input" id="{{ nested_item.id }}">
             <label class="nested-accordion-label" for="{{ nested_item.id }}">
                 {{ nested_item.title }}
-                <span class="accordion-button">▼</span> <!-- Button icon for nested accordion -->
+                <span class="nested-accordion-button">▼</span> <!-- Button icon for nested accordion -->
             </label>
             <div class="nested-accordion-content">
                 <p>{{ nested_item.content }}</p>

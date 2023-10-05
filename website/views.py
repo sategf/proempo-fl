@@ -131,38 +131,42 @@ def faq():
     accordion_items = [
         {
             "id": "section1",
-            "title": "Is there a tutorial or onboarding process to help me navigate the application for the first time?",
-            "content": "Sorry, the website doesn't offer any process at the moment, come back for future updates.",
+            "title": "Getting Started",
+            "content": "",
             "nested_items": [
-                {"id": "nested1", "title": "Nested Question 1", "content": "Answer to Nested Question 1"},
-                {"id": "nested2", "title": "Nested Question 2", "content": "Answer to Nested Question 2"},
+                {"id": "nested1", "title": "Is there a tutorial or onboarding process to help me navigate the application for the first time?", "content": "Sorry, the website doesn't offer any process at the moment, come back for future updates."},
+                {"id": "nested2", "title": "", "content": ""},
+                {"id": "nested3", "title": "", "content": ""},
+                {"id": "nested4", "title": "", "content": ""},
+                {"id": "nested5", "title": ""}
+                
             ],
         },
         {
             "id": "section2",
-            "title": "Can I use the website without creating an account or logging in?",
-            "content": "No, you need to create an account or log in in order to access the website.",
+            "title": "Mental Health",
+            "content": "",
+            "nested_items": [
+                {"id": "nested1", "title": "asdas", "content": "hello"},
+                {"id": "nested2", "title": "", "content": ""},
+                {"id": "nested3", "title": "", "content": ""},
+                {"id": "nested4", "title": "", "content": ""},
+                {"id": "nested5", "title": ""}
+            ],
         },
         {
             "id": "section3",
-            "title": "What is the pricing model for your website? Are there any free or trial versions available?",
-            "content": "This website is free, there is no pricing model nor any trial versions.",
+            "title": "Productivity",
+            "content": "",
+            "nested_items": [
+                {"id": "nested1", "title": "asdaas", "content": "hello"},
+                {"id": "nested2", "title": "", "content": ""},
+                {"id": "nested3", "title": "", "content": ""},
+                {"id": "nested4", "title": "", "content": ""},
+                {"id": "nested5", "title": ""}
+            ],
         },
-        {
-            "id": "section4",
-            "title": "What is the pomodoro technique? How can I use it on the website?",
-            "content": "The pomodoro technique is a time management method based on 25-minute stretches of focused work broken by five-minute breaks. You can use the technique located in the Self-Help page.",
-        },
-        {
-            "id": "section5",
-            "title": "What is the feynman technique? How can I use it on the website?",
-            "content": "The feynman technique is a four-step process for understanding any topic. It rejects automated recall in favor of true comprehension gained through selection, research, writing, explaining, and refining. You can find it located in the self-help page.",
-        },
-        {
-            "id": "section6",
-            "title": "Where can I go to contact support if any of the issues listed above aren't available?",
-            "content": "You can visit the Support page in the navigation bar and list your issues there.",
-        },
+       
     ]
     return render_template("FAQ.html", user=current_user, accordion_items=accordion_items)
 
