@@ -3,18 +3,33 @@
 <body> 
     <div class="ui container">
         <form action="/CreateFlashcards" method="POST" class="ui form">
-            <div class="field1">
-                <label for="lesson">Lesson</label>
-                <input type="text" name="lesson">
-            </div>
+
             <div class="field">
-                <label for="question">Question</label>
+                <label for="lesson">Select an existing lesson:</label>
+                <select id="lesson" name="lesson">
+                    <option value=""> -Select-</option>
+                    {% for lesson in all_lessons %}
+                    <option value="{{ lesson.id }}">{{ lesson.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+            <div class="field1">
+                <label for="new_lesson_name">Or Create a new Lesson</label>
+                <input type="text" id="new_lesson_name" name="new_lesson_name">
+            </div>
+
+            <div class="field">
+                <label for="question">Question:</label>
                 <input type="text" name="question">
             </div>
+
             <div class="field"> 
-                <label for="answer">Answer</label>
+                <label for="answer">Answer:</label>
                 <textarea name="answer" id="" cols="50" rows="10"></textarea>
             </div>
+
             <button type="submit" class="ui button">Submit</button>
         </form>
     </div>

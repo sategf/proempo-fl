@@ -40,10 +40,26 @@ class User(db.Model, UserMixin):
     finished_tasks = db.relationship('FinishedTask')
     journals = db.relationship('Journal')
 
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(150), unique=True)
+    password = db.Column(db.String(150))
+    tasks = db.relationship('Task')
+    finished_tasks = db.relationship('FinishedTask')
+    journals = db.relationship('Journal')
+    lessons = db.relationship('Lesson')
+
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    lesson = db.Column(db.String(100))
     question = db.Column(db.String(1000))
     answer = db.Column(db.String(100000))
     timestamp = db.Column(db.DateTime(timezone=True), index=True, default=get_current_time_in_et)
+    lesson_id = db.Column(db.Integer, db.ForeignKey('lesson.id'))
+    lessons = db.relationship('Lesson', back_populates='cards')
 
+class Lesson(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    cards = db.relationship('Card')
+    

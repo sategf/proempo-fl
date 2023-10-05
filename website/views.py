@@ -351,17 +351,50 @@ def send_support_email(issue_title, username, description):
         print(f"Error sending support email: {str(e)}")
 
 
-@views.route('/Flashcards')
+@views.route('/ViewFlashcards')
 @login_required
-def show_flashcards():
-   
-    ##cards = sorted(u.posts.all(), key=lambda card:card.lesson)
-    return render_template("createFlashcards.html", user=current_user)
+def show_flashcard():
+    lesson_alias = aliased(Lesson)
+    user_flashcards = (Card.query.join(lesson_alias).filter(lesson_alias.user_id == current_user.id).all())
+    return render_template("viewFlashcards.html", user=current_user, cards=user_flashcards, select_lesson=None)
 
 
-##@views.route('/Flashcards', methods=["GET", "POST"])
-##@login_required
-##def new_flashcard():
+@views.route('/CreateFlashcards', methods=["GET", "POST"])
+@login_required
+def new_flashcard():
+     # gets all the lessons from the user
+    if request.method == "GET":
+        all_lessons=current_user.lessons
+        return render_template("createFlashcards.html", all_lessons=all_lessons, user=current_user)
+    else:
+        #Get the data from the form
+        lesson_id=request.form["lesson"]
+        question=request.form["question"]
+        answer=request.form["answer"]
+        new_lesson_name=request.form["new_lesson_name"]
+
+        if lesson_id:
+            # Gets the selected lesson from the user
+            selected_lesson=Lesson.query.get(lesson_id)
+            if not selected_lesson or selected_lesson.user_id != current_user.id:
+                print("The selected lesson doesnt exist.")
+                return redirect("/CreateFlashcards")
+        elif new_lesson_name:
+            #Create a new lesson if needed
+            new_lesson=Lesson(name=new_lesson_name, user_id=current_user.id)
+            db.session.add(new_lesson)
+            db.session.commit()
+            selected_lesson=new_lesson
+        else:
+            print("no lesson provided")
+            return redirect("/CreateFlashcards")
+    
+        card=Card(question=question, lesson_id=selected_lesson.id,  answer=answer)
+        db.session.add(card)
+        db.session.commit()
+
+        return redirect("/help")
+
 
 @views.route('/clear-all-completed-tasks', methods=['POST'])
 @login_required
