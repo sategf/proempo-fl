@@ -106,12 +106,6 @@ def toggle_white_noise():
 
 
 
-
-
-
-
-
-
 @views.route('/help')
 @login_required
 def help():
@@ -164,11 +158,11 @@ def mentalhealth():
 def productivity():
     accordion_items = [
         {"id": "section1", "title": "What features does the website offer to enhance productivity?", "content": "The features offered in the website are the pomodoro method, feynman technique, which are both located in the self-help page."},  #title = header title or question, content = the description of the question or answer
-        {"id": "section2", "title": "Can you provide tips for settings and achieving productivity goals?", "content": ""},
-        {"id": "section3", "title": "How does time management play a role in productivity? Can your website assist with this?", "content": ""},
-        {"id": "section4", "title": "What are some strategies for overcoming procrastination and maintaining focus?", "content": ""},
-        {"id": "section5", "title": "how can I effectively priortize tasks and projects to optimize my productivity?", "content": ""},
-        {"id": "section6", "title": "How can I track my progress and measure my productivity gains using the website?", "content": ""},
+        {"id": "section2", "title": "Can you provide tips for settings and achieving productivity goals?", "content": "Our tips to utilizing this website for setting and achieving goals are creating tasks, using the pomodoro method, creating flashcards, and taking a break to prevent burnout."},
+        {"id": "section3", "title": "How does time management play a role in productivity? Can your website assist with this?", "content": "Time management plays a crucial role in productivity by helping individuals prioritize tasks, allocate time efficiently, and minimize distractions. Effective time management enables better organization and allows individuals to accomplish more in less time, leading to increased productivity. Our website can offer users with creating a task withing the tasks page, using the pomodoro method to set a timer along with completing the tasks created from the task page, creating flashcards in the self-help page, etc. Please check the self-help page if you want to enhance your productivity."},
+        {"id": "section4", "title": "What are some strategies for overcoming procrastination and maintaining focus?", "content": "Our website can list some strategies. Break tasks into smaller steps. Set specific, achievable goals. Use a timer for focused work like the pomodoro method. Minimize distractions with our built-in white noise player. Reward yourself for completing tasks. Create a dedicated workspace. Prioritize tasks based on importance and urgency."},
+        {"id": "section5", "title": "how can I effectively priortize tasks and projects to optimize my productivity?", "content": "This question is in progress. Come back for future updates."},
+        {"id": "section6", "title": "How can I track my progress and measure my productivity gains using the website?", "content": "You can track progress in the website with the provided graphs and charts to measure your current productivity progress."},
         {"id": "section7", "title": "Where can I go to contact support if any of the issues listed above aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."},
        
     ]
