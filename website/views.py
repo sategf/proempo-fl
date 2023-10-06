@@ -148,11 +148,11 @@ def faq():
             "title": "Mental Health",
             "content": "",
             "nested_items": [
-                {"id": "nested1", "title": "asdas", "content": "hello"},
-                {"id": "nested2", "title": "", "content": ""},
-                {"id": "nested3", "title": "", "content": ""},
-                {"id": "nested4", "title": "", "content": ""},
-                {"id": "nested5", "title": ""}
+                {"id": "nested6", "title": "asdas", "content": "hello"},
+                {"id": "nested7", "title": "", "content": ""},
+                {"id": "nested8", "title": "", "content": ""},
+                {"id": "nested9", "title": "", "content": ""},
+                {"id": "nested10", "title": ""}
             ],
         },
         {
@@ -160,11 +160,11 @@ def faq():
             "title": "Productivity",
             "content": "",
             "nested_items": [
-                {"id": "nested1", "title": "asdaas", "content": "hello"},
-                {"id": "nested2", "title": "", "content": ""},
-                {"id": "nested3", "title": "", "content": ""},
-                {"id": "nested4", "title": "", "content": ""},
-                {"id": "nested5", "title": ""}
+                {"id": "nested11", "title": "asdaas", "content": "hello"},
+                {"id": "nested12", "title": "", "content": ""},
+                {"id": "nested13", "title": "", "content": ""},
+                {"id": "nested14", "title": "", "content": ""},
+                {"id": "nested15", "title": ""}
             ],
         },
        
