@@ -3,7 +3,8 @@ from flask import Flask
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_mail import Mail, Message
 from flask_login import login_required, current_user
-from .models import Journal, Task, FinishedTask, Card
+from .models import Journal, Task, FinishedTask, Card, Lesson
+from sqlalchemy.orm import aliased
 from . import db
 import json, os
 from datetime import date, datetime
@@ -393,7 +394,7 @@ def new_flashcard():
         db.session.add(card)
         db.session.commit()
 
-        return redirect("/help")
+        return redirect("/CreateFlashcards")
 
 
 @views.route('/clear-all-completed-tasks', methods=['POST'])

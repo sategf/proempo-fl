@@ -32,13 +32,6 @@ class Journal(db.Model):
     grateful_content = db.Column(db.String(500))  
     day_rating = db.Column(db.String(20))
 
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(150), unique=True)
-    password = db.Column(db.String(150))
-    tasks = db.relationship('Task')
-    finished_tasks = db.relationship('FinishedTask')
-    journals = db.relationship('Journal')
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
