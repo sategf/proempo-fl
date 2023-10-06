@@ -82,15 +82,14 @@
         opacity: 0.8;
     }
 
-    /* Style the white noise player button container */
+    /* 
     .white-noise-button {
         position: absolute;
-        top: 70px; /* Adjust the top position as needed */
-        left: 10px; /* Adjust the left position as needed */
+        top: 70px;  Adjust the top position as needed 
+        left: 10px;  Adjust the left position as needed 
         text-align: left;
-    }
-
-    /* Add any additional styles you need */
+    } 
+    Add any additional styles you need */
 </style>
 </head>
 <body>
@@ -116,35 +115,35 @@
             {% else %}
                 <p>No quote today.</p>
             {% endif %}
+                        <!-- Single Play/Pause Button for White Noise -->
+            <div class="white-noise-button">
+                <button class="btn btn-outline-info" id="white-noise-toggle">Play White Noise</button>
+            </div>
+
+            <!-- White Noise Player -->
+            <audio loop id="white-noise" data-state="paused">
+                <source src="{{ url_for('static', filename='White_noise_player.mp3') }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
         </div>
     </div>
 
-<!-- White Noise Player Toggle Buttons -->
-<div class="white-noise-button">
-    <form method="post" onsubmit="handleAudioAction('play'); return false;">
-        <button type="submit" name="white_noise_action" value="play">Play White Noise</button>
-    </form>
-    <form method="post" onsubmit="handleAudioAction('pause'); return false;">
-        <button type="submit" name="white_noise_action" value="pause">Pause White Noise</button>
-    </form>
-</div>
 
-<!-- White Noise Player -->
-<audio controls id="white-noise" style="display: none;">
-    <source src="{{ url_for('static', filename='White_noise_player.mp3') }}" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio>
 
-<script>
-    function handleAudioAction(action) {
-        var audio = document.getElementById('white-noise');
-        if (action === 'play') {
-            audio.play();
-        } else if (action === 'pause') {
-            audio.pause();
-        }
-    }
-</script>
+    <script>
+        const whiteNoiseAudio = document.getElementById('white-noise');
+        const whiteNoiseToggleButton = document.getElementById('white-noise-toggle');
+    
+        whiteNoiseToggleButton.addEventListener('click', function () {
+            if (whiteNoiseAudio.paused) {
+                whiteNoiseAudio.play();
+                whiteNoiseToggleButton.textContent = 'Pause White Noise';
+            } else {
+                whiteNoiseAudio.pause();
+                whiteNoiseToggleButton.textContent = 'Play White Noise';
+            }
+        });
+    </script>
 </body>
 <script>
     function updateClock() {
