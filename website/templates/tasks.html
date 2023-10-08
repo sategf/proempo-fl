@@ -48,6 +48,12 @@
       color: black;
     }
 
+  .no-tasks {
+    background-color: #fcfcfc;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+    }
   
 </style>
 
@@ -169,9 +175,9 @@
 </ul>
 {% endif %} {% else %}
 <br />
-<center>
-  <h2>Congratulations! You have no tasks!</h2>
-  <h3>Make a new task above.</h3>
+<center class="no-tasks">
+  <h3>Congratulations! You have no tasks!</h3>
+  <h4>Make a new task above.</h4>
   <img src="../static/sleeping-bear.gif" />
 </center>
 {% endif %}
