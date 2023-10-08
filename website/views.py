@@ -6,7 +6,7 @@ from flask_login import login_required, current_user
 from .models import Journal, Task, FinishedTask, Card, Lesson
 from sqlalchemy.orm import aliased
 from . import db
-import json, os
+import json, os, smtplib
 from datetime import date, datetime
 import csv
 
