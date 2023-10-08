@@ -209,9 +209,20 @@ def tasks():
 
 
 
-@views.route('/journal')
+@views.route('/journal', methods = ['GET', 'POST'])
 @login_required
 def journal():
+    if request.method == 'POST':
+        journal_content = request.form.get('dearJournalContent')  
+        journal_gratitude = request.form.get('gratitudeContent')
+        journal_rating = request.form.get('dayRating')
+        
+       
+
+        new_journal = Journal(data=journal_content, user_gratitude=journal_gratitude, user_rating=journal_rating, user_id=current_user.id)  # Provide the schema for the task
+        db.session.add(new_journal)  
+        db.session.commit()
+        flash('Journal added!', category='success')
     return render_template("journal.html", user=current_user) 
 
 @views.route('/delete-task', methods=['POST'])
