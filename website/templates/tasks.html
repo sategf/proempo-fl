@@ -20,19 +20,45 @@
   }
 
   .form-container {
-    border-radius: 10px;
     background-color: #fcfcfc;
     padding: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
   }
+
+  h1 {
+    background-color: rgba(152, 125, 209, 0.65);
+    margin-top: 40px;
+    margin-bottom: 0px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    padding: 10px;
+    color: #ffffff;
+    box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+  }
+  
+  #addTaskButton {
+    background-color: #8b7cb3;
+    border: none;
+  }
+
+  #addTaskButton:hover {
+      background-color: #ffb700ad;
+      color: black;
+    }
+
+  
 </style>
 
-<br />
-<h1 align="center"><u>Tasks</u></h1>
-<br />
-
+<div class="container">
+  <div class="box">
+    <div class="title-box">
+      <h1 id="title" align="center">Tasks</h1>
+    </div>
 <div class="form-container">
   <form method="POST" class="d-flex flex-column">
-    <div class="form-group">
+    <div class="form-group" align="center">
       <label for="dueDate">Due Date: (Optional)</label>
       <input
         type="date"
@@ -43,7 +69,7 @@
       />
     </div>
 
-    <div class="form-group">
+    <div class="form-group" align="center">
       <label for="task">Task:</label>
       <textarea
         name="task"
@@ -52,7 +78,7 @@
         rows="1"
         style="font-size: 24px"
         autofocus
-      ></textarea>
+        ></textarea>
     </div>
 
     <button
@@ -149,6 +175,8 @@
   <img src="../static/sleeping-bear.gif" />
 </center>
 {% endif %}
+</div>
+</div>
 <script>
   document.getElementById("task").addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
