@@ -9,6 +9,9 @@ from . import db
 import json, os, smtplib
 from datetime import date, datetime
 import csv
+import plotly.graph_objs as go
+from datetime import datetime, timedelta
+from sqlalchemy import func
 
 views = Blueprint('views', __name__)
 
@@ -206,6 +209,24 @@ def tasks():
 
     return render_template("tasks.html", user=current_user)
 
+
+@views.route('/reports')
+@login_required
+def reports():
+    one_week_ago = datetime.now() - timedelta(days=7)
+    finished_tasks_data = (
+        db.session.query(
+            func.strftime('%Y-%m-%d', FinishedTask.date).label('date'),
+            func.count(FinishedTask.id).label('finished_count')
+        )
+        .filter(FinishedTask.user_id == current_user.id)
+        .filter(FinishedTask.date >= one_week_ago)
+        .group_by(func.strftime('%Y-%m-%d', FinishedTask.date))
+        .all()
+    )
+    finished_tasks_list = [row._asdict() for row in finished_tasks_data]
+    finished_tasks_json = json.dumps(finished_tasks_list)
+    return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json)
 
 
 
