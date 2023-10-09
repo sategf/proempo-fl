@@ -4,12 +4,35 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="container">
-    <h2>Reports</h2>
-    <div>
-        <canvas id="taskChart" width="300" height="150"></canvas>
-    </div>
+    <h1 align="center">Reports</h1>
+    <div class="reports-container">
+        <div>
+            <h5 align="center">Tasks I completed</h5>
+            <canvas id="taskChart" width="300" height="150"></canvas>
+        </div>
+</div>
 </div>
 
+<style>
+    h1 {
+        background-color: rgba(152, 125, 209, 0.65);
+        margin-top: 40px;
+        margin-bottom: 0px;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        padding: 10px;
+        color: #ffffff;
+        box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+    }
+
+    .reports-container {
+        background-color: #fcfcfc;
+        padding: 50px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+    }
+</style>
 <script>
     var finishedTasks = {{ finished_tasks|safe }};
     var dates = finishedTasks.map(function(item) { return item.date; });
@@ -21,8 +44,8 @@
             datasets: [{
                 label: 'Completed Tasks',
                 data: count,
-                backgroundColor: 'rgba(90, 10, 182, 0.2)',
-                borderColor: 'rgba(90, 10, 182, 1)',
+                backgroundColor: 'rgba(144, 206, 245, 0.5)',
+                borderColor: 'rgba(144, 206, 245, 1)',
                 borderWidth: 1
             }]
         },
