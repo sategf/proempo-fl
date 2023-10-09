@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Help{% endblock %}
 {% block content %}
-<br>
-<h1 align="center"><u>Frequently Ask Questions</u></h1>
-<br>
-<br>
+<div class="container">
+    <div class="box">
+      <div class="title-box">
+        <h1 id="title" align="center">Frequently Asked Questions</h1>
+      </div>
+<section>
 <h5 align="center">If you have other questions, please check out the other sections below.</h5>
 
 <br>
@@ -104,6 +106,27 @@
     .nested-accordion-input:checked + .nested-accordion-label + .nested-accordion-content {
         max-height: 300px; /* Adjust this value to fit your content */
     }
+
+
+    h1 {
+    background-color: rgba(152, 125, 209, 0.65);
+    margin-top: 40px;
+    margin-bottom: 0px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    padding: 10px;
+    color: #ffffff;
+    box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+  }
+
+  section {
+    margin-top: 0px;
+    background-color: #fcfcfc;
+    padding: 30px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+  }
 </style>
 
 {% for item in accordion_items %}
@@ -130,6 +153,7 @@
     {% endif %}
 </div>
 {% endfor %}
+</section>
 </html>
 
 {% endblock %}
