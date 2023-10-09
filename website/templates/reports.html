@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="container">
+    <h2>Reports</h2>
+    <div>
+        <canvas id="taskChart" width="300" height="150"></canvas>
+    </div>
+</div>
+
+<script>
+    var finishedTasks = {{ finished_tasks|safe }};
+    var dates = finishedTasks.map(function(item) { return item.date; });
+    var count = finishedTasks.map(function(item) { return item.finished_count; });
+    var chart = new Chart(document.getElementById('taskChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'Completed Tasks',
+                data: count,
+                backgroundColor: 'rgba(90, 10, 182, 0.2)',
+                borderColor: 'rgba(90, 10, 182, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
