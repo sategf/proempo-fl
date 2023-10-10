@@ -370,12 +370,24 @@ def send_support_email(issue_title, username, description):
         print(f"Error sending support email: {str(e)}")
 
 
-@views.route('/ViewFlashcards')
+@views.route('/ViewFlashcards', methods=["GET", "POST"])
 @login_required
 def show_flashcard():
+    #gets all the cards from the selected user
     lesson_alias = aliased(Lesson)
-    user_flashcards = (Card.query.join(lesson_alias).filter(lesson_alias.user_id == current_user.id).all())
-    return render_template("viewFlashcards.html", user=current_user, cards=user_flashcards, select_lesson=None)
+    user_flashcards = (Card.query.join(lesson_alias).filter(lesson_alias.user_id == current_user.id))
+
+    selected_lesson_id=request.args.get("lesson")
+#gets the leasson associated with the card
+    if request.method == 'POST':
+        selected_lesson_id = request.form.get('lesson')
+        if selected_lesson_id and selected_lesson_id != "all":
+             user_flashcards=user_flashcards.filter(Card.lesson_id == selected_lesson_id)
+#lists out all the cards
+    user_flashcards=user_flashcards.all()
+#filters all the available lessons by the user
+    all_lessons=Lesson.query.filter_by(user_id=current_user.id)
+    return render_template("viewFlashcards.html", user=current_user, cards=user_flashcards, all_lessons=all_lessons, select_lesson=selected_lesson_id)
 
 
 @views.route('/CreateFlashcards', methods=["GET", "POST"])

@@ -1,31 +1,114 @@
 {% extends "base.html" %} {% block title %}View Flashcards{% endblock %} {% block content %}
 
 <div class="container">
-    <h2>Selected Lesson: {% if selected_lesson %}{{ selected_lesson.name }}{% else %}All Lessons{% endif %}</h2>
-    <!-- Rest of your template content -->
+    <h2 id="title" align="center">Study Your Flashcards</h2>
 </div>
 
-    <div class="container">
-        {% for card in cards %}
-        <div class="ui card">
-            <div class="content">
-                <div class="lesson">
-                    {% if selected_lesson%}
-                    Lesson: {{ selected_lesson.name }}
-                    {% else %}
-                    Lesson: {{ card.lessons.id }}
-                    {% endif %}
-                </div>
-                <div class="question">
-                    Question: {{ card.question }}
-                </div>
-                <div class="answer">
-                    Answer: {{ card.answer }}
-                </div>
-            </div>
+<form action="/ViewFlashcards" method="POST" class="ui form">
+    <div class="ui selection dropdown">
+        <div class="field">
+            <label for="lesson">Select your Lesson:</label>
+            <select id="lesson" name="lesson">
+                <option value="all"> -All Cards-</option>
+                {% for select_lesson in all_lessons %}
+                <option value="{{ select_lesson.id }}">-{{ select_lesson.name }}-</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="ui button">Filter</button>
         </div>
-        {% endfor %}
-    </div> 
+    </div>
+</form>
 
+<div class="flashcard-container">
+    {% for card in cards %}
+    <div class="flashcard" id="flashcard-{{ card.id }}">
+        <h3>Lesson: {{ card.lessons.name }}</h3>
+        <div class="question">
+            <p>Question: {{ card.question }}</p>
+        </div>
+        <div class="answer" style="display: none;">
+            <p>Answer: {{ card.answer }}</p>
+        </div>
+        <button class="show answer" onclick="toggleAnswer('flashcard-{{ card.id }}')">Show Answer</button>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    <!-- This is a script for the answer button. It toggles the answer based on the card id -->
+    function toggleAnswer(cardId) {
+        var answer = document.querySelector('#' + cardId + ' .answer');
+        if (answer.style.display === 'none' || answer.style.display === '') {
+            answer.style.display = 'block';
+        } else {
+            answer.style.display = 'none';
+        }
+    }
+</script>
+
+<style>
+
+    h2 {
+            
+        background-color: rgba(152, 125, 209, 0.65);
+        margin-top: 40px;
+        margin-bottom: 0px;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        padding: 10px;
+        color: #ffffff;
+        box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+    }
+    
+    
+    /* Container for the flashcards */
+    .flashcard-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    /* Styles for individual flashcards */
+    .flashcard {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        border-radius: 10px;
+        width: calc(33.33% - 20px);
+    }
+
+    .flashcard h3 {
+        font-size: 18px;
+        margin: 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .flashcard p {
+        font-size: 16px;
+    }
+
+    /* Dropdown styles */
+    .ui.selection.dropdown {
+        margin-top: 20px;
+    }
+
+    .ui.button {
+    background-color: #a751bb;
+    border: none;
+  }
+
+  .ui.button:hover {
+      background-color: #ffb700ad;
+      color: black;
+    }
+
+</style>
+ 
+
+
+  
 {% endblock %}
 

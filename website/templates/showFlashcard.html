@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block title %}View Flashcard{% endblock %} {% block content %}
+
+
+
+
+<div class="ui main container">
+    <div class="row">
+        <div class="eight wide column">
+            <form action="/EditFlashcard/{{ card.id }}" method="POST" class="ui form">
+                <div class="field">
+                    <label for="lesson">Lesson</label>
+                    <input type="text" name="lesson" value="{{ card.lessons.name }}">
+                </div>
+                <div class="field">
+                    <label for="question">Question</label>
+                    <textarea name="question" id="" cols="30" rows="10">{{ card.question }}</textarea>
+                </div>
+                <button type="submit" class="ui circular teal button">Update!</button>
+            </form>
+        </div>
+        <hr>
+        <div class="eight wide column">
+            <form action="/DeleteFlashcard" method="POST">
+                <button type="submit" class="ui circular red button">Delete!</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
