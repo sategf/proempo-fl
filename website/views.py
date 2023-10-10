@@ -213,21 +213,33 @@ def tasks():
 @views.route('/reports')
 @login_required
 def reports():
-    one_week_ago = datetime.now() - timedelta(days=7)
+    end_date = datetime.now()
+    start_date = end_date - timedelta(days=6) 
     finished_tasks_data = (
         db.session.query(
             func.strftime('%Y-%m-%d', FinishedTask.date).label('date'),
             func.count(FinishedTask.id).label('finished_count')
         )
         .filter(FinishedTask.user_id == current_user.id)
-        .filter(FinishedTask.date >= one_week_ago)
+        .filter(FinishedTask.date >= start_date)
+        .filter(FinishedTask.date <= end_date)
         .group_by(func.strftime('%Y-%m-%d', FinishedTask.date))
         .all()
     )
-    finished_tasks_list = [row._asdict() for row in finished_tasks_data]
+    data_dict = {}
+    current_day = start_date
+    while current_day <= end_date:
+        formatted_date = current_day.strftime('%Y-%m-%d')
+        data_dict[formatted_date] = 0  # Initialize all days with zero completed tasks
+        current_day += timedelta(days=1)
+
+    for row in finished_tasks_data:
+        date_str = row.date
+        data_dict[date_str] = row.finished_count
+
+    finished_tasks_list = [{'date': date, 'finished_count': count} for date, count in data_dict.items()]
     finished_tasks_json = json.dumps(finished_tasks_list)
     return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json)
-
 
 
 @views.route('/journal', methods = ['GET', 'POST'])
