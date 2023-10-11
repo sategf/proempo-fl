@@ -250,7 +250,7 @@ def journal():
         journal_gratitude = request.form.get('gratitudeContent')
         journal_rating = request.form.get('dayRating')
         
-       
+        
 
         new_journal = Journal(data=journal_content, user_gratitude=journal_gratitude, user_rating=journal_rating, user_id=current_user.id)  # Provide the schema for the task
         db.session.add(new_journal)  
