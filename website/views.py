@@ -324,8 +324,8 @@ def about():
 def support():
     return render_template("Support.html", user=current_user)
 
-@app.route('/submit_support', methods=['POST']) #something about routes isn't submitting the form through here, will be fixed soon
-def submit_support():
+@views.route('/submit_support', methods=['POST']) #something about routes isn't submitting the form through here, will be fixed soon
+def submit_support_form():
     if request.method == 'POST':
         # Get form data
         issue_title = request.form['issue_title']
