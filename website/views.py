@@ -2,6 +2,7 @@
 from flask import Flask
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_mail import Mail, Message
+from email.message import EmailMessage
 from flask_login import login_required, current_user
 from .models import Journal, Task, FinishedTask, ArchivedTask, Card, Lesson
 from sqlalchemy.orm import aliased
@@ -25,14 +26,6 @@ mail_password = os.environ.get('MAIL_PASSWORD')
 
 
 
-
-# Flask-Mail configuration
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP server
-app.config['MAIL_PORT'] = 587  #the SMTP port
-app.config['MAIL_USERNAME'] = mail_username
-app.config['MAIL_PASSWORD'] = mail_password
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
 
 
 # Creating the Mail instance
@@ -258,7 +251,7 @@ def journal():
         journal_gratitude = request.form.get('gratitudeContent')
         journal_rating = request.form.get('dayRating')
         
-       
+        
 
         new_journal = Journal(data=journal_content, user_gratitude=journal_gratitude, user_rating=journal_rating, user_id=current_user.id)  # Provide the schema for the task
         db.session.add(new_journal)  
@@ -402,20 +395,33 @@ def about():
 def support():
     return render_template("Support.html", user=current_user)
 
-@app.route('/submit_support', methods=['POST']) #something about routes isn't submitting the form through here, will be fixed soon
-def submit_support():
+@views.route('/submit_support', methods=['POST']) #something about routes isn't submitting the form through here, will be fixed soon
+def submit_support_form():
     if request.method == 'POST':
         # Get form data
         issue_title = request.form['issue_title']
         username = request.form['username']
         description = request.form['description']
+
+        recipient_email = username #Assuming the user provides their email or username as the recipient
         
-        # Send an email to the support team with the form data
-        send_support_email(issue_title, username, description)
-        
-        # You can also save the form data to a database or perform other actions as needed
-        
-        # Redirect back to the support page or a thank you page
+         # Create an EmailMessage
+        message = EmailMessage()
+        message.set_content(description)
+        message['Subject'] = issue_title
+        message['From'] = 'Proempohelpdesk@gmail.com'  # Replace with your email
+        message['To'] = recipient_email   # Use the collected email or username as the recipient
+
+
+        # Set up your SMTP server and send the email
+        smtp_server = smtplib.SMTP('smtp.gmail.com', 587)  # Replace with your SMTP server and port
+        smtp_server.starttls()
+        smtp_server.login('MAIL_USERNAME', 'MAIL_PASSWORD')  # Replace with your email and password
+        smtp_server.send_message(message)
+        smtp_server.quit()
+
+
+
         return redirect(url_for('thank_you'))
 
 
@@ -424,21 +430,6 @@ def thank_you():
     return render_template('thank_you.html') # thank you message for the user after submitting form
 
 
-
-
-def send_support_email(issue_title, username, description):
-    # Create a message object for the email
-    msg = Message('Support Request: ' + issue_title, sender=support_email, recipients=[support_email])
-    
-    # Customize the email content with the form data
-    msg.body = f"Issue Title: {issue_title}\nUsername: {username}\nDescription: {description}"
-    
-    # Send the email
-    try:
-        mail.send(msg)
-        print("Support email sent successfully")
-    except Exception as e:
-        print(f"Error sending support email: {str(e)}")
 
 
 @views.route('/ViewFlashcards', methods=["GET", "POST"])
