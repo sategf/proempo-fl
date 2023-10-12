@@ -3,7 +3,7 @@ from flask import Flask
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_mail import Mail, Message
 from flask_login import login_required, current_user
-from .models import Journal, Task, FinishedTask, Card, Lesson
+from .models import Journal, Task, FinishedTask, ArchivedTask, Card, Lesson
 from sqlalchemy.orm import aliased
 from . import db
 import json, os, smtplib
@@ -210,6 +210,14 @@ def tasks():
     return render_template("tasks.html", user=current_user)
 
 
+@views.route('/archivedtasks')
+@login_required
+def archivedtasks():
+    archivedtasks = ArchivedTask.query.filter_by(user_id=current_user.id).order_by(ArchivedTask.date).all()
+    return render_template('archivedtasks.html', archivedtasks=archivedtasks, user=current_user)
+    
+
+
 @views.route('/reports')
 @login_required
 def reports():
@@ -260,24 +268,48 @@ def journal():
 
 @views.route('/delete-task', methods=['POST'])
 def delete_task():  
-    task = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
-    taskId = task['taskId']
-    task = Task.query.get(taskId)
-    if task:
-        if task.user_id == current_user.id:
-            db.session.delete(task)
-            db.session.commit()
+    task_data = json.loads(request.data)
+    task_id = task_data['taskId']
+
+    task = Task.query.get(task_id)
+
+    if task and task.user_id == current_user.id:
+        # Create a archived with the same data and due date as the original task
+        archivedtask = ArchivedTask(data=task.data, user_id=current_user.id, due_date=task.due_date, date=task.date)
+
+        # Add and commit changes to the database
+        db.session.add(archivedtask)
+        db.session.delete(task)
+        db.session.commit()
 
     return jsonify({})
 
 @views.route('/delete-finished-task', methods=['POST'])
 def delete_finished_task():  
     task_data = json.loads(request.data)
-    taskId = task_data['taskId']
-    finished_task = FinishedTask.query.get(taskId)
+    finished_task_id = task_data['finishedTaskId']
+
+    finished_task = FinishedTask.query.get(finished_task_id)
 
     if finished_task and finished_task.user_id == current_user.id:
+        # Create a Task with the same data and due date as the FinishedTask
+        archivedtask = ArchivedTask(data=finished_task.data, user_id=current_user.id, due_date=finished_task.due_date, date=finished_task.date)
+
+        # Add and commit changes to the database
+        db.session.add(archivedtask)
         db.session.delete(finished_task)
+        db.session.commit()
+
+    return jsonify({})
+
+@views.route('/delete-archived-task', methods=['POST'])
+def delete_archivedtask():  
+    archivedtask_data = json.loads(request.data)
+    archivedTaskId = archivedtask_data['archivedTaskId']
+    archivedtask = ArchivedTask.query.get(archivedTaskId)
+
+    if archivedtask and archivedtask.user_id == current_user.id:
+        db.session.delete(archivedtask)
         db.session.commit()
 
     return jsonify({})
@@ -292,8 +324,8 @@ def mark_task():
     task = Task.query.get(task_id)
 
     if task and task.user_id == current_user.id:
-        # Create a FinishedTask with the same data
-        finished_task = FinishedTask(data=task.data, user_id=current_user.id)
+        # Create a FinishedTask with the same data and due date as the original task
+        finished_task = FinishedTask(data=task.data, user_id=current_user.id, due_date=task.due_date, date=task.date)
 
         # Add and commit changes to the database
         db.session.add(finished_task)
@@ -304,19 +336,58 @@ def mark_task():
 
 @views.route('/unmark-task', methods=['POST'])
 @login_required
-def unMark_task():
+def unmark_task():
     task_data = json.loads(request.data)
     finished_task_id = task_data['finishedTaskId']
 
     finished_task = FinishedTask.query.get(finished_task_id)
 
     if finished_task and finished_task.user_id == current_user.id:
-        # Create a Task with the same data as the FinishedTask
-        task = Task(data=finished_task.data, user_id=current_user.id)
+        # Create a Task with the same data and due date as the FinishedTask
+        task = Task(data=finished_task.data, user_id=current_user.id, due_date=finished_task.due_date, date=finished_task.date)
 
         # Add and commit changes to the database
         db.session.add(task)
         db.session.delete(finished_task)
+        db.session.commit()
+
+    return jsonify({})
+
+
+@views.route('/return-task', methods=['POST'])
+@login_required
+def return_task():
+    task_data = json.loads(request.data)
+    archived_task_id = task_data['archivedTaskId']
+
+    archived_task = ArchivedTask.query.get(archived_task_id)
+
+    if archived_task and archived_task.user_id == current_user.id:
+        # Create a Task with the same data and due date as the FinishedTask
+        task = Task(data=archived_task.data, user_id=current_user.id, due_date=archived_task.due_date, date=archived_task.date)
+
+        # Add and commit changes to the database
+        db.session.add(task)
+        db.session.delete(archived_task)
+        db.session.commit()
+
+    return jsonify({})
+
+
+@views.route('/archive-task', methods=['POST'])
+@login_required
+def archive_task():
+    task_data = json.loads(request.data)
+    task_id = task_data['taskId']
+
+    task = Task.query.get(task_id)
+
+    if task and task.user_id == current_user.id:
+        # Create an ArchivedTask with the same data, date, and due date as the original task
+        archivedtask = ArchivedTask(data=task.data, user_id=current_user.id, due_date=task.due_date, date=task.date)
+
+        # Delete the original task
+        db.session.delete(task)
         db.session.commit()
 
     return jsonify({})
@@ -430,11 +501,21 @@ def new_flashcard():
 @views.route('/clear-all-completed-tasks', methods=['POST'])
 @login_required
 def clear_all_completed_tasks():
-    # Perform the action to clear all completed tasks
     completed_tasks = FinishedTask.query.filter_by(user_id=current_user.id).all()
+
     for task in completed_tasks:
+        archived_task = ArchivedTask(
+            data=task.data,
+            user_id=current_user.id,
+            due_date=task.due_date,
+            date=task.date
+        )
+
+        db.session.add(archived_task)
         db.session.delete(task)
+
     db.session.commit()
+
     return jsonify({})
 
 

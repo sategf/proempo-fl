@@ -156,14 +156,35 @@
       }
     </script>
     <script type="text/javascript">
-      function deleteFinishedTask(taskId) {
-        console.log("Task deleted: " + taskId);
+      function returnTask(archivedTaskId) {
+        fetch("/return-task", {
+          method: "POST",
+          body: JSON.stringify({ archivedTaskId: archivedTaskId }),
+        }).then((_res) => {
+          window.location.href = "/archivedtasks";
+        });
+      }
+    </script>
+    <script type="text/javascript">
+      function deleteFinishedTask(finishedTaskId) {
         fetch("/delete-finished-task", {
           method: "POST",
-          body: JSON.stringify({ taskId: taskId }),
+          body: JSON.stringify({ finishedTaskId: finishedTaskId }),
         }).then((_res) => {
           window.location.href = "/tasks";
         });
+      }
+    </script>
+    <script>
+      function deleteArchivedTask(archivedTaskId) {
+        if (confirm("Are you sure you want to permanently delete this task? Once a task is deleted it will no longer be factored into your statistics and charts. We recommend not deleting tasks unless you really want to.")) {
+          fetch("/delete-archived-task", {
+            method: "POST",
+            body: JSON.stringify({ archivedTaskId: archivedTaskId }),
+          }).then((_res) => {
+            window.location.href = "/archivedtasks";
+          });
+        }
       }
     </script>
 

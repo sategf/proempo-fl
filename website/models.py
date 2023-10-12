@@ -24,6 +24,13 @@ class FinishedTask(db.Model):
     due_date = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+class ArchivedTask(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    data = db.Column(db.String(1000))
+    date = db.Column(db.DateTime(timezone=True), default=get_current_time_in_et)
+    due_date = db.Column(db.Date)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
 class Journal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime(timezone=True), default=get_current_time_in_et)
@@ -39,6 +46,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     tasks = db.relationship('Task')
     finished_tasks = db.relationship('FinishedTask')
+    archivedtasks = db.relationship('ArchivedTask')
     journals = db.relationship('Journal')
     lessons = db.relationship('Lesson')
 

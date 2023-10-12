@@ -1,0 +1,130 @@
+{% extends "base.html" %} {% block title %}Archived Tasks{% endblock %} {% block
+content %}
+<style>
+  .container {
+    max-width: 700px;
+  }
+  .list-group-flush .list-group-item {
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: #fcfcfc;
+  }
+  #addTaskButton {
+    margin-left: 10px !important;
+  }
+  .navbar {
+    display: none;
+  }
+  .dataLine {
+    margin-left: 5px;
+  }
+  .form-container {
+    background-color: #fcfcfc;
+    padding: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+  }
+
+  h1 {
+    background-color: rgba(152, 125, 209, 0.65);
+    margin-top: 40px;
+    margin-bottom: 0px;
+    border-radius: 10px;
+    padding: 10px;
+    color: #ffffff;
+    box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+  }
+
+  .no-tasks {
+    background-color: #fcfcfc;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+  }
+</style>
+<div class="container">
+  <div class="box">
+    <div class="title-box">
+      <h1 id="title" align="center">Archived Tasks</h1>
+    </div>
+    {% if user.archivedtasks|length > 0 %}
+    <ul class="list-group list-group-flush" id="completed-tasks">
+      {% for archivedtask in user.archivedtasks %}
+      <li
+        class="list-group-item"
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div>
+          <button
+            class="btn btn-primary"
+            onClick="returnTask({{ archivedtask.id }})"
+          >
+            <span id="" class="fa fa-rotate-left"></span>
+          </button>
+          <span class="dataLine">{{ archivedtask.data }}</span>
+          {% if archivedtask.due_date %}
+          <span class="dataLine" style="margin-left: 10px; color: grey">
+            Due Date: {{ archivedtask.due_date.strftime('%m/%d/%Y') }}
+          </span>
+          {% endif %}
+        </div>
+        <div style="margin-left: auto; color: grey; padding-right: 5px">
+          {{ archivedtask.date.strftime('%H:%M %m/%d/%y') }}
+        </div>
+        <button
+          type="button"
+          class="btn btn-danger"
+          onClick="deleteArchivedTask({{ archivedtask.id }})"
+        >
+          <span aria-hidden="true" class="fa fa-trash"></span>
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <br />
+    <h2><center>Nothing Here...</center></h2>
+    {% endif %}
+  </div>
+</div>
+<script>
+  document.getElementById("task").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("addTaskButton").click();
+    }
+  });
+</script>
+<script>
+  function confirmClearAll() {
+    if (confirm("Are you sure you want to clear all completed tasks?")) {
+      clearAllCompletedTasks();
+    }
+  }
+
+  function clearAllCompletedTasks() {
+    fetch("/clear-all-completed-tasks", {
+      method: "POST",
+    }).then((_res) => {
+      window.location.reload();
+    });
+  }
+</script>
+<script>
+  function confirmTaskAction(taskId) {
+    // Display a confirmation dialog
+    if (confirm("Are you sure you want to perform this action?")) {
+      // If the user confirms, execute the task action
+      returnTask(taskId);
+    } else {
+      // If the user cancels, do nothing or perform another action
+    }
+  }
+</script>
+
+{% endblock %}
