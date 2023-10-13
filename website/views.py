@@ -534,3 +534,11 @@ def save_journal_entry():
     except Exception as e:
         print(str(e))
         return jsonify({'message': 'Failed to save journal entry'}), 500
+
+
+@views.route('/player')
+def player():
+    playIcon="▶"
+    pauseIcon="⏸"
+
+    return render_template('player.html', user=current_user, playIcon=playIcon, pauseIcon=pauseIcon)

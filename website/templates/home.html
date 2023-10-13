@@ -10,6 +10,11 @@
         padding: 0;
     }
 
+    @font-face {
+        font-family: 'MorningDew';
+        src: url("{{ url_for('static', filename='Morning Dew Alt.otf') }}") format('opentype');
+    }
+
     .quote-container {
         max-width: 800px;
         margin: auto;
@@ -104,46 +109,26 @@
         </div>
         <div id="quote-container">
             <br>
-            <h1 align="center"><u>Welcome!</u></h1>
-            <br>
             <h1 align="center"><u>Today is {{ currentDay }}</u></h1>
             <br>
-            <h2 align="center"><u>Quote of the Day</u></h2>
-            <br>
+            <h2 align="left"><u>Quote of the Day</u></h2>
             {% if qod %}
-                <p>"{{ qod[0] }}" - {{ qod[1] }}</p>
+                <p style="font-family: 'MorningDew', Arial, sans-serif; font-size:42px;">"{{ qod[0] }}" - {{ qod[1] }}</p>
             {% else %}
                 <p>No quote today.</p>
             {% endif %}
-                        <!-- Single Play/Pause Button for White Noise -->
+            <a
+                href="/archivedtasks"
+                target="popup"
+                onclick="window.open('/player','popup','width=600,height=600'); return false;"
+            >
             <div class="white-noise-button">
-                <button class="btn btn-outline-info" id="white-noise-toggle">Play White Noise</button>
-            </div>
+                <button class="btn btn-outline-info" id="white-noise-toggle">Open Noise Player</button>
+            </div></a>
 
-            <!-- White Noise Player -->
-            <audio loop id="white-noise" data-state="paused">
-                <source src="{{ url_for('static', filename='Dark_noise_player.mp3') }}" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
         </div>
     </div>
 
-
-
-    <script>
-        const whiteNoiseAudio = document.getElementById('white-noise');
-        const whiteNoiseToggleButton = document.getElementById('white-noise-toggle');
-    
-        whiteNoiseToggleButton.addEventListener('click', function () {
-            if (whiteNoiseAudio.paused) {
-                whiteNoiseAudio.play();
-                whiteNoiseToggleButton.textContent = 'Pause White Noise';
-            } else {
-                whiteNoiseAudio.pause();
-                whiteNoiseToggleButton.textContent = 'Play White Noise';
-            }
-        });
-    </script>
 </body>
 <script>
     function updateClock() {

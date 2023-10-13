@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+{% block title %}Noise Player - ProEmPo{% endblock %}
+{% block content %}
+<style>
+    .container {
+        max-width: 550px;
+    }
+    .navbar {
+        display: none;
+    }
+    .content-container {
+        display: flex;
+        justify-content: space-between;
+        background-color: #fcfcfc;
+        border-radius: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .left-container {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .right-container {
+        flex: 1;
+    }
+
+    #quote-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        height: 100%;
+    }
+
+    #timer-container {
+        text-align: right;
+    }
+
+    #timer {
+        font-size: 60px;
+    }
+
+    .noise-button {
+        margin-right: 20px;
+        padding-bottom: 10px;
+    }
+/*
+    #white-noise-toggle {
+        background-color: #8b7cb3;
+        border: none;
+    }
+
+    #white-noise-toggle:hover {
+        background-color: #ffb700ad;
+        color: black;
+    }
+
+*/
+</style>
+</head>
+<body>
+    <br>
+    <div class="content-container">
+        <div class="left-container">
+            <!-- White Noise Player -->
+            <div class="white-noise-button noise-button">
+                <button class="btn btn-outline-info" id="white-noise-toggle" data-noise-type="White">{{playIcon}}  White Noise</button>
+            </div>
+            <audio loop id="white-noise" data-state="paused">
+                <source src="{{ url_for('static', filename='Dark_noise_player.mp3') }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <!-- Balanced Noise Player -->
+            <div class="balanced-noise-button noise-button">
+                <button class="btn btn-outline-info" id="balanced-noise-toggle" data-noise-type="Balanced">{{playIcon}}  Balanced Noise</button>
+            </div>
+            <audio loop id="balanced-noise" data-state="paused">
+                <source src="{{ url_for('static', filename='Balanced_noise_player.mp3') }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <!-- Bright Noise Player -->
+            <div class="bright-noise-button noise-button">
+                <button class="btn btn-outline-info" id="bright-noise-toggle" data-noise-type="Bright">{{playIcon}}  Bright Noise</button>
+            </div>
+            <audio loop id="bright-noise" data-state="paused">
+                <source src="{{ url_for('static', filename='Bright_noise_player.mp3') }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <!-- rain Noise Player -->
+            <div class="rain-noise-button noise-button">
+                <button class="btn btn-outline-info" id="rain-noise-toggle" data-noise-type="Rain">{{playIcon}}  Rain Noise</button>
+            </div>
+            <audio loop id="rain-noise" data-state="paused">
+                <source src="{{ url_for('static', filename='Rain_noise_player.mp3') }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <!-- Ocean Noise Player -->
+            <div class="ocean-noise-button noise-button">
+                <button class="btn btn-outline-info" id="ocean-noise-toggle" data-noise-type="Ocean">{{playIcon}}  Ocean Noise</button>
+            </div>
+            <audio loop id="ocean-noise" data-state="paused">
+                <source src="{{ url_for('static', filename='Ocean_noise_player.mp3') }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <!-- Stream Noise Player -->
+            <div class="stream-noise-button noise-button">
+                <button class="btn btn-outline-info" id="stream-noise-toggle" data-noise-type="Stream">{{playIcon}}  Stream Noise</button>
+            </div>
+            <audio loop id="stream-noise" data-state="paused">
+                <source src="{{ url_for('static', filename='Stream_noise_player.mp3') }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <!-- Underwater Noise Player -->
+            <div class="underwater-noise-button noise-button">
+                <button class="btn btn-outline-info" id="underwater-noise-toggle" data-noise-type="Underwater">{{playIcon}}  Underwater Noise</button>
+            </div>
+            <audio loop id="underwater-noise" data-state="paused">
+                <source src="{{ url_for('static', filename='Underwater_noise_player.mp3') }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="right-container" id="quote-container">
+            <div id="timer-container">
+                <div>Time Playing Noises:</div>
+                <h1 id="timer"> 00:00</h1>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let startTime = 0; // Initialize with 0
+        let timerInterval;
+    
+        function updateTimer() {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+        }
+        timerInterval = setInterval(updateDisplay, 1000);
+        }
+
+        function updateDisplay() {
+            startTime += 1000;
+            const currentTime = new Date(startTime);
+            const hours = currentTime.getUTCHours().toString().padStart(2, '0');
+            const minutes = currentTime.getUTCMinutes().toString().padStart(2, '0');
+            const seconds = currentTime.getUTCSeconds().toString().padStart(2, '0');
+            const timeString = hours === '00' ? `${minutes}:${seconds}` : `${hours}:${minutes}:${seconds}`;
+            document.getElementById('timer').textContent = timeString;
+        }
+        
+        function toggleAudioAndText(audioElement, toggleButton) {
+            if (audioElement.paused) {
+                audioElement.play();
+                toggleButton.textContent = '{{pauseIcon}} ' + toggleButton.getAttribute('data-noise-type') + ' Noise';
+                updateTimer();
+                pauseOtherAudio(audioElement.id);
+            } else {
+                audioElement.pause();
+                toggleButton.textContent = '{{playIcon}} ' + toggleButton.getAttribute('data-noise-type') + ' Noise';
+                checkAllAudioPaused();
+            }
+        }
+    
+        function pauseOtherAudio(currentAudioId) {
+            const audioElements = [
+                'white-noise',
+                'balanced-noise',
+                'bright-noise',
+                'rain-noise',
+                'ocean-noise',
+                'stream-noise',
+                'underwater-noise'
+            ];
+    
+            audioElements.forEach((audioId) => {
+                if (audioId !== currentAudioId) {
+                    const audio = document.getElementById(audioId);
+                    const toggleButton = document.getElementById(audioId + '-toggle');
+                    if (!audio.paused) {
+                        audio.pause();
+                        toggleButton.textContent = '▶️ ' + toggleButton.getAttribute('data-noise-type') + ' Noise';
+                    }
+                }
+            });
+        }
+        
+        function checkAllAudioPaused() {
+            const audioIds = [
+                'white-noise',
+                'balanced-noise',
+                'bright-noise',
+                'rain-noise',
+                'ocean-noise',
+                'stream-noise',
+                'underwater-noise'
+            ];
+    
+            const allPaused = audioIds.every((audioId) => {
+                const audioElement = document.getElementById(audioId);
+                return audioElement.paused;
+            });
+    
+            if (allPaused) {
+                clearInterval(timerInterval);
+            }
+        }
+    
+        // Add event listeners for all the buttons and audio elements
+        const whiteNoiseAudio = document.getElementById('white-noise');
+        const whiteNoiseToggleButton = document.getElementById('white-noise-toggle');
+
+        const balancedNoiseAudio = document.getElementById('balanced-noise');
+        const balancedNoiseToggleButton = document.getElementById('balanced-noise-toggle');
+    
+        const brightNoiseAudio = document.getElementById('bright-noise');
+        const brightNoiseToggleButton = document.getElementById('bright-noise-toggle');
+    
+        const rainNoiseAudio = document.getElementById('rain-noise');
+        const rainNoiseToggleButton = document.getElementById('rain-noise-toggle');
+    
+        const oceanNoiseAudio = document.getElementById('ocean-noise');
+        const oceanNoiseToggleButton = document.getElementById('ocean-noise-toggle');
+    
+        const streamNoiseAudio = document.getElementById('stream-noise');
+        const streamNoiseToggleButton = document.getElementById('stream-noise-toggle');
+    
+        const underwaterNoiseAudio = document.getElementById('underwater-noise');
+        const underwaterNoiseToggleButton = document.getElementById('underwater-noise-toggle');
+    
+        whiteNoiseToggleButton.addEventListener('click', function () {
+            toggleAudioAndText(whiteNoiseAudio, whiteNoiseToggleButton);
+        });
+
+        balancedNoiseToggleButton.addEventListener('click', function () {
+            toggleAudioAndText(balancedNoiseAudio, balancedNoiseToggleButton);
+        });
+    
+        brightNoiseToggleButton.addEventListener('click', function () {
+            toggleAudioAndText(brightNoiseAudio, brightNoiseToggleButton);
+        });
+    
+        rainNoiseToggleButton.addEventListener('click', function () {
+            toggleAudioAndText(rainNoiseAudio, rainNoiseToggleButton);
+        });
+    
+        oceanNoiseToggleButton.addEventListener('click', function () {
+            toggleAudioAndText(oceanNoiseAudio, oceanNoiseToggleButton);
+        });
+    
+        streamNoiseToggleButton.addEventListener('click', function () {
+            toggleAudioAndText(streamNoiseAudio, streamNoiseToggleButton);
+        });
+    
+        underwaterNoiseToggleButton.addEventListener('click', function () {
+            toggleAudioAndText(underwaterNoiseAudio, underwaterNoiseToggleButton);
+        });
+    </script>
+    
+</body>
+{% endblock %}
