@@ -37,24 +37,23 @@
     color: #ffffff;
     box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
   }
-  
+
   #addTaskButton {
     background-color: #8b7cb3;
     border: none;
   }
 
   #addTaskButton:hover {
-      background-color: #ffb700ad;
-      color: black;
-    }
+    background-color: #ffb700ad;
+    color: black;
+  }
 
   .no-tasks {
     background-color: #fcfcfc;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
-    }
-  
+  }
 </style>
 
 <div class="container">
@@ -62,126 +61,145 @@
     <div class="title-box">
       <h1 id="title" align="center">Tasks</h1>
     </div>
-<div class="form-container">
-  <form method="POST" class="d-flex flex-column">
-    <div class="form-group" align="center">
-      <label for="dueDate">Due Date: (Optional)</label>
-      <input
-        type="date"
-        name="dueDate"
-        id="dueDate"
-        class="form-control"
-        style="width: 16%"
-      />
+    <div class="form-container">
+      <form method="POST" class="d-flex flex-column">
+        <div class="form-group" align="center">
+          <label for="dueDate">Due Date: (Optional)</label>
+          <input
+            type="date"
+            name="dueDate"
+            id="dueDate"
+            class="form-control"
+            style="width: 16%"
+          />
+        </div>
+
+        <div class="form-group" align="center">
+          <label for="task">Task:</label>
+          <textarea
+            name="task"
+            id="task"
+            class="form-control"
+            rows="1"
+            style="font-size: 24px"
+            autofocus
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          id="addTaskButton"
+          class="btn btn-primary align-self-center"
+        >
+          Add Task
+        </button>
+      </form>
     </div>
 
-    <div class="form-group" align="center">
-      <label for="task">Task:</label>
-      <textarea
-        name="task"
-        id="task"
-        class="form-control"
-        rows="1"
-        style="font-size: 24px"
-        autofocus
-        ></textarea>
-    </div>
-
-    <button
-      type="submit"
-      id="addTaskButton"
-      class="btn btn-primary align-self-center"
-    >
-      Add Task
-    </button>
-  </form>
-</div>
-
-{% if user.finished_tasks|length > 0 or user.tasks|length > 0 %}
-<ul class="list-group list-group-flush" id="tasks">
-  {% for task in user.tasks %}
-  <li
-    class="list-group-item"
-    style="display: flex; justify-content: space-between; align-items: center"
-  >
-    <div>
-      <button class="btn btn-success" onClick="markTask({{ task.id }})">
-        <span class="fa fa-check"></span>
-      </button>
-      <span class="dataLine">{{ task.data }}</span>
-      {% if task.due_date %}
-      <span class="dataLine" style="margin-left: 10px; color: grey">
-        Due Date: {{ task.due_date.strftime('%m/%d/%Y') }}
-      </span>
-      {% endif %}
-    </div>
-    <div style="margin-left: auto; color: grey; padding-right: 5px">
-      {{ task.date.strftime('%H:%M %m/%d/%y') }}
-    </div>
-    <button
-      type="button"
-      class="btn btn-danger"
-      onClick="deleteTask({{ task.id }})"
-    >
-      <span aria-hidden="true" class="fa fa-trash"></span>
-    </button>
-  </li>
-  {% endfor %}
-</ul>
-
-<br />
-{% if user.finished_tasks|length > 0 %}
-
-<h3 align="center">
-  Completed Tasks&nbsp;<button
-    class="btn btn-danger"
-    onClick="confirmClearAll()"
-  >
-    <span id="" class="">Clear All</span>
-  </button>
-</h3>
-<ul class="list-group list-group-flush" id="completed-tasks">
-  {% for finishedtask in user.finished_tasks %}
-  <li
-    class="list-group-item"
-    style="display: flex; justify-content: space-between; align-items: center"
-  >
-    <div>
-      <button
-        class="btn btn-primary"
-        onClick="unMarkTask({{ finishedtask.id }})"
+    {% if user.finished_tasks|length > 0 or user.tasks|length > 0 %}
+    <ul class="list-group list-group-flush" id="tasks">
+      {% for task in user.tasks %}
+      <li
+        class="list-group-item"
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
       >
-        <span id="" class="fa fa-arrow-up"></span>
+        <div>
+          <button class="btn btn-success" onClick="markTask({{ task.id }})">
+            <span class="fa fa-check"></span>
+          </button>
+          <span class="dataLine">{{ task.data }}</span>
+          {% if task.due_date %}
+          <span class="dataLine" style="margin-left: 10px; color: grey">
+            Due Date: {{ task.due_date.strftime('%m/%d/%Y') }}
+          </span>
+          {% endif %}
+        </div>
+        <div style="margin-left: auto; color: grey; padding-right: 5px">
+          {{ task.date.strftime('%H:%M %m/%d/%y') }}
+        </div>
+        <button
+          type="button"
+          class="btn btn-danger"
+          onClick="deleteTask({{ task.id }})"
+        >
+          <span aria-hidden="true" class="fa fa-trash"></span>
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <br />
+    {% if user.finished_tasks|length > 0 %}
+
+    <h3 align="center">
+      Completed Tasks&nbsp;<button
+        class="btn btn-danger"
+        onClick="confirmClearAll()"
+      >
+        <span id="" class="">Clear All</span>
       </button>
-      <span class="dataLine"><s>{{ finishedtask.data }}</s></span>
-      {% if finishedtask.due_date %}
-      <span class="dataLine" style="margin-left: 10px; color: grey">
-        Due Date: {{ task.due_date.strftime('%m/%d/%Y') }}
-      </span>
-      {% endif %}
-    </div>
-    <div style="margin-left: auto; color: grey; padding-right: 5px">
-      {{ finishedtask.date.strftime('%H:%M %m/%d/%y') }}
-    </div>
-    <button
-      type="button"
-      class="btn btn-danger"
-      onClick="deleteFinishedTask({{ finishedtask.id }})"
-    >
-      <span aria-hidden="true" class="fa fa-trash"></span>
-    </button>
-  </li>
-  {% endfor %}
-</ul>
-{% endif %} {% else %}
-<br />
-<center class="no-tasks">
-  <h3>Congratulations! You have no tasks!</h3>
-  <h4>Make a new task above.</h4>
-  <img src="../static/sleeping-bear.gif" />
-</center>
-{% endif %}
-</div>
+    </h3>
+    <ul class="list-group list-group-flush" id="completed-tasks">
+      {% for finishedtask in user.finished_tasks %}
+      <li
+        class="list-group-item"
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div>
+          <button
+            class="btn btn-primary"
+            onClick="unMarkTask({{ finishedtask.id }})"
+          >
+            <span id="" class="fa fa-arrow-up"></span>
+          </button>
+          <span class="dataLine"><s>{{ finishedtask.data }}</s></span>
+          {% if finishedtask.due_date %}
+          <span class="dataLine" style="margin-left: 10px; color: grey">
+            Due Date: {{ finishedtask.due_date.strftime('%m/%d/%Y') }}
+          </span>
+          {% endif %}
+        </div>
+        <div style="margin-left: auto; color: grey; padding-right: 5px">
+          {{ finishedtask.date.strftime('%H:%M %m/%d/%y') }}
+        </div>
+        <button
+          type="button"
+          class="btn btn-danger"
+          onClick="deleteFinishedTask({{ finishedtask.id }})"
+        >
+          <span aria-hidden="true" class="fa fa-trash"></span>
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% else %}
+    <br />
+    <center class="no-tasks">
+      <h3>Congratulations! You have no tasks!</h3>
+      <h4>Make a new task above.</h4>
+      <img src="../static/sleeping-bear.gif" />
+    </center>
+    {% endif %}
+
+    <center>
+      <a
+        href="/archivedtasks"
+        target="popup"
+        onclick="window.open('/archivedtasks','popup','width=600,height=600'); return false;"
+      >
+        Archived Tasks
+      </a>
+    </center>
+    <br />
+  </div>
 </div>
 <script>
   document.getElementById("task").addEventListener("keydown", function (event) {

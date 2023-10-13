@@ -8,13 +8,13 @@ function deleteTask(taskId) {
   });
 }
 
-function deleteFinishedTask(taskId) {
-  console.log("Task deleted: " + taskId);
-  fetch("/delete-finished-task", {
+function deleteArchivedTask(archivedTaskId) {
+  console.log("Task deleted: " + archivedTaskId);
+  fetch("/delete-archived-task", {
     method: "POST",
-    body: JSON.stringify({ taskId: taskId }),
+    body: JSON.stringify({ archivedTaskId: archivedTaskId }),
   }).then((_res) => {
-    window.location.href = "/tasks";
+    window.location.href = "/archivedtasks";
   });
 }
 
@@ -33,5 +33,14 @@ function unMarkTask(finishedTaskId) {
     body: JSON.stringify({ finishedTaskId: finishedTaskId }),
   }).then((_res) => {
     window.location.href = "/tasks";
+  });
+}
+
+function returnTask(archivedTaskId) {
+  fetch("/return-task", {
+    method: "POST",
+    body: JSON.stringify({ archivedTaskId: archivedTaskId }),
+  }).then((_res) => {
+    window.location.href = "/archivedtasks";
   });
 }

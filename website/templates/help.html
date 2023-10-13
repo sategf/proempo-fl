@@ -1,221 +1,235 @@
-{% extends "base.html" %}
-{% block title %}Help{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}Help{% endblock %} {% block content
+%}
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    }
-    
-
-    section {
-        background-color: white;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        box-shadow: 0 0 50px rgba(172, 123, 196, 0.409);
-    }
-
-    h1 {
-        background-color: rgba(152, 125, 209, 0.65);
-        margin-top: 40px;
-        margin-bottom: 0px;
-        border-top-left-radius: 30px;
-        border-top-right-radius: 30px;
-        padding: 10px;
-        color: #ffffff;
-        box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+      "Lucida Sans", Arial, sans-serif;
   }
-    
 
-    h2 {
-        text-align: center;
-    }
+  section {
+    background-color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 0 50px rgba(172, 123, 196, 0.409);
+  }
 
+  h1 {
+    background-color: rgba(152, 125, 209, 0.65);
+    margin-top: 40px;
+    margin-bottom: 0px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    padding: 10px;
+    color: #ffffff;
+    box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  .choices {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .choice {
+    flex: 1;
+    border: 1px solid white;
+    padding: 20px;
+    margin: 20px;
+    text-align: center;
+    border-radius: 20px;
+    background-color: white;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 0 70px rgba(255, 255, 255, 0.644);
+  }
+
+  .choice img {
+    max-width: 100%;
+    height: auto;
+    transition: filter 0.3s ease;
+    border-radius: 20px;
+  }
+
+  .choice h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  .choice p {
+    font-size: 1rem;
+    top: 45%;
+  }
+
+  .choice h3,
+  .choice p,
+  .choice a {
+    opacity: 0;
+    position: absolute;
+    color: rgb(238, 235, 251);
+    width: 90%;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .choice h3 {
+    top: 20%;
+  }
+
+  .choice a {
+    bottom: 20%;
+    font-style: italic;
+  }
+
+  .choice .regularMeditation {
+    bottom: 15%;
+  }
+
+  .choice:hover img {
+    filter: brightness(20%);
+  }
+
+  .choice:hover h3,
+  .choice:hover p,
+  .choice:hover a {
+    opacity: 1;
+    padding: 10px;
+  }
+
+  .choice:hover .regularMeditation {
+    bottom: 5%;
+  }
+
+  .choice .viewFlashcards {
+    bottom: 10%;
+  }
+
+  @media (max-width: 1000px) {
     .choices {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
     }
 
     .choice {
-        flex: 1;
-        border: 1px solid white;
-        padding: 20px;
-        margin: 20px;
-        text-align: center;
-        border-radius: 20px;
-        background-color: white;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-        transition: transform 0.2s ease-in-out;
-        box-shadow: 0 0 70px rgba(255, 255, 255, 0.644);
+      width: 350px;
     }
 
     .choice img {
-        max-width: 100%;
-        height: auto;
-        transition: filter 0.3s ease;
-        border-radius: 20px;
+      width: 200px;
+      margin-left: 150px;
     }
 
-    .choice h3 {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-    }
-
-    .choice p {
-        font-size: 1rem;
-        top: 45%;
+    .choice:hover img {
+      filter: brightness(100%);
     }
 
     .choice h3,
     .choice p,
     .choice a {
-        opacity: 0;
-        position: absolute;
-        color: rgb(238, 235, 251);
-        width: 90%;
-        text-align: center;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        transition: opacity 0.2s ease-in-out;
-    }
-
-    .choice h3 {
-        top: 20%;
+      color: black;
+      text-align: left;
+      opacity: 1;
+      width: 180px;
+      margin-left: -75px;
     }
 
     .choice a {
-        bottom: 20%;
-        font-style: italic;
+      bottom: 3%;
     }
 
     .choice .regularMeditation {
-        bottom: 15%;
+      bottom: 3%;
     }
-
-    .choice:hover img {
-        filter: brightness(20%);
-    }
-
-    .choice:hover h3,
-    .choice:hover p,
-    .choice:hover a {
-        opacity: 1;
-        padding: 10px;
-    }
-
-    .choice:hover .regularMeditation {
-        bottom: 5%;
-    }
-
-    .choice .viewFlashcards {
-        bottom: 10%;
-    }
-
-    @media (max-width: 1000px) {
-        .choices {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .choice {
-            width: 350px;
-        }
-
-        .choice img {
-            width: 200px;
-            margin-left: 150px; 
-        }
-
-        .choice:hover img {
-            filter: brightness(100%);
-        }
-
-        .choice h3,
-        .choice p, 
-        .choice a {
-            color: black; 
-            text-align: left; 
-            opacity: 1; 
-            width: 180px;
-            margin-left: -75px;
-        }
-
-        .choice a{
-            bottom: 3%;
-        }
-
-        .choice .regularMeditation {
-            bottom:3%
-        }
-        .choice .bearMeditation {
-            bottom:15%
-        }
+    .choice .bearMeditation {
+      bottom: 15%;
     }
 </style>
 
-<div class="container">
-    <div class="box">
-      <div class="title-box">
-        <h1 id="title" align="center">Concentration Self-Work</h1>
-      </div>
-<section id="study">
-    <div class="choices">
+<div class="subcontainer">
+  <div class="box">
+    <div class="title-box">
+      <h1 id="title" align="center">Concentration Self-Work</h1>
+    </div>
+    <section id="study">
+      <div class="choices">
         <div class="choice">
-            <img src="../static/pomodoroHelpPic.png" alt="Pomodoro Technique">
-            <h3>Pomodoro</h3>
-            <p>Try the Pomodoro Technique to boost your productivity.</p>
-            <a href="/pomodoro">Begin ></a>
+          <img src="../static/pomodoroHelpPic.png" alt="Pomodoro Technique" />
+          <h3>Pomodoro</h3>
+          <p>Try the Pomodoro Technique to boost your productivity.</p>
+          <a href="/pomodoro">Begin ></a>
         </div>
         <div class="choice" id="flashcardsChoice">
-            <img src="../static/flashcardsHelpPic.png" alt="Flashcards">
-            <h3 id="flashcardsName">Flashcards</h3>
-            <p id="flashcardsDescription">Use flashcards to memorize information effectively.</p>
-            <a class="createFlashcards" href="/CreateFlashcards">Create</a>
-            <a class="viewFlashcards" href="/ViewFlashcards">View</a>
+          <img src="../static/flashcardsHelpPic.png" alt="Flashcards" />
+          <h3 id="flashcardsName">Flashcards</h3>
+          <p id="flashcardsDescription">
+            Use flashcards to memorize information effectively.
+          </p>
+          <a class="createFlashcards" href="/CreateFlashcards">Create</a>
+          <a class="viewFlashcards" href="/ViewFlashcards">View</a>
         </div>
         <div class="choice" id="rubberDuck">
-            <img src="../static/feynmanhelpPic.png" alt="Rubber Duck method">
-            <h3 id="rubberDuckName">Feynman</h3>
-            <p id="feynmanDescription">Master complex subjects by explaining it to a smaller entity in simple terms.</p>
-            <a href="/feynman">Begin ></a>
+          <img src="../static/feynmanhelpPic.png" alt="Rubber Duck method" />
+          <h3 id="rubberDuckName">Feynman</h3>
+          <p id="feynmanDescription">
+            Master complex subjects by explaining it to a smaller entity in
+            simple terms.
+          </p>
+          <a href="/feynman">Begin ></a>
         </div>
-    </div>
-</section>
-
-<div class="container">
-    <div class="box">
-      <div class="title-box">
-        <h1 id="title" align="center">Inner Self-Work</h1>
       </div>
-<section id="relaxation">
-    <div class="choices">
+    </section>
 
-        <div class="choice" id="gratitudeChoice">
-            <img src="../static/gratitudeHelpPic.png" alt="Gratitude">
-            <h3 id="gratitudeName">Gratitude</h3>
-            <p id="gratitudeDescription">Cultivate a positive mindset by recalling what you are grateful for today</p>
-            <a href="/journal">Begin > </a>
+    <div class="subcontainer">
+      <div class="box">
+        <div class="title-box">
+          <h1 id="title" align="center">Inner Self-Work</h1>
         </div>
-        <div class="choice">
-            <img src="../static/journalPic.png" alt="Journaling">
-            <h3>Journal</h3>
-            <p>Explore your thoughts and feelings through journaling.</p>
-            <a href="/journal">Begin > </a>
-        </div>
-        <div class="choice" id="meditationChoice">
-            <img src="../static/helpMeditation.png" alt="Meditation">
-            <h3 id="meditationName">Meditation</h3>
-            <p id="meditationDescription">Find peace and reduce stress through paced breathing.</p>
-            <a class="bearMeditation" href="/bearMeditation">Young Edition > </a>
-            <a class="regularMeditation" href="/regularMeditation">College Edition > </a>
-        </div>
+        <section id="relaxation">
+          <div class="choices">
+            <div class="choice" id="gratitudeChoice">
+              <img src="../static/gratitudeHelpPic.png" alt="Gratitude" />
+              <h3 id="gratitudeName">Gratitude</h3>
+              <p id="gratitudeDescription">
+                Cultivate a positive mindset by recalling what you are grateful
+                for today
+              </p>
+              <a href="/journal">Begin > </a>
+            </div>
+            <div class="choice">
+              <img src="../static/journalPic.png" alt="Journaling" />
+              <h3>Journal</h3>
+              <p>Explore your thoughts and feelings through journaling.</p>
+              <a href="/journal">Begin > </a>
+            </div>
+            <div class="choice" id="meditationChoice">
+              <img src="../static/helpMeditation.png" alt="Meditation" />
+              <h3 id="meditationName">Meditation</h3>
+              <p id="meditationDescription">
+                Find peace and reduce stress through paced breathing.
+              </p>
+              <a class="bearMeditation" href="/bearMeditation"
+                >Young Edition >
+              </a>
+              <a class="regularMeditation" href="/regularMeditation"
+                >College Edition >
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {% endblock %}
+      </div>
     </div>
-</section>
-
-{% endblock %}
+  </div>
+</div>
