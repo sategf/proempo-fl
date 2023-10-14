@@ -57,13 +57,21 @@
         transform: translateY(-50%);
         transition: transform 0.6s ease;
     }
+   
+        /* Style for the nested accordion button icons */
     .nested-accordion-button {
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        transform: translateY(-50%);
-        transition: transform 0.6s ease;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    transition: transform 0.6s ease;
     }
+
+    /* Rotate the button icon when content is expanded */
+    .nested-accordion-input:checked + .nested-accordion-label .nested-accordion-button {
+    transform: translateY(-50%) rotate(180deg);
+    }
+
 
     /* Rotate the button icon when content is expanded */
     .accordion-input:checked + .accordion-label .accordion-button {
@@ -143,7 +151,7 @@
             <input type="checkbox" class="nested-accordion-input" id="{{ nested_item.id }}">
             <label class="nested-accordion-label" for="{{ nested_item.id }}">
                 {{ nested_item.title }}
-                <span class="nested-accordion-button">▼</span> <!-- Button icon for nested accordion -->
+               <!-- Button icon for nested accordion -->
             </label>
             <div class="nested-accordion-content">
                 <p>{{ nested_item.content }}</p>
@@ -153,6 +161,8 @@
     {% endif %}
 </div>
 {% endfor %}
+
+
 </section>
 </html>
 
