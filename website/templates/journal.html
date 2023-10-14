@@ -181,7 +181,44 @@
     margin: 0 10px;
   }
 </style>
-
+{% if user.finished_journals|length > 0 or user.journals|length > 0 %}
+    <ul class="list-group list-group-flush" id="journals">
+      {% for journal in user.journals %}
+      <li
+        class="list-group-item"
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+    <li
+      class="list-group-item"
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      "
+    >
+      <div>
+        <button class="btn btn-success" onClick="markJournal({{ journal.id }})">
+          <span class="fa fa-check"></span>
+        </button>
+        <span class="dataLine">{{ journal.data }}</span>
+        
+      </div>
+      
+      <button
+        type="button"
+        class="btn btn-danger"
+        onClick="deleteJournal({{ journal.id }})"
+      >
+        <span aria-hidden="true" class="fa fa-trash"></span>
+      </button>
+    </li>
+    {% endfor %}
+    {% endif %}
+  </ul>
 <script>
 // Function to update the visibility of the "Save" button based on the date
 function updateSaveButtonVisibility() {

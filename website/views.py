@@ -2,9 +2,8 @@
 from flask import Flask
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_mail import Mail, Message
-from email.message import EmailMessage
 from flask_login import login_required, current_user
-from .models import Journal, Task, FinishedTask, ArchivedTask, Card, Lesson
+from .models import Journal, Task, FinishedTask, Card, Lesson
 from sqlalchemy.orm import aliased
 from . import db
 import json, os, smtplib
@@ -26,6 +25,14 @@ mail_password = os.environ.get('MAIL_PASSWORD')
 
 
 
+
+# Flask-Mail configuration
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP server
+app.config['MAIL_PORT'] = 587  #the SMTP port
+app.config['MAIL_USERNAME'] = mail_username
+app.config['MAIL_PASSWORD'] = mail_password
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
 
 
 # Creating the Mail instance
@@ -203,14 +210,6 @@ def tasks():
     return render_template("tasks.html", user=current_user)
 
 
-@views.route('/archivedtasks')
-@login_required
-def archivedtasks():
-    archivedtasks = ArchivedTask.query.filter_by(user_id=current_user.id).order_by(ArchivedTask.date).all()
-    return render_template('archivedtasks.html', archivedtasks=archivedtasks, user=current_user)
-    
-
-
 @views.route('/reports')
 @login_required
 def reports():
@@ -261,48 +260,24 @@ def journal():
 
 @views.route('/delete-task', methods=['POST'])
 def delete_task():  
-    task_data = json.loads(request.data)
-    task_id = task_data['taskId']
-
-    task = Task.query.get(task_id)
-
-    if task and task.user_id == current_user.id:
-        # Create a archived with the same data and due date as the original task
-        archivedtask = ArchivedTask(data=task.data, user_id=current_user.id, due_date=task.due_date, date=task.date)
-
-        # Add and commit changes to the database
-        db.session.add(archivedtask)
-        db.session.delete(task)
-        db.session.commit()
+    task = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
+    taskId = task['taskId']
+    task = Task.query.get(taskId)
+    if task:
+        if task.user_id == current_user.id:
+            db.session.delete(task)
+            db.session.commit()
 
     return jsonify({})
 
 @views.route('/delete-finished-task', methods=['POST'])
 def delete_finished_task():  
     task_data = json.loads(request.data)
-    finished_task_id = task_data['finishedTaskId']
-
-    finished_task = FinishedTask.query.get(finished_task_id)
+    taskId = task_data['taskId']
+    finished_task = FinishedTask.query.get(taskId)
 
     if finished_task and finished_task.user_id == current_user.id:
-        # Create a Task with the same data and due date as the FinishedTask
-        archivedtask = ArchivedTask(data=finished_task.data, user_id=current_user.id, due_date=finished_task.due_date, date=finished_task.date)
-
-        # Add and commit changes to the database
-        db.session.add(archivedtask)
         db.session.delete(finished_task)
-        db.session.commit()
-
-    return jsonify({})
-
-@views.route('/delete-archived-task', methods=['POST'])
-def delete_archivedtask():  
-    archivedtask_data = json.loads(request.data)
-    archivedTaskId = archivedtask_data['archivedTaskId']
-    archivedtask = ArchivedTask.query.get(archivedTaskId)
-
-    if archivedtask and archivedtask.user_id == current_user.id:
-        db.session.delete(archivedtask)
         db.session.commit()
 
     return jsonify({})
@@ -317,8 +292,8 @@ def mark_task():
     task = Task.query.get(task_id)
 
     if task and task.user_id == current_user.id:
-        # Create a FinishedTask with the same data and due date as the original task
-        finished_task = FinishedTask(data=task.data, user_id=current_user.id, due_date=task.due_date, date=task.date)
+        # Create a FinishedTask with the same data
+        finished_task = FinishedTask(data=task.data, user_id=current_user.id)
 
         # Add and commit changes to the database
         db.session.add(finished_task)
@@ -329,58 +304,19 @@ def mark_task():
 
 @views.route('/unmark-task', methods=['POST'])
 @login_required
-def unmark_task():
+def unMark_task():
     task_data = json.loads(request.data)
     finished_task_id = task_data['finishedTaskId']
 
     finished_task = FinishedTask.query.get(finished_task_id)
 
     if finished_task and finished_task.user_id == current_user.id:
-        # Create a Task with the same data and due date as the FinishedTask
-        task = Task(data=finished_task.data, user_id=current_user.id, due_date=finished_task.due_date, date=finished_task.date)
+        # Create a Task with the same data as the FinishedTask
+        task = Task(data=finished_task.data, user_id=current_user.id)
 
         # Add and commit changes to the database
         db.session.add(task)
         db.session.delete(finished_task)
-        db.session.commit()
-
-    return jsonify({})
-
-
-@views.route('/return-task', methods=['POST'])
-@login_required
-def return_task():
-    task_data = json.loads(request.data)
-    archived_task_id = task_data['archivedTaskId']
-
-    archived_task = ArchivedTask.query.get(archived_task_id)
-
-    if archived_task and archived_task.user_id == current_user.id:
-        # Create a Task with the same data and due date as the FinishedTask
-        task = Task(data=archived_task.data, user_id=current_user.id, due_date=archived_task.due_date, date=archived_task.date)
-
-        # Add and commit changes to the database
-        db.session.add(task)
-        db.session.delete(archived_task)
-        db.session.commit()
-
-    return jsonify({})
-
-
-@views.route('/archive-task', methods=['POST'])
-@login_required
-def archive_task():
-    task_data = json.loads(request.data)
-    task_id = task_data['taskId']
-
-    task = Task.query.get(task_id)
-
-    if task and task.user_id == current_user.id:
-        # Create an ArchivedTask with the same data, date, and due date as the original task
-        archivedtask = ArchivedTask(data=task.data, user_id=current_user.id, due_date=task.due_date, date=task.date)
-
-        # Delete the original task
-        db.session.delete(task)
         db.session.commit()
 
     return jsonify({})
@@ -395,33 +331,20 @@ def about():
 def support():
     return render_template("Support.html", user=current_user)
 
-@views.route('/submit_support', methods=['POST']) #something about routes isn't submitting the form through here, will be fixed soon
-def submit_support_form():
+@app.route('/submit_support', methods=['POST']) #something about routes isn't submitting the form through here, will be fixed soon
+def submit_support():
     if request.method == 'POST':
         # Get form data
         issue_title = request.form['issue_title']
         username = request.form['username']
         description = request.form['description']
-
-        recipient_email = username #Assuming the user provides their email or username as the recipient
         
-         # Create an EmailMessage
-        message = EmailMessage()
-        message.set_content(description)
-        message['Subject'] = issue_title
-        message['From'] = 'Proempohelpdesk@gmail.com'  # Replace with your email
-        message['To'] = recipient_email   # Use the collected email or username as the recipient
-
-
-        # Set up your SMTP server and send the email
-        smtp_server = smtplib.SMTP('smtp.gmail.com', 587)  # Replace with your SMTP server and port
-        smtp_server.starttls()
-        smtp_server.login('MAIL_USERNAME', 'MAIL_PASSWORD')  # Replace with your email and password
-        smtp_server.send_message(message)
-        smtp_server.quit()
-
-
-
+        # Send an email to the support team with the form data
+        send_support_email(issue_title, username, description)
+        
+        # You can also save the form data to a database or perform other actions as needed
+        
+        # Redirect back to the support page or a thank you page
         return redirect(url_for('thank_you'))
 
 
@@ -430,6 +353,21 @@ def thank_you():
     return render_template('thank_you.html') # thank you message for the user after submitting form
 
 
+
+
+def send_support_email(issue_title, username, description):
+    # Create a message object for the email
+    msg = Message('Support Request: ' + issue_title, sender=support_email, recipients=[support_email])
+    
+    # Customize the email content with the form data
+    msg.body = f"Issue Title: {issue_title}\nUsername: {username}\nDescription: {description}"
+    
+    # Send the email
+    try:
+        mail.send(msg)
+        print("Support email sent successfully")
+    except Exception as e:
+        print(f"Error sending support email: {str(e)}")
 
 
 @views.route('/ViewFlashcards', methods=["GET", "POST"])
@@ -492,21 +430,11 @@ def new_flashcard():
 @views.route('/clear-all-completed-tasks', methods=['POST'])
 @login_required
 def clear_all_completed_tasks():
+    # Perform the action to clear all completed tasks
     completed_tasks = FinishedTask.query.filter_by(user_id=current_user.id).all()
-
     for task in completed_tasks:
-        archived_task = ArchivedTask(
-            data=task.data,
-            user_id=current_user.id,
-            due_date=task.due_date,
-            date=task.date
-        )
-
-        db.session.add(archived_task)
         db.session.delete(task)
-
     db.session.commit()
-
     return jsonify({})
 
 
@@ -542,3 +470,15 @@ def player():
     pauseIcon="⏸"
 
     return render_template('player.html', user=current_user, playIcon=playIcon, pauseIcon=pauseIcon)
+
+@views.route('/delete-journal-entry', methods=['POST'])
+def delete_journal():  
+    task = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
+    journalId = journal['journalId']
+    journal = Journal.query.get(journalId)
+    if journal:
+        if journal.user_id == current_user.id:
+            db.session.delete(journal)
+            db.session.commit()
+
+    return jsonify({})
