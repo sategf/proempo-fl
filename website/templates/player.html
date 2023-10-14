@@ -185,7 +185,7 @@
                     const toggleButton = document.getElementById(audioId + '-toggle');
                     if (!audio.paused) {
                         audio.pause();
-                        toggleButton.textContent = '▶️ ' + toggleButton.getAttribute('data-noise-type') + ' Noise';
+                        toggleButton.textContent = '{{playIcon}} ' + toggleButton.getAttribute('data-noise-type') + ' Noise';
                     }
                 }
             });
