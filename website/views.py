@@ -554,3 +554,16 @@ def delete_journal():
             db.session.commit()
 
     return jsonify({})
+
+
+@views.route('/goals')
+@login_required
+def goals():
+    return render_template('goals.html', user=current_user)
+    
+
+@views.route('/pride')
+@login_required
+def pride():
+    return render_template('pride.html', user=current_user)
+    
