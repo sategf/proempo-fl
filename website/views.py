@@ -84,6 +84,8 @@ def generate_quote():
 
         for i, row in enumerate(reader):
             if i == index:
+                if(row[0] == "") :
+                    row[0] = "Unknown Author"
                 qod = (row[1], row[0]) 
                 break
         else:
