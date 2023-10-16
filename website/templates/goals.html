@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}My Goals{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="box">
+      <div class="title-box">
+        <h1 id="title" align="center">My Goals</h1>
+      </div>
+  <div class="main">
+    <div class="explanation">
+        <p>When it comes to goals, Proempo adopts the 'smart' goal approach.</p>
+        <p>What is the 'smart' approach?</p>
+    </div>
+    <ul class="section">
+      <li class="item">
+        <div class="card">
+          <div class="card_content">
+            <div class="card_text">
+                <h2 class="firstLetter">S</h2>
+                <p class="categoryName">Specific</p>
+                <p class="question">What will I accomplish?</p>
+                <input type="text" id="textbox" placeholder="Answer here">
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="item">
+        <div class="card">
+          <div class="card_content">
+            <div class="card_text">
+                <h2 class="firstLetter">M</h2>
+                <p class="categoryName">Measurable</p>
+                <p class="question">How do I know when I reach this goal?</p>
+                <input type="text" id="textbox" placeholder="Answer here">
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="item">
+        <div class="card">
+          <div class="card_content">
+            <div class="card_text">
+                <h2 class="firstLetter">A</h2>
+                <p class="categoryName">Achievable</p>
+                <p class="question">Is this goal realistic with commitment?</p>
+                <input type="text" id="textbox" placeholder="Answer here">
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="item">
+        <div class="card">
+          <div class="card_content">
+            <div class="card_text">
+                <h2 class="firstLetter">R</h2>
+                <p class="categoryName">Relevant</p>        
+                <p class="question">Why is this goal significant to me?</p>
+                <input type="text" id="textbox" placeholder="Answer here">
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="item">
+        <div class="card">
+          <div class="card_content">
+            <div class="card_text">
+                <h2 class="firstLetter">T</h2>
+                <p class="categoryName">Timely</p>
+                <p class="question">When will I achieve this goal?</p>
+                <input type="text" id="textbox" placeholder="Answer here">
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+  
+  
+  <style>
+    h1 {
+      background-color: rgba(152, 125, 209, 0.65);
+      margin-top: 40px;
+      margin-bottom: 0px;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      padding: 10px;
+      color: #ffffff;
+      box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+    }
+  
+    .main {
+      max-width: 1500px;
+      background-color: white;
+      padding: 10px;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+      margin-bottom: 40px;
+    }
+  
+    .explanation p {
+        color:rgb(136, 91, 192)
+    }
+
+    .section {
+      display: grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      margin: 0px;
+      padding: 0px;
+    }
+  
+    .item {
+      display: flex;
+      padding: 1rem;
+      filter:drop-shadow(0 0 5px rgba(206, 186, 217, 0.5));
+    }
+  
+    .card {
+      background-color: rgb(136, 91, 192);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      width: 200px;
+      padding: 10px;
+      justify-content: center;
+      align-items: center; 
+      height: 300px;
+    }
+
+    h2, p, #textbox{
+        color: rgb(242, 235, 249);
+        text-align: center;
+    }
+
+    .firstLetter {
+        font-size: 50pt;
+        font-weight: bold;
+    }
+
+    #textbox {
+        width:160px;
+        color: black;
+    }
+
+  </style>
+{% endblock %}

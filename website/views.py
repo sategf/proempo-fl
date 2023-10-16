@@ -543,14 +543,27 @@ def player():
 
     return render_template('player.html', user=current_user, playIcon=playIcon, pauseIcon=pauseIcon)
 
-@views.route('/delete-journal-entry', methods=['POST'])
+@views.route('/delete-journal', methods=['POST'])
 def delete_journal():  
-    task = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
-    journalId = journal['journalId']
-    journal = Journal.query.get(journalId)
-    if journal:
-        if journal.user_id == current_user.id:
-            db.session.delete(journal)
-            db.session.commit()
+    journal_data = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
+    journal_id = journal_data['journalId']
+    journal = Journal.query.get(journal_id)
+    if journal and journal.user_id == current_user.id:
+        
+        db.session.delete(journal)
+        db.session.commit()
 
     return jsonify({})
+
+
+@views.route('/goals')
+@login_required
+def goals():
+    return render_template('goals.html', user=current_user)
+    
+
+@views.route('/pride')
+@login_required
+def pride():
+    return render_template('pride.html', user=current_user)
+    

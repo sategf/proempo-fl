@@ -29,10 +29,18 @@
         <div class="card_content">
           <h2 class="card_title">3 things I am grateful for today are:</h2>
           <div class="card_text">
-            <p></p>
-            <p contenteditable="true">1. </p><br>
-            <p contenteditable="true">2. </p><br>
-            <p contenteditable="true">3. </p><br>
+            <div class="gratitude-item">
+              <span class="number">1.</span>
+              <p contenteditable="true"></p>
+            </div>
+            <div class="gratitude-item">
+              <span class="number">2.</span>
+              <p contenteditable="true"></p>
+            </div>
+            <div class="gratitude-item">
+              <span class="number">3.</span>
+              <p contenteditable="true"></p>
+            </div>
           </div>
         </div>
       </div>
@@ -175,6 +183,16 @@
     cursor: pointer;
     outline: none;
   }
+
+  .gratitude-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .number {
+    margin-right: 5px;
+    font-weight: bold; 
+  }
   
   #current-date {
     font-size: 20px;
@@ -219,6 +237,10 @@
     {% endfor %}
     {% endif %}
   </ul>
+
+  <center class="no-journals">
+    <h3>What is on your mind?</h3>
+    <img src="../static/journaling.gif" />
 <script>
 // Function to update the visibility of the "Save" button based on the date
 function updateSaveButtonVisibility() {
