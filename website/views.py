@@ -189,7 +189,7 @@ def tasks():
         due_date_str = request.form.get('dueDate')  # Gets the due date string from the HTML
 
         if len(task_data) < 1:
-            flash('Task is too short!', category='error')
+            flash('You must enter a task!', category='error')
         else:
             due_date = None  # Default to None if no due date is provided
             if due_date_str:
@@ -538,8 +538,8 @@ def save_journal_entry():
 
 @views.route('/player')
 def player():
-    playIcon="▶"
-    pauseIcon="⏸"
+    playIcon='<i class="fas fa-play"></i>'
+    pauseIcon='<i class="fas fa-pause"></i>'
 
     return render_template('player.html', user=current_user, playIcon=playIcon, pauseIcon=pauseIcon)
 
