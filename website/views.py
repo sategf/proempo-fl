@@ -216,6 +216,7 @@ def archivedtasks():
 @views.route('/reports')
 @login_required
 def reports():
+    #code for the first graph on page
     end_date = datetime.now()
     start_date = end_date - timedelta(days=6) 
     finished_tasks_data = (
@@ -242,7 +243,18 @@ def reports():
 
     finished_tasks_list = [{'date': date, 'finished_count': count} for date, count in data_dict.items()]
     finished_tasks_json = json.dumps(finished_tasks_list)
-    return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json)
+
+
+    # Code for the second visualization
+    goals_count = Goal.query.filter(Goal.user_id == current_user.id).count()
+
+    return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count)
+
+
+
+
+
+
 
 '''
 @views.route('/journal', methods = ['GET', 'POST'])

@@ -10,6 +10,11 @@
             <h5 align="center">Amount of tasks I completed this week</h5>
             <canvas id="taskChart" width="300" height="150"></canvas>
         </div>
+
+        <div class="goals-count-container">
+            <h5 align="center">Number of Goals Achieved</h5>
+            <div id="goalsCount" class="goals-count">0</div>
+        </div>
 </div>
 </div>
 
@@ -32,8 +37,40 @@
         border-bottom-right-radius: 10px;
         box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
     }
+
+
+
+
+    .goals-count-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+/* Style for the animated number */
+.goals-count {
+    font-size: 36px;
+    font-weight: bold;
+    color: #007BFF; /* Customize the color */
+    animation: countUp 2s ease-out forwards;
+}
+
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 </style>
 <script>
+    // data for the first chart
     var finishedTasks = {{ finished_tasks|safe }};
     var dates = finishedTasks.map(function(item) { return item.date; });
     var count = finishedTasks.map(function(item) { return item.finished_count; });
@@ -57,5 +94,34 @@
             }
         }
     });
+
+    // Data for the goals visualization
+    document.addEventListener("DOMContentLoaded", function () {
+        
+    var goalsCount = {{ goals_count }};
+    if (goalsCount > 0) {
+        goalsCount = goalsCount - 1;
+    }
+    var goalsCountElement = document.getElementById("goalsCount");
+    var interval = 1000; // Update interval in milliseconds
+
+    var start = 0;
+
+    
+    
+    function updateCount() {
+        if (start < goalsCount) {
+            start += 1;
+            goalsCountElement.textContent = start;
+            setTimeout(updateCount, interval);
+        } else {
+            goalsCountElement.textContent = goalsCount; 
+        }
+    }
+
+    // Delay the start of the animation for 2 second 
+    setTimeout(updateCount, 2000);
+});
+
 </script>
 {% endblock %}
