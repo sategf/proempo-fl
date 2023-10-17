@@ -299,14 +299,12 @@ def journal():
 
             return redirect(url_for('views.journal'))
     elif request.method == 'GET':
-        #Handle req to display a selected previous entry
+        previous_entries = Journal.query.filter(Journal.user_id == current_user.id).all()
+
         previous_entry_id = request.args.get('previous_entry')
 
         if previous_entry_id:
             selected_entry = Journal.query.get(previous_entry_id)
-
-    #Fetch all previous entries from the database
-    previous_entries = Journal.query.all()
     date = (datetime.now().date())
 
     return render_template('journal.html', user=current_user, previous_entries=previous_entries, selected_entry=selected_entry, date=date)
