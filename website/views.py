@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request, flash, jsonify, redirect,
 from flask_mail import Mail, Message
 from email.message import EmailMessage
 from flask_login import login_required, current_user
-from .models import Journal, Task, FinishedTask, ArchivedTask, Card, Lesson
+from .models import Goal, Journal, Task, FinishedTask, ArchivedTask, Card, Lesson
 from sqlalchemy.orm import aliased
 from . import db
 import json, os, smtplib
@@ -617,11 +617,43 @@ def delete_journal():
     return jsonify({})
 '''
 
+
 @views.route('/goals')
 @login_required
 def goals():
-    return render_template('goals.html', user=current_user)
+    user_id = current_user.id
+    previous_goals = Goal.query.filter_by(user_id=user_id).all()
     
+    return render_template('goals.html', user=current_user, previous_goals=previous_goals)
+    
+@views.route('/save_goal', methods=['POST'])
+def save_goal():
+    try:
+        data = request.json
+        user_id = current_user.id
+        specific = data.get('specific')
+        measurable = data.get('measurable')
+        achievable = data.get('achievable')
+        relevant = data.get('relevant')
+        timely = data.get('timely')
+
+        goal_entry = Goal(
+            user_id=user_id,
+            specific=specific,
+            measurable=measurable,
+            achievable=achievable,
+            relevant=relevant,
+            timely=timely
+        )
+
+        db.session.add(goal_entry)
+        db.session.commit()
+
+        return jsonify({'message': 'Goal entry saved successfully'})
+    except Exception as e:
+        print(str(e))
+        return jsonify({'message': 'Failed to save goal entry'}), 500
+
 
 @views.route('/pride')
 @login_required
