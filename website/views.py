@@ -312,7 +312,7 @@ def journal():
 def is_entry_exists_for_today():
     today = date.today()
 
-    entry_for_today = Journal.query.filter(Journal.date == today).first()
+    entry_for_today = Journal.query.filter(Journal.date == today, Journal.user_id == current_user.id).first()
 
     return entry_for_today is not None
 
