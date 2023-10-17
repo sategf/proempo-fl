@@ -296,6 +296,8 @@ def journal():
             )
             db.session.add(journal_entry)
             db.session.commit()
+
+            return redirect(url_for('views.journal'))
     elif request.method == 'GET':
         #Handle req to display a selected previous entry
         previous_entry_id = request.args.get('previous_entry')
