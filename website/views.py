@@ -33,7 +33,7 @@ mail = Mail(app)
 
 
 # Defining the support email address
-support_email = "Proempohelpdesk@gmail.com" 
+support_email = "proempohelpdesk@gmail.com" 
 
 
 
@@ -457,19 +457,20 @@ def support():
 @views.route('/submit_support', methods=['POST']) #something about routes isn't submitting the form through here, will be fixed soon
 def submit_support_form():
     if request.method == 'POST':
-        # Get form data
+       # Get form data
         issue_title = request.form['issue_title']
         username = request.form['username']
         description = request.form['description']
 
-        recipient_email = username #Assuming the user provides their email or username as the recipient
-        
-         # Create an EmailMessage
+        sender_email = username  # User's email or username
+        recipient_email = 'proempohelpdesk@gmail.com'  # Help desk email
+
+        # Create an EmailMessage
         message = EmailMessage()
         message.set_content(description)
         message['Subject'] = issue_title
-        message['From'] = 'Proempohelpdesk@gmail.com'  # Replace with your email
-        message['To'] = recipient_email   # Use the collected email or username as the recipient
+        message['From'] = sender_email  # Use the user's email as the sender
+        message['To'] = recipient_email  # Set the recipient as the help desk email
 
 
         # Set up your SMTP server and send the email
@@ -546,6 +547,35 @@ def new_flashcard():
         db.session.commit()
 
         return redirect("/CreateFlashcards")
+
+@views.route('/DeleteFlashcard/<int:flashcard_id>', methods=["POST"])
+@login_required
+def delete_flashcard(flashcard_id):
+
+    flashcard=Card.query.get(flashcard_id)
+
+    db.session.delete(flashcard)
+    db.session.commit()
+
+    return redirect("/ViewFlashcards")
+
+
+@views.route('/ViewFlashcards/<int:flashcard_id>')
+@login_required
+def get_flashcard(flashcard_id):
+
+    flashcard_id=request.view_args.get('flashcard_id')
+
+    if flashcard_id is None:
+        return "Invalid request"
+
+    flashcard=Card.query.get(flashcard_id)
+
+    if not flashcard:
+        print('Flashcard not found')
+        return redirect('/ViewFlashcards')
+    
+    return render_template("showFlashcard.html", card=flashcard, user=current_user)
 
 
 @views.route('/clear-all-completed-tasks', methods=['POST'])
