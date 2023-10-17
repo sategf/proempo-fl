@@ -9,73 +9,88 @@
         <h1 id="title" align="center">My Goals</h1>
       </div>
   <div class="main">
-    <div class="explanation">
-        <p>When it comes to goals, Proempo adopts the 'smart' goal approach.</p>
-        <p>What is the 'smart' approach?</p>
-    </div>
+    
     <ul class="section">
       <li class="item">
-        <div class="card">
+        <div class="card" id="card1">
           <div class="card_content">
             <div class="card_text">
                 <h2 class="firstLetter">S</h2>
                 <p class="categoryName">Specific</p>
-                <p class="question">What will I accomplish?</p>
-                <input type="text" id="textbox" placeholder="Answer here">
+                <p class="question">What goal will I accomplish?</p>
+                <textarea type="text" id="textbox" placeholder="Answer here"></textarea>
             </div>
           </div>
         </div>
       </li>
       <li class="item">
-        <div class="card">
+        <div class="card" id="card2">
           <div class="card_content">
             <div class="card_text">
                 <h2 class="firstLetter">M</h2>
                 <p class="categoryName">Measurable</p>
                 <p class="question">How do I know when I reach this goal?</p>
-                <input type="text" id="textbox" placeholder="Answer here">
+                <textarea type="text" id="textbox" placeholder="Answer here"></textarea>
             </div>
           </div>
         </div>
       </li>
       <li class="item">
-        <div class="card">
+        <div class="card" id="card3">
           <div class="card_content">
             <div class="card_text">
                 <h2 class="firstLetter">A</h2>
                 <p class="categoryName">Achievable</p>
                 <p class="question">Is this goal realistic with commitment?</p>
-                <input type="text" id="textbox" placeholder="Answer here">
+                <textarea type="text" id="textbox" placeholder="Answer here"></textarea>
             </div>
           </div>
         </div>
       </li>
       <li class="item">
-        <div class="card">
+        <div class="card" id="card4">
           <div class="card_content">
             <div class="card_text">
                 <h2 class="firstLetter">R</h2>
                 <p class="categoryName">Relevant</p>        
                 <p class="question">Why is this goal significant to me?</p>
-                <input type="text" id="textbox" placeholder="Answer here">
+                <textarea type="text" id="textbox" placeholder="Answer here"></textarea>
             </div>
           </div>
         </div>
       </li>
       <li class="item">
-        <div class="card">
+        <div class="card" id="card5">
           <div class="card_content">
             <div class="card_text">
                 <h2 class="firstLetter">T</h2>
                 <p class="categoryName">Timely</p>
                 <p class="question">When will I achieve this goal?</p>
-                <input type="text" id="textbox" placeholder="Answer here">
+                <textarea type="text" id="textbox" placeholder="Answer here"></textarea>
             </div>
           </div>
         </div>
       </li>
     </ul>
+    <div class="save-btn" id="save-button-container">
+      <button class="save-button">Save Entry</button>
+    </div>
+    <div class="add-another" id="add-container">
+      <p>I completed my goal. Add another here.</button>
+    </div>
 
+    <div class="explanation">
+      <p>When it comes to goal-setting, Proempo adopts the 'smart' goal approach.
+        The SMART goal approach is a professional goal-setting framework with five essential components: </p>
+      <p class="itemized">&bull; Specific: Goals must be clear and well-defined.</p>
+      <p class="itemized">&bull; Measurable: Goals should be quantifiable and trackable.</p>
+      <p class="itemized">&bull; Achievable: Goals should be realistic and attainable.</p>
+      <p class="itemized">&bull; Relevant: Goals should align with your objectives and values.</p>
+      <p class="itemized">&bull; Timely: Goals should have a defined time frame.</p>
+      <p>This framework enhances goal-setting precision and effectiveness.
+        In this implementation of the smart framework, you will focus on one main goal at the time. 
+        When you have completed the goal, come back and update to a new one.</p>
+  </div>
   </div>
   
   
@@ -101,9 +116,7 @@
       margin-bottom: 40px;
     }
   
-    .explanation p {
-        color:rgb(136, 91, 192)
-    }
+    
 
     .section {
       display: grid;
@@ -113,13 +126,13 @@
     }
   
     .item {
+      margin-top: 30px;
       display: flex;
-      padding: 1rem;
+      padding: 10px;
       filter:drop-shadow(0 0 5px rgba(206, 186, 217, 0.5));
     }
   
     .card {
-      background-color: rgb(136, 91, 192);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -127,7 +140,29 @@
       padding: 10px;
       justify-content: center;
       align-items: center; 
-      height: 300px;
+      height: 600px;
+      border-radius: 700px;
+      box-shadow:0 0 20px rgba(172, 123, 196, 0.5);
+    }
+
+    #card1 {
+      background-color: rgba(40, 5, 85, 0.64);
+    }
+
+    #card2 {
+      background-color: rgba(54, 14, 118, 0.638);
+    }
+
+    #card3 {
+      background-color: rgba(83, 30, 152, 0.617);
+    }
+
+    #card4 {
+      background-color:  rgba(107, 45, 182, 0.615);
+    }
+
+    #card5 {
+      background-color:rgba(136, 67, 220, 0.645);
     }
 
     h2, p, #textbox{
@@ -140,10 +175,71 @@
         font-weight: bold;
     }
 
+    .categoryName {
+      margin-bottom: 30px;
+      margin-top: 40px;
+      text-decoration: underline;
+    }
+
+    .question {
+      margin-bottom: 30px;
+    }
+
     #textbox {
         width:160px;
         color: black;
+        border-radius: 30px;
+        border: none;
+        height: 180px;
     }
 
+  .save-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+  
+  .save-button {
+    background-color: #2495409c;
+    padding: 10px 110px;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 5px;
+  }
+
+  .save-button:hover {
+      background-color: #ffb700ad;
+      color: black;
+    }
+
+    .explanation {
+      margin: 60px 30px;
+      border-radius: 10px;
+      box-shadow:0 0 20px rgba(206, 174, 222, 0.5);
+      padding: 30px;
+      background-color: rgba(187, 170, 223, 0.65);;
+    }
+    .explanation p {
+      color: rgb(68, 62, 62);
+      text-align: left; 
+    }
+
+    .itemized {
+      margin: 0px 100px;
+      margin-bottom: 10px;
+    }
+
+    .add-another p {
+      color: rgb(95, 87, 87);
+    }
+
+    .add-another p:hover {
+      text-decoration: underline; 
+      font-style: italic; 
+      cursor: pointer;
+      color: black;
+}
   </style>
 {% endblock %}
