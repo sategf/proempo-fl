@@ -18,8 +18,8 @@
                 <h2 class="firstLetter">S</h2>
                 <p class="categoryName">Specific</p>
                 <p class="question">What goal will I accomplish?</p>
-                <textarea type="text" id="textbox" placeholder="Answer here"></textarea>
-            </div>
+                <textarea type="text" id="textbox" name="specific" placeholder="{% if previous_goals and previous_goals[-1].specific %}{{ previous_goals[-1].specific|e }}{% else %}Answer here{% endif %}"></textarea>
+              </div>
           </div>
         </div>
       </li>
@@ -30,8 +30,8 @@
                 <h2 class="firstLetter">M</h2>
                 <p class="categoryName">Measurable</p>
                 <p class="question">How do I know when I reach this goal?</p>
-                <textarea type="text" id="textbox" placeholder="Answer here"></textarea>
-            </div>
+                <textarea type="text" id="textbox" name="measurable" placeholder="{% if previous_goals and previous_goals[-1].measurable %}{{ previous_goals[-1].measurable }}{% else %}Answer here{% endif %}"></textarea>
+              </div>
           </div>
         </div>
       </li>
@@ -42,8 +42,8 @@
                 <h2 class="firstLetter">A</h2>
                 <p class="categoryName">Achievable</p>
                 <p class="question">Is this goal realistic with commitment?</p>
-                <textarea type="text" id="textbox" placeholder="Answer here"></textarea>
-            </div>
+                <textarea type="text" id="textbox" name="achievable" placeholder="{% if previous_goals and previous_goals[-1].achievable %}{{ previous_goals[-1].achievable }}{% else %}Answer here{% endif %}"></textarea>
+              </div>
           </div>
         </div>
       </li>
@@ -54,8 +54,8 @@
                 <h2 class="firstLetter">R</h2>
                 <p class="categoryName">Relevant</p>        
                 <p class="question">Why is this goal significant to me?</p>
-                <textarea type="text" id="textbox" placeholder="Answer here"></textarea>
-            </div>
+                <textarea type="text" id="textbox" name="relevant" placeholder="{% if previous_goals and previous_goals[-1].relevant %}{{ previous_goals[-1].relevant }}{% else %}Answer here{% endif %}"></textarea>
+              </div>
           </div>
         </div>
       </li>
@@ -66,17 +66,17 @@
                 <h2 class="firstLetter">T</h2>
                 <p class="categoryName">Timely</p>
                 <p class="question">When will I achieve this goal?</p>
-                <textarea type="text" id="textbox" placeholder="Answer here"></textarea>
-            </div>
+                <textarea type="text" id="textbox" name="timely" placeholder="{% if previous_goals and previous_goals[-1].timely %}{{ previous_goals[-1].timely }}{% else %}Answer here{% endif %}"></textarea>
+              </div>
           </div>
         </div>
       </li>
     </ul>
     <div class="save-btn" id="save-button-container">
-      <button class="save-button">Save Entry</button>
+      <button class="save-button" onclick="saveGoalEntry()">Save Goal</button>
     </div>
     <div class="add-another" id="add-container">
-      <p>I completed my goal. Add another here.</button>
+      <p>I completed my goal.</button>
     </div>
 
     <div class="explanation">
@@ -116,8 +116,6 @@
       margin-bottom: 40px;
     }
   
-    
-
     .section {
       display: grid;
       grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -188,7 +186,7 @@
     #textbox {
         width:160px;
         color: black;
-        border-radius: 30px;
+        border-radius: 5px;
         border: none;
         height: 180px;
     }
@@ -202,7 +200,7 @@
   
   .save-button {
     background-color: #2495409c;
-    padding: 10px 110px;
+    padding: 10px 60px;
     color: white;
     border-radius: 10px;
     border: none;
@@ -242,4 +240,40 @@
       color: black;
 }
   </style>
+
+
+<script>
+  function saveGoalEntry() {
+    const specific = document.querySelector('textarea[name="specific"]').value;
+    const measurable = document.querySelector('textarea[name="measurable"]').value;
+    const achievable = document.querySelector('textarea[name="achievable"]').value;
+    const relevant = document.querySelector('textarea[name="relevant"]').value;
+    const timely = document.querySelector('textarea[name="timely"]').value;
+
+    const data = {
+      specific,
+      measurable,
+      achievable,
+      relevant,
+      timely
+    };
+
+    fetch('/save_goal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        alert(data.message);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
+</script>
+
+
 {% endblock %}

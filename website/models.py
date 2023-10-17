@@ -64,3 +64,12 @@ class Lesson(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     cards = db.relationship('Card')
     
+class Goal(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    specific = db.Column(db.String(1000)) 
+    measurable = db.Column(db.String(1000))
+    achievable = db.Column(db.String(1000))
+    relevant = db.Column(db.String(1000))
+    timely = db.Column(db.String(1000))
+    date = db.Column(db.DateTime(timezone=True), default=get_current_time_in_et)
