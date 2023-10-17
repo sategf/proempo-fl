@@ -128,7 +128,7 @@
     <label for="previous_entries">Select a previous entry:</label>
     <select name="previous_entry">
         <option value="" disabled selected>Select an entry</option>
-        {% for entry in previous_entries %}
+        {% for entry in previous_entries|reverse %}
             <option value="{{ entry.id }}">{{ entry.date.strftime('%m/%d/%Y') }}</option>
         {% endfor %}
     </select>
