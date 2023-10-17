@@ -76,7 +76,7 @@
       <button class="save-button" onclick="saveGoalEntry()">Save Goal</button>
     </div>
     <div class="add-another" id="add-container">
-      <p>I completed my goal.</button>
+      <p>Modify existing goals</button>
     </div>
 
     <div class="explanation">
@@ -89,7 +89,11 @@
       <p class="itemized">&bull; Timely: Goals should have a defined time frame.</p>
       <p>This framework enhances goal-setting precision and effectiveness.
         In this implementation of the smart framework, you will focus on one main goal at the time. 
-        When you have completed the goal, come back and update to a new one.</p>
+        When you have completed the goal, come back and create a new one by updating 
+        your answers to the questions.</p>
+      <p>This page is designed to always have a goal in the background. Once you accomplish one, 
+        you set another. When you set a second goal automatically means you accomplished the first. 
+      </p>
   </div>
   </div>
   
@@ -184,7 +188,7 @@
     }
 
     #textbox {
-        width:160px;
+        width:170px;
         color: black;
         border-radius: 5px;
         border: none;
@@ -243,37 +247,56 @@
 
 
 <script>
-  function saveGoalEntry() {
+  function validateTextareas() {
     const specific = document.querySelector('textarea[name="specific"]').value;
     const measurable = document.querySelector('textarea[name="measurable"]').value;
     const achievable = document.querySelector('textarea[name="achievable"]').value;
     const relevant = document.querySelector('textarea[name="relevant"]').value;
     const timely = document.querySelector('textarea[name="timely"]').value;
 
-    const data = {
-      specific,
-      measurable,
-      achievable,
-      relevant,
-      timely
-    };
+    if (!specific || !measurable || !achievable || !relevant || !timely) {
+      alert('Please answer all the questions');
+      return false;
+    }
 
-    fetch('/save_goal', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        alert(data.message);
-      })
-      .catch((error) => {
-        alert(error);
-      });
+    return true;
   }
+
+  function saveGoalEntry() {
+    if (validateTextareas()) {
+      const specific = document.querySelector('textarea[name="specific"]').value;
+      const measurable = document.querySelector('textarea[name="measurable"]').value;
+      const achievable = document.querySelector('textarea[name="achievable"]').value;
+      const relevant = document.querySelector('textarea[name="relevant"]').value;
+      const timely = document.querySelector('textarea[name="timely"]').value;
+
+      const data = {
+        specific,
+        measurable,
+        achievable,
+        relevant,
+        timely
+      };
+
+      fetch('/save_goal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          alert(data.message);
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+  }
+
 </script>
+
 
 
 {% endblock %}
