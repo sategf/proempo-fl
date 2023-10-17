@@ -33,7 +33,7 @@ mail = Mail(app)
 
 
 # Defining the support email address
-support_email = "Proempohelpdesk@gmail.com" 
+support_email = "proempohelpdesk@gmail.com" 
 
 
 
@@ -457,19 +457,20 @@ def support():
 @views.route('/submit_support', methods=['POST']) #something about routes isn't submitting the form through here, will be fixed soon
 def submit_support_form():
     if request.method == 'POST':
-        # Get form data
+       # Get form data
         issue_title = request.form['issue_title']
         username = request.form['username']
         description = request.form['description']
 
-        recipient_email = username #Assuming the user provides their email or username as the recipient
-        
-         # Create an EmailMessage
+        sender_email = username  # User's email or username
+        recipient_email = 'proempohelpdesk@gmail.com'  # Help desk email
+
+        # Create an EmailMessage
         message = EmailMessage()
         message.set_content(description)
         message['Subject'] = issue_title
-        message['From'] = 'Proempohelpdesk@gmail.com'  # Replace with your email
-        message['To'] = recipient_email   # Use the collected email or username as the recipient
+        message['From'] = sender_email  # Use the user's email as the sender
+        message['To'] = recipient_email  # Set the recipient as the help desk email
 
 
         # Set up your SMTP server and send the email
