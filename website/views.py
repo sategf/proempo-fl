@@ -547,6 +547,35 @@ def new_flashcard():
 
         return redirect("/CreateFlashcards")
 
+@views.route('/DeleteFlashcard/<int:flashcard_id>', methods=["POST"])
+@login_required
+def delete_flashcard(flashcard_id):
+
+    flashcard=Card.query.get(flashcard_id)
+
+    db.session.delete(flashcard)
+    db.session.commit()
+
+    return redirect("/ViewFlashcards")
+
+
+@views.route('/ViewFlashcards/<int:flashcard_id>')
+@login_required
+def get_flashcard(flashcard_id):
+
+    flashcard_id=request.view_args.get('flashcard_id')
+
+    if flashcard_id is None:
+        return "Invalid request"
+
+    flashcard=Card.query.get(flashcard_id)
+
+    if not flashcard:
+        print('Flashcard not found')
+        return redirect('/ViewFlashcards')
+    
+    return render_template("showFlashcard.html", card=flashcard, user=current_user)
+
 
 @views.route('/clear-all-completed-tasks', methods=['POST'])
 @login_required
