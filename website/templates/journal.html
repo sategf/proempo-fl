@@ -145,7 +145,7 @@
           <div class="card_text">
             <!--<p name="dear_journal_content" contenteditable="true" required>Today, I spent my day thinking about... {% if selected_entry != None %}{{ selected_entry.dear_journal_content }}{% endif %}</p>-->
             <p name="dear_journal_content" contenteditable="false" >Today, I spent my day thinking about...</p>
-            <textarea style="background-color: transparent; border: transparent;" name="dear_journal_content" rows="10" cols="26" required {% if selected_entry != None %}readonly{% endif %}>{% if selected_entry != None %}{{ selected_entry.dear_journal_content }}{% endif %}</textarea><br>
+            <textarea style="background-color: transparent; border: transparent;" name="dear_journal_content" rows="10" cols="26" required {% if selected_entry != None %}readonly{% else %}autofocus{% endif %}>{% if selected_entry != None %}{{ selected_entry.dear_journal_content }}{% endif %}</textarea><br>
           </div>
         </div>
       </div>

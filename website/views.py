@@ -267,6 +267,12 @@ def journal():
 def journal():
     selected_entry = None  #Initialize selected_entry to None
 
+    today = datetime.now().date()
+    entry_for_today = Journal.query.filter(Journal.date == today, Journal.user_id == current_user.id).first()
+    if entry_for_today:
+        selected_entry = entry_for_today
+
+
     if request.method == 'POST':
         if is_entry_exists_for_today():
             flash('Entry already exists for today. Cannot check-in again today.', category='error')
