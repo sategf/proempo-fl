@@ -129,7 +129,7 @@
     <select name="previous_entry">
         <option value="" disabled selected>Select an entry</option>
         {% for entry in previous_entries %}
-            <option value="{{ entry.id }}">{{ entry.date }}</option>
+            <option value="{{ entry.id }}">{{ entry.date.strftime('%m/%d/%Y') }}</option>
         {% endfor %}
     </select>
     <input type="submit" value="Go">
