@@ -1,88 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Daily Check-In - ProEmPo{% endblock %}
 {% block content %}
-
-<div class="container">
-  <div class="box">
-    <div class="title-box">
-      <h1 id="title" align="center">Daily Check-In</h1>
-    </div>
-<div class="main">
-  <div class="date-filter-top">
-    <button class="arrow-button" id="prev-date-button">&#8592;</button>
-    <span id="current-date"></span>
-    <button class="arrow-button" id="next-date-button">&#8594;</button>
-  </div>
-  <ul class="section">
-    <li class="item">
-      <div class="card">
-        <div class="card_content">
-          <h2 class="card_title">Dear Journal,</h2>
-          <div class="card_text">
-            <p contenteditable="true">Today, I spent my day thinking about... </p>
-          </div>
-        </div>
-      </div>
-    </li>
-    <li class="item">
-      <div class="card">
-        <div class="card_content">
-          <h2 class="card_title">3 things I am grateful for today are:</h2>
-          <div class="card_text">
-            <div class="gratitude-item">
-              <span class="number">1.</span>
-              <p contenteditable="true"></p>
-            </div>
-            <div class="gratitude-item">
-              <span class="number">2.</span>
-              <p contenteditable="true"></p>
-            </div>
-            <div class="gratitude-item">
-              <span class="number">3.</span>
-              <p contenteditable="true"></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </li>
-    <li class="item">
-      <div class="card">
-        <div class="card_content">
-          <h2 class="card_title">My day was...</h2>
-          <div class="card_text">
-            <form>
-              <div>
-                <label>
-                  <input type="radio" name="dayRating" value="excellent"> <img src="../static/veryWell.png" alt=""> Excellent 
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input type="radio" name="dayRating" value="well"> <img src="../static/well.png" alt="" > Well
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input type="radio" name="dayRating" value="bad"> <img src="../static/bad.png" alt=""> Bad
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input type="radio" name="dayRating" value="horrible"> <img src="../static/horrible.png" alt=""> Horrible
-                </label>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
-  <div class="save-btn" id="save-button-container">
-    <button class="save-button" onclick="saveJournalEntry()">Save Entry</button>
-  </div>
-</div>
-
-
 <style>
   h1 {
     background-color: rgba(152, 125, 209, 0.65);
@@ -187,6 +105,7 @@
   .gratitude-item {
     display: flex;
     align-items: center;
+    padding-bottom: 30px;
   }
 
   .number {
@@ -199,201 +118,104 @@
     margin: 0 10px;
   }
 </style>
-{% if user.finished_journals|length > 0 or user.journals|length > 0 %}
-    <ul class="list-group list-group-flush" id="journals">
-      {% for journal in user.journals %}
-      <li
-        class="list-group-item"
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        "
-      >
-    <li
-      class="list-group-item"
-      style="
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      "
-    >
-      <div>
-        <button class="btn btn-success" onClick="markJournal({{ journal.id }})">
-          <span class="fa fa-check"></span>
-        </button>
-        <span class="dataLine">{{ journal.data }}</span>
-        
+<div class="container">
+  <div class="box">
+    <div class="title-box">
+      <h1 id="title" align="center">Daily Check-In</h1>
+    </div>
+<div class="main">
+  <form method="GET" action="{{ url_for('views.journal') }}">
+    <label for="previous_entries">Select a previous entry:</label>
+    <select name="previous_entry">
+        <option value="" disabled selected>Select an entry</option>
+        {% for entry in previous_entries %}
+            <option value="{{ entry.id }}">{{ entry.date }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Go">
+</form>
+<label for="date">Date:</label>
+<input readonly type="date" name="date" {% if selected_entry != None %}value="{{ selected_entry.date }}" {% else %}value="{{ date }}" {% endif %}><br>
+<form method="POST">
+  <ul class="section">
+    <li class="item">
+      <div class="card">
+        <div class="card_content">
+          <h2 class="card_title">Dear Journal,</h2>
+          <div class="card_text">
+            <!--<p name="dear_journal_content" contenteditable="true" required>Today, I spent my day thinking about... {% if selected_entry != None %}{{ selected_entry.dear_journal_content }}{% endif %}</p>-->
+            <p name="dear_journal_content" contenteditable="false" >Today, I spent my day thinking about...</p>
+            <textarea style="background-color: transparent; border: transparent;" name="dear_journal_content" rows="10" cols="26" required {% if selected_entry != None %}readonly{% endif %}>{% if selected_entry != None %}{{ selected_entry.dear_journal_content }}{% endif %}</textarea><br>
+          </div>
+        </div>
       </div>
-      
-      <button
-        type="button"
-        class="btn btn-danger"
-        onClick="deleteJournal({{ journal.id }})"
-      >
-        <span aria-hidden="true" class="fa fa-trash"></span>
-      </button>
     </li>
-    {% endfor %}
-    {% endif %}
+    <li class="item">
+      <div class="card">
+        <div class="card_content">
+          <h2 class="card_title">3 things I am grateful for today are:</h2>
+          <div class="card_text">
+            <div class="gratitude-item">
+              <span class="number">1.</span>
+              <input type="text" style="background-color: transparent; border: transparent;" name="grateful1" {% if selected_entry != None %} value= "{{ selected_entry.grateful_content.split(',')[0] }}" {% endif %} required {% if selected_entry != None %}readonly{% endif %}>
+              <!--<p contenteditable="true"></p>-->
+            </div>
+            <div class="gratitude-item">
+              <span class="number">2.</span>
+              <input type="text" style="background-color: transparent; border: transparent;" name="grateful2" {% if selected_entry != None %} value= "{{ selected_entry.grateful_content.split(',')[1] }}" {% endif %} required {% if selected_entry != None %}readonly{% endif %}>
+              <!--<p contenteditable="true"></p>-->
+            </div>
+            <div class="gratitude-item">
+              <span class="number">3.</span>
+              <input type="text" style="background-color: transparent; border: transparent;" name="grateful3" {% if selected_entry != None %} value= "{{ selected_entry.grateful_content.split(',')[2] }}" {% endif %} required {% if selected_entry != None %}readonly{% endif %}>
+              <!--<p contenteditable="true"></p>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="item">
+      <div class="card">
+        <div class="card_content">
+          <h2 class="card_title">My day was...</h2>
+          <div class="card_text">
+              <div>
+                <label>
+                  <input type="radio" name="day_rating" value="Excellent" required {% if selected_entry %}disabled {% endif %}{% if selected_entry and selected_entry.day_rating == 'Excellent' %}checked {% endif %}> <img src="../static/veryWell.png" alt=""> Excellent 
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input type="radio" name="day_rating" value="Good" required {% if selected_entry %}disabled {% endif %}{% if selected_entry and selected_entry.day_rating == 'Good' %}checked {% endif %}> <img src="../static/well.png" alt="" > Good
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input type="radio" name="day_rating" value="Bad" required {% if selected_entry %}disabled {% endif %}{% if selected_entry and selected_entry.day_rating == 'Bad' %}checked {% endif %}> <img src="../static/bad.png" alt=""> Bad
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input type="radio" name="day_rating" value="Horrible" required {% if selected_entry %}disabled {% endif %}{% if selected_entry and selected_entry.day_rating == 'Horrible' %}checked {% endif %}> <img src="../static/horrible.png" alt=""> Horrible
+                </label>
+              </div>
+          </div>
+        </div>
+      </div>
+    </li>
   </ul>
+  <center><input type="submit" {% if selected_entry %}disabled {% endif %} value="Submit"></center>
+  <!--<div class="save-btn" id="save-button-container">
+    <input class="save-button" type="submit" {% if selected_entry %}disabled {% endif %} value="Save Entry">
+  </div>-->
+  </form>
+</div>
+
+
+
 
   <center class="no-journals">
     <h3>What is on your mind?</h3>
     <img src="../static/journaling.gif" />
-<script>
-// Function to update the visibility of the "Save" button based on the date
-function updateSaveButtonVisibility() {
-    const currentDate = new Date(document.getElementById("current-date").textContent);
-    const today = new Date();
-    const saveButton = document.getElementById("save-button-container");
-    
-    if (currentDate.toDateString() === today.toDateString()) {
-      saveButton.style.display = "flex";
-    } else {
-      saveButton.style.display = "none";
-    }
-}
 
-// Function to update the displayed date
-function updateDate(date) {
-    document.getElementById("current-date").textContent = date.toLocaleDateString();
-    updateArrowVisibility(date);
-    updateSaveButtonVisibility();
-}
-
-  // Function to handle clicking the previous date button
-  document.getElementById("prev-date-button").addEventListener("click", function () {
-    const currentDate = new Date(document.getElementById("current-date").textContent);
-    // Go one day back in time
-    currentDate.setDate(currentDate.getDate() - 1);
-    updateDate(currentDate);
-  });
-
-  // Function to handle clicking the next date button
-  document.getElementById("next-date-button").addEventListener("click", function () {
-    const currentDate = new Date(document.getElementById("current-date").textContent);
-    // Get the current actual date
-    const today = new Date();
-    // Check if currentDate is not the same as today
-    if (currentDate.toDateString() !== today.toDateString()) {
-      // Go forward in time
-      currentDate.setDate(currentDate.getDate() + 1);
-      updateDate(currentDate);
-    }
-  });
-
-  // Function to update the visibility of the right arrow button
-  function updateArrowVisibility(date) {
-    const today = new Date();
-    const nextDateButton = document.getElementById("next-date-button");
-    if (date.toDateString() === today.toDateString()) {
-      nextDateButton.style.visibility = "hidden"; 
-    } else {
-      nextDateButton.style.visibility = "visible"; 
-    }
-  }
-
-  updateDate(new Date());
-</script>
-
-<script>
-  var user_id = { user_id };
-  // Function to handle the "Save Entry" button click event
-  function saveJournalEntry() {
-    const dearJournalContent = document.querySelector('.card_text p:nth-child(1)').textContent;
-    const gratitudeContentNodes = document.querySelectorAll('.card_text p:nth-child(n+2)');
-    const gratitudeContentArray = Array.from(gratitudeContentNodes); 
-    const gratitudeContent = gratitudeContentArray.map(p => p.textContent);
-    const dayRating = document.querySelector('input[name="dayRating"]:checked').value;
-
-    const data = {
-        dearJournalContent: dearJournalContent,
-        gratitudeContent: gratitudeContent,
-        dayRating: dayRating
-    };
-
-    fetch('/save-journal-entry', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(result => {
-      if (result.message === "Journal entry saved successfully") {
-        alert("Journal entry saved successfully!");
-      } else {
-        alert("Failed to save journal entry.");
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert("An error occurred while saving the journal entry.");
-    });
-}
-</script>
-
-
-<script>
-  // Function to edit user input and update
-  function updateContent(element) {
-    element.contentEditable = "true";
-    element.focus();
-  }
-
-  // Variables to store the card contents
-  let dearJournalContent = "";
-  let gratefulContent = ["", "", ""];
-  let dayRating = "";
-
-  // Event listeners to make paragraphs editable on click and capture content
-  document.querySelectorAll('.card_text p').forEach(function (paragraph, index) {
-    paragraph.addEventListener('input', function () {
-      // Update the variables based on the card being edited
-      if (index === 0) {
-        dearJournalContent = paragraph.textContent;
-      } else if (index >= 1 && index <= 3) {
-        gratefulContent[index - 1] = paragraph.textContent;
-      }
-    });
-  });
-
-  // Event listener for radio buttons to capture day rating
-  document.querySelectorAll('input[name="dayRating"]').forEach(function (radio) {
-    radio.addEventListener('change', function () {
-      dayRating = this.value;
-    });
-  });
-
-  // Event listener for the "Save Entry" button
-  document.querySelector('.save-button').addEventListener('click', function () {
-    // Use the captured content to output to the console
-    // TO-DO: Must change this to save to the database instead of outputting to console !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-    console.log("Dear Journal Content:", dearJournalContent);
-    console.log("Grateful Content:", gratefulContent);
-    console.log("Day Rating:", dayRating);
-
-    // Show a popup message to indicate that the content was saved
-    window.alert("Content saved successfully!");
-
-  });  
-</script>
-
-<script>
-    // Event listeners to make paragraphs editable on click
-  document.querySelectorAll('.card_text p').forEach(function (paragraph) {
-    paragraph.addEventListener('click', function () {
-      updateContent(this);
-    });
-  });
-</script>
-
-</script>
 {% endblock %}

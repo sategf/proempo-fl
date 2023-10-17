@@ -244,7 +244,7 @@ def reports():
     finished_tasks_json = json.dumps(finished_tasks_list)
     return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json)
 
-
+'''
 @views.route('/journal', methods = ['GET', 'POST'])
 @login_required
 def journal():
@@ -260,6 +260,57 @@ def journal():
         db.session.commit()
         flash('Journal added!', category='success')
     return render_template("journal.html", user=current_user) 
+'''
+
+@views.route('/journal', methods=['GET', 'POST'])
+@login_required
+def journal():
+    selected_entry = None  #Initialize selected_entry to None
+
+    if request.method == 'POST':
+        if is_entry_exists_for_today():
+            flash('Entry already exists for today. Cannot check-in again today.', category='error')
+        else:
+
+            #Handle form submission
+            date = datetime.now().date()
+            dear_journal_content = request.form.get('dear_journal_content')
+            grateful_contents = [request.form.get('grateful1'), request.form.get('grateful2'), request.form.get('grateful3')]
+            day_rating = request.form.get('day_rating')
+
+            
+
+            #Create a new journal entry
+            journal_entry = Journal(
+                date=date,
+                user_id=current_user.id,
+                dear_journal_content=dear_journal_content,
+                grateful_content=','.join(grateful_contents),
+                day_rating=day_rating
+            )
+            db.session.add(journal_entry)
+            db.session.commit()
+    elif request.method == 'GET':
+        #Handle req to display a selected previous entry
+        previous_entry_id = request.args.get('previous_entry')
+
+        if previous_entry_id:
+            selected_entry = Journal.query.get(previous_entry_id)
+
+    #Fetch all previous entries from the database
+    previous_entries = Journal.query.all()
+    date = (datetime.now().date())
+
+    return render_template('journal.html', user=current_user, previous_entries=previous_entries, selected_entry=selected_entry, date=date)
+
+def is_entry_exists_for_today():
+    today = date.today()
+
+    entry_for_today = Journal.query.filter(Journal.date == today).first()
+
+    return entry_for_today is not None
+
+
 
 @views.route('/delete-task', methods=['POST'])
 def delete_task():  
@@ -512,7 +563,7 @@ def clear_all_completed_tasks():
     return jsonify({})
 
 
-
+'''
 @views.route('/save-journal-entry', methods=['POST'])
 def save_journal_entry():
     try:
@@ -536,7 +587,7 @@ def save_journal_entry():
     except Exception as e:
         print(str(e))
         return jsonify({'message': 'Failed to save journal entry'}), 500
-
+'''
 
 @views.route('/player')
 def player():
@@ -544,7 +595,7 @@ def player():
     pauseIcon='<i class="fas fa-pause"></i>'
 
     return render_template('player.html', user=current_user, playIcon=playIcon, pauseIcon=pauseIcon)
-
+'''
 @views.route('/delete-journal', methods=['POST'])
 def delete_journal():  
     journal_data = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
@@ -556,7 +607,7 @@ def delete_journal():
         db.session.commit()
 
     return jsonify({})
-
+'''
 
 @views.route('/goals')
 @login_required
@@ -569,3 +620,4 @@ def goals():
 def pride():
     return render_template('pride.html', user=current_user)
     
+

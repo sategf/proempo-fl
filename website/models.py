@@ -33,7 +33,7 @@ class ArchivedTask(db.Model):
 
 class Journal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime(timezone=True), default=get_current_time_in_et)
+    date = db.Column(db.Date) #, default=datetime.date.today)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     dear_journal_content = db.Column(db.String(1000)) 
     grateful_content = db.Column(db.String(500))  
