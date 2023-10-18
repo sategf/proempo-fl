@@ -466,35 +466,40 @@ def about():
 def support():
     return render_template("Support.html", user=current_user)
 
-@views.route('/submit_support', methods=['POST']) #something about routes isn't submitting the form through here, will be fixed soon
+@views.route('/submit_support', methods=['POST'])
 def submit_support_form():
     if request.method == 'POST':
-       # Get form data
-        issue_title = request.form['issue_title']
-        username = request.form['username']
-        description = request.form['description']
+        try:
+            # Get form data
+            issue_title = request.form['issue_title']
+            username = request.form['username']
+            description = request.form['description']
 
-        sender_email = username  # User's email or username
-        recipient_email = 'proempohelpdesk@gmail.com'  # Help desk email
+            sender_email = username  # User's email or username
+            recipient_email = 'proempohelpdesk@gmail.com'  # Help desk email
 
-        # Create an EmailMessage
-        message = EmailMessage()
-        message.set_content(description)
-        message['Subject'] = issue_title
-        message['From'] = sender_email  # Use the user's email as the sender
-        message['To'] = recipient_email  # Set the recipient as the help desk email
+            # Create an EmailMessage
+            message = EmailMessage()
+            message.set_content(description)
+            message['Subject'] = issue_title
+            message['From'] = sender_email  # Use the user's email as the sender
+            message['To'] = recipient_email  # Set the recipient as the help desk email
 
+            # Set up your SMTP server and send the email
+            smtp_server = smtplib.SMTP('smtp.gmail.com', 587)  # Replace with your SMTP server and port
+            smtp_server.starttls()
+            smtp_server.login(mail_username, mail_password)  # Replace with your email and password
+            smtp_server.send_message(message)
+            smtp_server.quit()
 
-        # Set up your SMTP server and send the email
-        smtp_server = smtplib.SMTP('smtp.gmail.com', 587)  # Replace with your SMTP server and port
-        smtp_server.starttls()
-        smtp_server.login('MAIL_USERNAME', 'MAIL_PASSWORD')  # Replace with your email and password
-        smtp_server.send_message(message)
-        smtp_server.quit()
+            return redirect(url_for('thank_you'))
 
-
-
-        return redirect(url_for('thank_you'))
+        except Exception as e:
+            print("An error occurred while sending the email:", e)
+            # Handle the error, log it, or take appropriate action
+            flash('Failed to submit the support request', category='error')
+    
+    return render_template("Support.html", user=current_user)
 
 
 @app.route('/thank_you')
