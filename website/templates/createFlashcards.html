@@ -9,9 +9,9 @@
             <div class="field">
                 <label for="lesson">Select an existing lesson:</label>
                 <select id="lesson" name="lesson">
-                    <option value=""> -Select-</option>
+                    <option id="select" value=""> --Select--</option>
                     {% for lesson in all_lessons %}
-                    <option value="{{ lesson.id }}">{{ lesson.name }}</option>
+                    <option id="option" value="{{ lesson.id }}">{{ lesson.name }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -19,16 +19,16 @@
 
             <div class="field1">
                 <label for="new_lesson_name">Or Create a new Lesson</label>
-                <input type="text" id="new_lesson_name" name="new_lesson_name">
+                <input id="cLesson" type="text" id="new_lesson_name" name="new_lesson_name">
             </div>
 
-            <div class="field">
+            <div class="field1">
                 <label for="question">Question:</label>
-                <input type="text" name="question">
+                <input id="question" type="text" name="question">
             </div>
 
-            <div class="field"> 
-                <label for="answer">Answer:</label>
+            <div class="field1"> 
+                <label id="answer" for="answer">Answer:</label>
                 <textarea name="answer" id="" cols="50" rows="10"></textarea>
             </div>
 
@@ -65,10 +65,12 @@
         padding: 10px;
         color: #ffffff;
         box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
-  }
+    }
+
     .field1{
         margin-top: 10px;
     }
+
     button{
         padding: 8px;
         outline: black;
@@ -77,11 +79,11 @@
         text-decoration-color: white;
     }
 
-
     #redirect {
         background-color: #a751bb;
         border: black;
         margin-bottom: 20px;
+        color: white;
     }
 
     #redirect:hover {
@@ -93,6 +95,7 @@
         background-color: #a751bb;
         border: black;
         margin-bottom: 20px;
+        color: white;
     }
 
     #submit:hover {
@@ -109,6 +112,39 @@
         box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
         margin-bottom: 40px;
 
+    }
+
+    textarea {
+        height: 200px;
+        width: 815px;
+        border-radius: 10px;
+        vertical-align: top;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    input {
+        border-radius: 10px;
+    }
+
+    select {
+        border-radius: 10px;
+    }
+    
+    #select {
+        text-align: center;
+    }
+
+    #option{
+        text-align: center;
+    }
+
+    #question {
+        width: 800px;
+    }
+
+    #cLesson {
+        width: 500px;
     }
 
 </style>

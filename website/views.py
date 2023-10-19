@@ -730,5 +730,17 @@ def pride():
         pride_entries = Pride.query.all()
 
     return render_template('pride.html', pride_entries=pride_entries, user=current_user)
+
+
+@views.route('/DeletePride/<int:pride_id>', methods=["POST"])
+@login_required
+def delete_pride(pride_id):
+
+    moment=Pride.query.get(pride_id)
+
+    db.session.delete(moment)
+    db.session.commit()
+
+    return redirect("/pride")
     
 

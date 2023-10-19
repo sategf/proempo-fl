@@ -9,9 +9,9 @@
         <div class="field">
             <label for="lesson">Select your Lesson:</label>
             <select id="lesson" name="lesson">
-                <option value="all"> -All Cards-</option>
+                <option id="select" value="all"> --All Cards--</option>
                 {% for select_lesson in all_lessons %}
-                <option value="{{ select_lesson.id }}">-{{ select_lesson.name }}-</option>
+                <option id="cLesson" value="{{ select_lesson.id }}">-{{ select_lesson.name }}-</option>
                 {% endfor %}
             </select>
             <button type="submit" class="btn btn-basic" id="filter">Filter</button>
@@ -48,8 +48,6 @@
             answer.style.display = 'none';
         }
     }
-
-
 </script>
 
 <script>
@@ -64,23 +62,25 @@
     }
 </script>
 
-
-
-
-
 <script>
     function confirmDeleteFlashcard(cardId) {
         if (confirm("Are you sure you want to delete this flashcard?")) {
+
             deleteFlashcard(cardId);
+
         }
     }
     function deleteFlashcard(cardId){
 
         fetch('/DeleteFlashcard/' + cardId, {
+
             method: "POST",
+
         })
         .then((_res) => {
+
             window.location.reload();
+
         });
     }
 </script>
@@ -107,6 +107,7 @@
         flex-wrap: wrap;
         justify-content: space-between;
         gap: 15px;
+        text-align: center;
     }
 
     /* Styles for individual flashcards */
@@ -130,15 +131,16 @@
         font-size: 16px;
     }
 
-    /* Dropdown styles */
+   
     .ui.selection.dropdown {
         margin-top: 20px;
     }
 
     #filter {
-    background-color: #a751bb;
-    border: none;
-  }
+        background-color: #a751bb;
+        border: none;
+        color: white;
+    }
 
   #filter:hover {
       background-color: #ffb700ad;
@@ -153,11 +155,12 @@
         background-color: #a751bb;
         border: black;
         margin-bottom: 20px;
+        color: white;
     }
 
     #redirect:hover {
-      background-color: #ffb700ad;
-      color: black;
+        background-color: #ffb700ad;
+        color: black;
     }
 
     .ui-form {
@@ -170,10 +173,22 @@
         margin-bottom: 40px;
     }
 
+    .option {
+        text-align: center;
+    }
+
+    #cLesson {
+        text-align: center;
+    }
+
+    select {
+        border-radius: 10px;
+    }
+
+    #select{
+        text-align: center;
+    }
+
 </style>
- 
-
-
-  
 {% endblock %}
 

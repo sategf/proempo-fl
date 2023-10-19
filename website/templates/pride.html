@@ -14,63 +14,165 @@
     <div id="form">
         <form action="/pride" method="POST" class="ui form">
 
-            <label for="moment">What are you proud of?</label>
+            <label id="proud" for="moment">What are you proud of?</label>
             <textarea id="moment" name="moment" placeholder="List your thoughts that your are proud of here..." required></textarea>
 
             <button type="submit" class="btn btn-basic" id="save">Save</button>
         </form>
     </div>
+</div>
 
-    <div id="list">
-        <h3>What I take pride in...</h3>
-        <ul>
-            
-            {% for entry in pride_entries %}
+<div id="pride-entries-length" data-length="{{ pride_entries|length }}"></div>
 
-                <li>{{ entry.moment }}</li>
-
-            {% endfor %}
-            
-        </ul>
+    <div class="postit-container">
+        {% for entry in pride_entries %}
+        <div class="draggable-postit" id="postit-{{ entry.id }}">
+            <div class="moment">
+                {{ entry.moment }}
+            </div>   
+        </div>
+        <button class="btn btn-danger" id="delete-card" onclick="confirmDeletePride('{{ entry.id }}')"><span aria-hidden="true" class="fa fa-trash"></span> Delete </button>    
+        {% endfor %}
     </div>
 
-
-</div> 
-
+<script>
+    // Make the DIV element draggable:
+    dragElement(document.getElementsByClassName("draggable-postit"));
     
+    function dragElement(elmnt) {
+
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        if (document.getElementById(elmnt.id + "header")) {
+
+            document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+        
+        } else {
+
+            elmnt.onmousedown = dragMouseDown;
+
+        }
+    
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves
+            document.onmousemove = elementDrag;
+        }
+        
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // set the element's new position:
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+    
+        function closeDragElement() {
+        
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+</script>
+
+<script>
+    function addDraggableElement() {
+        const moment = document.getElementById("moment").value;
+
+        // Create a new element
+        const newDiv = document.createElement("div");
+        newDiv.className = "draggable-postit";
+        newDiv.innerHTML = `<div id="mydivheader">I am proud of...</div><div class="moment">${moment}</div>`;
+
+        document.querySelector(".postit-container").appendChild(newDiv);
+
+        // Make the new element draggable
+        dragElement(newDiv);
+        
+        // Clear the input field after adding a new element
+        document.getElementById("moment").value = "";
+
+        return false; //so there is no submission
+    }
+
+    // adds a new element everytime you save
+    document.getElementById("save").addEventListener("click", addDraggableElement);
+
+</script>
+
+<script>
+
+    function confirmDeletePride(prideId) {
+        if (confirm("Are you sure you want to delete this post?")) {
+
+            deleteFlashcard(prideId);
+        }
+    }
+
+    function deletePride(prideId){
+
+        fetch('/DeletePride/' + prideId, {
+
+            method: "POST",
+
+        })
+
+        .then((_res) => {
+
+            window.location.reload();
+
+        });
+    }
+
+</script>
+
 <style>
     
     h2 {  
-                background-color: rgba(152, 125, 209, 0.65);
-                margin-top: 40px;
-                margin-bottom: 0px;
-                border-top-left-radius: 30px;
-                border-top-right-radius: 30px;
-                padding: 10px;
-                color: #ffffff;
-                box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
-            }
-
-            
+        align-items: center;
+        background-color: rgba(152, 125, 209, 0.65);
+        margin-top: 40px;
+        margin-bottom: 0px;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        padding: 10px;
+        color: #ffffff;
+        box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+        
+    }
+  
     .main {
-      max-width: 1500px;
-      background-color: white;
-      padding: 10px;
-      border-bottom-left-radius: 20px;
-      border-bottom-right-radius: 20px;
-      box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
-      margin-bottom: 40px;
+        align-items: center;
+        margin-top: 0px;
+        background-color: #fcfcfc;
+        padding: 30px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+      
     }
 
     .explanation p {
         color:rgb(136, 91, 192);
         text-align: center;
+        font-size: larger;
+        font-weight: bolder;
     }
 
     #save {
         background-color: #a751bb;
         border: black;
         margin-bottom: 20px;
+        color: white;
     }
  
     #save:hover {
@@ -79,9 +181,40 @@
     }
 
 
+    .draggable-postit {
+        position: absolute;
+        z-index: 9;
+        background-color: purple;
+        text-align: center;
+        border: 1px solid #d3d3d3;
+        border-radius: 25px;
+        width: 200px;
+        height: 150px;
+        
+    }
+
+    .moment {
+        color: white;
+    }
+
+    #mydivheader {
+        padding: 10px;
+        cursor: move;
+        z-index: 10;
+        background-color: purple;
+        color: #fff;
+        border-radius: 25px;
+    }
+
+    textarea {
+        border-radius: 10px;
+        width: 100%;
+    }
+
+    #proud {
+        font-size: large;
+        color: rgb(136, 91, 192);
+    }
+
 </style>
-
-
-
-
 {% endblock %}
