@@ -50,8 +50,8 @@ def sign_up():
             flash('Passwords do not match.', category='error')
         elif len(password1) < 5:
             flash('Password must be 6 or more characters', category='error')
-        elif agree != 'on':
-            flash('You must agree to the terms.', category='error')
+        #elif agree != 'on':
+        #    flash('You must agree to the terms.', category='error')
         else: 
             new_user = User(username=username, password=generate_password_hash(password1, method='scrypt'))
             db.session.add(new_user)
