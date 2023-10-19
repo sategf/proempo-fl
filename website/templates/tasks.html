@@ -70,9 +70,18 @@
             name="dueDate"
             id="dueDate"
             class="form-control"
-            style="width: 16%"
+            style="width: auto"
+          />
+          <label for="dueTime">Due Time: (Optional)</label>
+          <input
+            type="time"
+            name="dueTime"
+            id="duetime"
+            class="form-control"
+            style="width: auto"
           />
         </div>
+        
 
         <div class="form-group" align="center">
           <label for="task">Task:</label>
@@ -112,10 +121,14 @@
             <span class="fa fa-check"></span>
           </button>
           <span class="dataLine">{{ task.data }}</span>
-          {% if task.due_date %}
-          <span class="dataLine" style="margin-left: 10px; color: grey">
-            Due Date: {{ task.due_date.strftime('%m/%d/%Y') }}
-          </span>
+          {%  if task.due_date and task.due_time %}
+            <span class="dataLine" style="margin-left: 10px; color: grey">
+              Due Date: {{ task.due_date.strftime('%m/%d/%Y') }} at {{ task.due_time.strftime('%I:%M %p') }}
+            </span>
+          {% elif task.due_date %}
+            <span class="dataLine" style="margin-left: 10px; color: grey">
+              Due Date: {{ task.due_date.strftime('%m/%d/%Y') }} 
+            </span>
           {% endif %}
         </div>
         <div style="margin-left: auto; color: grey; padding-right: 5px">

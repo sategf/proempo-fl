@@ -188,16 +188,29 @@ def regularMeditation():
 def tasks():
     if request.method == 'POST':
         task_data = request.form.get('task')  # Gets the task from the HTML
-        due_date_str = request.form.get('dueDate')  # Gets the due date string from the HTML
+        due_date_str = request.form.get('dueDate')  # Gets the due date string
+        due_time_str = request.form.get('dueTime') # Gets due time
 
         if len(task_data) < 1:
             flash('You must enter a task!', category='error')
+        elif due_time_str and not due_date_str:
+            flash('You cannot have a due time without choosing a due date!', category='error')
         else:
             due_date = None  # Default to None if no due date is provided
+            due_time = None
             if due_date_str:
                 due_date = datetime.strptime(due_date_str, '%Y-%m-%d').date()
 
-            new_task = Task(data=task_data, due_date=due_date, user_id=current_user.id)  # Provide the schema for the task
+            if due_time_str:
+                due_time = datetime.strptime(due_time_str, '%H:%M').time()
+
+            new_task = Task(
+                data=task_data,
+                due_date=due_date,
+                due_time=due_time,  
+                user_id=current_user.id
+            )
+
             db.session.add(new_task)  # Add the task to the database
             db.session.commit()
             flash('Task added!', category='success')

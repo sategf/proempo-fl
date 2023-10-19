@@ -14,6 +14,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(1000))
     date = db.Column(db.DateTime(timezone=True), default=get_current_time_in_et)
+    due_time = db.Column(db.Time)
     due_date = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -21,6 +22,7 @@ class FinishedTask(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(1000))
     date = db.Column(db.DateTime(timezone=True), default=get_current_time_in_et)
+    due_time = db.Column(db.Time)
     due_date = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -28,6 +30,7 @@ class ArchivedTask(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(1000))
     date = db.Column(db.DateTime(timezone=True), default=get_current_time_in_et)
+    due_time = db.Column(db.Time)
     due_date = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
