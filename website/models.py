@@ -52,6 +52,7 @@ class User(db.Model, UserMixin):
     archivedtasks = db.relationship('ArchivedTask')
     journals = db.relationship('Journal')
     lessons = db.relationship('Lesson')
+    pride = db.relationship('Pride')
 
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -76,3 +77,9 @@ class Goal(db.Model):
     relevant = db.Column(db.String(1000))
     timely = db.Column(db.String(1000))
     date = db.Column(db.DateTime(timezone=True), default=get_current_time_in_et)
+
+
+class Pride(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    moment = db.Column(db.String(1000))

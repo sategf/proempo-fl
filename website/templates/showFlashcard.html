@@ -1,27 +1,39 @@
 {% extends "base.html" %} {% block title %}Flashcard{% endblock %} {% block content %}
 
-    <div class="container">
-        <div class="ui card">
+
+
+    <div class="flashcard-container">
+        <div class="flashcard">
             <div class="content">
+                <h3>Lesson: {{ card.lessons.name }}</h3>
                 <div class="question">
                     Question: {{ card.question }}
                 </div>
                 <div class="answer">
                     Answer: {{ card.answer }}
                 </div>
+                <button class="btn btn-basic" id="edit">Edit Card</button>
+                <button class="btn btn-basic" id="redirect" onclick="redirectToView()">View All Cards</button>
+                
             </div>
         </div>
     </div>
 
-
+    <script>
+        function redirectToView() {
+            window.location.href = '/ViewFlashcards';
+        }
+    </script>
 
 
  <style>
      .flashcard-container {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: center;
+        align-items: center;
         gap: 15px;
+        height: 100vh;
+        
     }
 
      .flashcard {
@@ -30,7 +42,7 @@
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
         padding: 20px;
         border-radius: 10px;
-        width: calc(33.33% - 20px);
+        width: 600px;
     }
 
     .flashcard h3 {
@@ -43,5 +55,29 @@
     .flashcard p {
         font-size: 16px;
     }
+
+    #edit {
+        background-color: #a751bb;
+        border: black;
+        margin-bottom: 20px;
+    }
+
+    #edit:hover {
+      background-color: #ffb700ad;
+      color: black;
+    }
+
+
+    #redirect {
+        background-color: #a751bb;
+        border: black;
+        margin-bottom: 20px;
+    }
+
+    #redirect:hover {
+      background-color: #ffb700ad;
+      color: black;
+    }
+
  </style>   
 {% endblock %}

@@ -4,8 +4,8 @@
     <h2 id="title" align="center">Study Your Flashcards</h2>
 </div>
 
-<form action="/ViewFlashcards" method="POST" class="ui form">
-    <div class="ui selection dropdown">
+<form action="/ViewFlashcards" method="POST" class="ui-form">
+    <div class="ui-selection-dropdown">
         <div class="field">
             <label for="lesson">Select your Lesson:</label>
             <select id="lesson" name="lesson">
@@ -14,10 +14,12 @@
                 <option value="{{ select_lesson.id }}">-{{ select_lesson.name }}-</option>
                 {% endfor %}
             </select>
-            <button type="submit" class="ui button">Filter</button>
+            <button type="submit" class="btn btn-basic" id="filter">Filter</button>
         </div>
     </div>
 </form>
+
+<button class="btn btn-basic" id="redirect" onclick="redirectToCreate()">Create More Flashcards</button>
 
 <div class="flashcard-container">
     {% for card in cards %}
@@ -29,8 +31,9 @@
         <div class="answer" style="display: none;">
             <p>Answer: {{ card.answer }}</p>
         </div>
-        <button class="show answer" onclick="toggleAnswer('flashcard-{{ card.id }}')">Show/Hide Answer</button> <button id="Show card" onclick="redirectToFlashcard('{{ card.id }}')">View Flashcard</button>
-        <button id="Show card" onclick="confirmDeleteFlashcard('{{ card.id }}')">Delete Flashcard</button>
+        <button class="btn btn-info" id="show-answer"onclick="toggleAnswer('flashcard-{{ card.id }}')"><span aria-hidden="true" class="fa fa-eye"></span> Toggle Answer</button> 
+        <button class="btn btn-success" id="show-card" onclick="redirectToFlashcard('{{ card.id }}')"><span aria-hidden="true" class="fa fa-pencil"></span> View/Edit </button> 
+        <button class="btn btn-danger" id="delete-card" onclick="confirmDeleteFlashcard('{{ card.id }}')"><span aria-hidden="true" class="fa fa-trash"></span> Delete </button>
     </div>
     {% endfor %}
 </div>
@@ -54,6 +57,14 @@
         window.location.href = '/ViewFlashcards/' + flashcard_id;
     }
 </script>
+
+<script>
+    function redirectToCreate() {
+        window.location.href = '/CreateFlashcards';
+    }
+</script>
+
+
 
 
 
@@ -124,14 +135,39 @@
         margin-top: 20px;
     }
 
-    .ui.button {
+    #filter {
     background-color: #a751bb;
     border: none;
   }
 
-  .ui.button:hover {
+  #filter:hover {
       background-color: #ffb700ad;
       color: black;
+    }
+
+    #show-answer {
+        margin: 5px;
+    }
+
+    #redirect {
+        background-color: #a751bb;
+        border: black;
+        margin-bottom: 20px;
+    }
+
+    #redirect:hover {
+      background-color: #ffb700ad;
+      color: black;
+    }
+
+    .ui-form {
+        max-width: 1500px;
+        background-color: white;
+        padding: 10px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+        margin-bottom: 40px;
     }
 
 </style>

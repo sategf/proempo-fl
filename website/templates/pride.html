@@ -1,43 +1,42 @@
-{% extends "base.html" %} {% block title %}Confidence{% endblock %} {% block content    %}
+{% extends "base.html" %} {% block title %}Confidence{% endblock %} {% block content %}
 
 <div class="container">
      <h2 id="title" align="center">Confidence</h2>
 </div>
+
 <div class="main" >
     <div class="explanation">
         <p>On this page we want you to realize that you are <u>GREAT!</u></p>
         <p>Work on thinking of things that you are proud of. It's important to love yourself!</p>
         <p>It may not come to you right away and that is O.K. this is an ongoing process for <u>YOU</u> and only <u>YOU</u></p>
     </div>
-    <div id="content">
-        <label for="category">Type of Achievement(Optional): </label>
-        <input type="text" id="category" placeholder="E.g., Personal, Academic, or Work"/>
-        <br>
-        <label for="moment">What are you proud of?</label>
-        <textarea id="moment" placeholder="List your thoughts that your are proud of here..."></textarea>
-        <button id="save">Save</button>
+
+    <div id="form">
+        <form action="/pride" method="POST" class="ui form">
+
+            <label for="moment">What are you proud of?</label>
+            <textarea id="moment" name="moment" placeholder="List your thoughts that your are proud of here..." required></textarea>
+
+            <button type="submit" class="btn btn-basic" id="save">Save</button>
+        </form>
     </div>
 
     <div id="list">
         <h3>What I take pride in...</h3>
         <ul>
-            <li>
+            
+            {% for entry in pride_entries %}
 
-            </li>
+                <li>{{ entry.moment }}</li>
+
+            {% endfor %}
+            
         </ul>
     </div>
 
 
 </div> 
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
 <style>
     
@@ -68,6 +67,21 @@
         text-align: center;
     }
 
+    #save {
+        background-color: #a751bb;
+        border: black;
+        margin-bottom: 20px;
+    }
  
+    #save:hover {
+        background-color: #ffb700ad;
+        color: black;
+    }
+
+
 </style>
-    {% endblock %}
+
+
+
+
+{% endblock %}

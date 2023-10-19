@@ -3,7 +3,7 @@
 <h1 id="title" align="center">Create Your Flashcards</h1>
 
 <body> 
-    <div class="ui container">
+    <div class="ui-container">
         <form action="/CreateFlashcards" method="POST" class="ui form">
 
             <div class="field">
@@ -32,14 +32,21 @@
                 <textarea name="answer" id="" cols="50" rows="10"></textarea>
             </div>
 
-            <button type="submit" class="ui button">Submit</button>
+            <button type="submit" class="btn btn-basic" id="submit">Submit</button>
         </form>
         <br>
         <div>
-            <a href="/ViewFlashcards">Go to View page</a>
+            <button class="btn btn-basic" id="redirect" onclick="redirectToView()">View your Flashcards</button>
+
         </div>
     </div>
 </body> 
+
+<script>
+    function redirectToView() {
+        window.location.href = '/ViewFlashcards';
+    }
+</script>
 
 <style>
 
@@ -70,30 +77,39 @@
         text-decoration-color: white;
     }
 
-    .flashcards{
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start; 
-        flex-wrap: wrap;
-        margin: auto;
-        margin-top: 15px;
-        width: 100%;
-        padding: 0 10px;
+
+    #redirect {
+        background-color: #a751bb;
+        border: black;
+        margin-bottom: 20px;
     }
 
-    .flashcard{
-        width: 370px;
-        height: 200px;
-        word-wrap: break-word;
-        margin: 15px;
+    #redirect:hover {
+      background-color: #ffb700ad;
+      color: black;
+    }
+
+    #submit {
+        background-color: #a751bb;
+        border: black;
+        margin-bottom: 20px;
+    }
+
+    #submit:hover {
+      background-color: #ffb700ad;
+      color: black;
+    }
+
+    .ui-container {
+        max-width: 1500px;
         background-color: white;
-    }
+        padding: 10px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+        margin-bottom: 40px;
 
-    .flashcard h2{
-        font-size: 1rem;
     }
-
-    
 
 </style>
 {% endblock %}

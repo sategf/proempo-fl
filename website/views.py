@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request, flash, jsonify, redirect,
 from flask_mail import Mail, Message
 from email.message import EmailMessage
 from flask_login import login_required, current_user
-from .models import Goal, Journal, Task, FinishedTask, ArchivedTask, Card, Lesson
+from .models import Goal, Journal, Task, FinishedTask, ArchivedTask, Card, Lesson, Pride
 from sqlalchemy.orm import aliased
 from . import db
 import json, os, smtplib
@@ -713,9 +713,22 @@ def save_goal():
         return jsonify({'message': 'Failed to save goal entry'}), 500
 
 
-@views.route('/pride')
+@views.route('/pride', methods=['GET', 'POST'])
 @login_required
 def pride():
-    return render_template('pride.html', user=current_user)
+
+    pride_entries = []
+
+    if request.method == 'POST':
+        #gets the info from the form
+        new_moment = request.form.get('moment')
+        #creates the pride object
+        pride_entry = Pride(user_id=current_user.id, moment=new_moment)
+        db.session.add(pride_entry)
+        db.session.commit()
+        #gets all the entries
+        pride_entries = Pride.query.all()
+
+    return render_template('pride.html', pride_entries=pride_entries, user=current_user)
     
 
