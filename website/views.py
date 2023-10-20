@@ -243,6 +243,17 @@ def reports():
         .group_by(func.strftime('%Y-%m-%d', FinishedTask.date))
         .all()
     )
+    archived_tasks_data = (
+        db.session.query(
+            func.strftime('%Y-%m-%d', ArchivedTask.date).label('date'),
+            func.count(ArchivedTask.id).label('finished_count')
+        )
+        .filter(ArchivedTask.user_id == current_user.id)
+        .filter(ArchivedTask.date >= start_date)
+        .filter(ArchivedTask.date <= end_date)
+        .group_by(func.strftime('%Y-%m-%d', ArchivedTask.date))
+        .all()
+    )
     data_dict = {}
     current_day = start_date
     while current_day <= end_date:
@@ -254,13 +265,18 @@ def reports():
         date_str = row.date
         data_dict[date_str] = row.finished_count
 
+    for row in archived_tasks_data:
+        date_str = row.date
+        data_dict[date_str] += row.finished_count
+
+
     finished_tasks_list = [{'date': date, 'finished_count': count} for date, count in data_dict.items()]
     finished_tasks_json = json.dumps(finished_tasks_list)
 
 
     # Code for the second visualization
     goals_count = Goal.query.filter(Goal.user_id == current_user.id).count()
-
+    print(finished_tasks_json)
     return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count)
 
 
