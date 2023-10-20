@@ -7,7 +7,7 @@
 <form action="/ViewFlashcards" method="POST" class="ui-form">
     <div class="ui-selection-dropdown">
         <div class="field">
-            <label for="lesson">Select your Lesson:</label>
+            <label for "lesson"> Select your Lesson:</label>
             <select id="lesson" name="lesson">
                 <option id="select" value="all"> --All Cards--</option>
                 {% for select_lesson in all_lessons %}
@@ -19,8 +19,6 @@
     </div>
 </form>
 
-<button class="btn btn-basic" id="redirect" onclick="redirectToCreate()">Create More Flashcards</button>
-
 <div class="flashcard-container">
     {% for card in cards %}
     <div class="flashcard" id="flashcard-{{ card.id }}">
@@ -31,12 +29,16 @@
         <div class="answer" style="display: none;">
             <p>Answer: {{ card.answer }}</p>
         </div>
-        <button class="btn btn-info" id="show-answer"onclick="toggleAnswer('flashcard-{{ card.id }}')"><span aria-hidden="true" class="fa fa-eye"></span> Toggle Answer</button> 
-        <button class="btn btn-success" id="show-card" onclick="redirectToFlashcard('{{ card.id }}')"><span aria-hidden="true" class="fa fa-pencil"></span> View/Edit </button> 
+        <button class="btn btn-info" id="show-answer" onclick="toggleAnswer('flashcard-{{ card.id }}')"><span aria-hidden="true" class="fa fa-eye"></span> Toggle Answer</button>
+        <button class="btn btn-success" id="show-card" onclick="redirectToFlashcard('{{ card.id }}')"><span aria-hidden="true" class="fa fa-pencil"></span> View/Edit </button>
         <button class="btn btn-danger" id="delete-card" onclick="confirmDeleteFlashcard('{{ card.id }}')"><span aria-hidden="true" class="fa fa-trash"></span> Delete </button>
     </div>
     {% endfor %}
 </div>
+
+<br>
+
+<button class="btn btn-basic" id="redirect" onclick="redirectToCreate()">Create More Flashcards</button>
 
 <script>
     <!-- This is a script for the answer button. It toggles the answer based on the card id -->
@@ -84,6 +86,9 @@
         });
     }
 </script>
+
+
+
 
 <style>
 
