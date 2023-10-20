@@ -210,12 +210,19 @@
   </div>-->
   </form>
 </div>
-
-
-
-
   <center class="no-journals">
     <h3>What is on your mind?</h3>
     <img src="../static/journaling.gif" />
+<script>
 
+function scanJournal() {
+    content = "dear_journal_content"
+    if (content.includes("hurt", "suicide", "kill", "murder")) {
+      console.log("Your journal contained concerning words. What is hurting you?")
+    }
+  }
+</script>
+
+
+    
 {% endblock %}
