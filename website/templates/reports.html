@@ -13,7 +13,17 @@
 
         <div class="goals-count-container">
             <h5 align="center">Number of Goals Achieved</h5>
-            <div id="goalsCount" class="goals-count">0</div>
+            <div id="goalsCount" class="goals-count">{{ goals_count }}</div>
+            <ul>
+                {% if latest_completed_goals %}
+                    <h5>Latest Completed Goals</h5>
+                    {% for goal in latest_completed_goals %}
+                        <li>{{ goal.specific }}</li>
+                    {% endfor %}
+                {% elif no_goals_message %}
+                    <p>{{ no_goals_message }}</p>
+                {% endif %}
+            </ul>
         </div>
 </div>
 </div>
@@ -98,31 +108,7 @@
         }
     });
 
-    // Data for the goals visualization
-    document.addEventListener("DOMContentLoaded", function () {
-        
-    var goalsCount = {{ goals_count }};
     
-    var goalsCountElement = document.getElementById("goalsCount");
-    var interval = 1000; // Update interval in milliseconds
-
-    var start = 0;
-
-    
-    
-    function updateCount() {
-        if (start < goalsCount) {
-            start += 1;
-            goalsCountElement.textContent = start;
-            setTimeout(updateCount, interval);
-        } else {
-            goalsCountElement.textContent = goalsCount; 
-        }
-    }
-
-    // Delay the start of the animation for 2 second 
-    setTimeout(updateCount, 2000);
-});
 
 </script>
 {% endblock %}

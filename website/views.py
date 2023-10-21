@@ -275,14 +275,18 @@ def reports():
 
 
     # Code for the second visualization
-    # goals_count = Goal.query.filter(Goal.user_id == current_user.id).count()
     goals_count = Goal.query.filter(
-    and_(Goal.user_id == current_user.id, Goal.status == "C")
+        and_(Goal.user_id == current_user.id, Goal.status == "C")
     ).count()
-    print(finished_tasks_json)
-    return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count)
 
+    latest_completed_goals = Goal.query.filter(
+        and_(Goal.user_id == current_user.id, Goal.status == "C")
+    ).order_by(Goal.date.desc()).limit(3).all()
 
+    if goals_count > 0:
+        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, latest_completed_goals=latest_completed_goals)
+    else:
+        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message="Oh oh. It appears as if you have not set any goals. Begin setting goals")
 
 
 
@@ -706,9 +710,13 @@ def delete_journal():
 def goals():
     user_id = current_user.id
     previous_goals = Goal.query.filter_by(user_id=user_id).all()
-    
+    if previous_goals is None:
+        previous_goals = [] 
+
     return render_template('goals.html', user=current_user, previous_goals=previous_goals)
-    
+
+
+
 @views.route('/save_goal', methods=['POST'])
 def save_goal():
     try:

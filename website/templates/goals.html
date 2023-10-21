@@ -301,10 +301,14 @@
 <script>
   function completedGoal() {
     if (validateTextareas()) {
-        var goalId = {{ previous_goals[-1].id }};
-        markGoalAsCompleted(goalId);
+        var goalId = {% if previous_goals and previous_goals|length > 0 %}{{ previous_goals[-1].id }}{% else %}null{% endif %};
+        if (goalId !== null) {
+            markGoalAsCompleted(goalId);
+        } else {
+            alert("No goals available to mark as completed.");
+        }
     } else {
-        alert("issue");
+        alert("Please fill in all the textareas.");
     }
   }
 
@@ -318,7 +322,7 @@
     .then((response) => response.json())
     .then((data) => {
         if (data.message === 'Goal marked as completed successfully') {
-            alert("goal marked as completed");
+            alert("Goal marked as completed");
         } else {
             alert("Failed to mark goal as completed");
         }
@@ -328,6 +332,7 @@
     });
   }
 </script>
+
 
 
   
