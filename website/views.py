@@ -286,7 +286,7 @@ def reports():
     if goals_count > 0:
         return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, latest_completed_goals=latest_completed_goals)
     else:
-        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message="Oh oh. It appears as if you have not set any goals. Begin setting goals")
+        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message="It appears as if you have not set any goals. <a href=/goals>Begin setting goals.</a>")
 
 
 
