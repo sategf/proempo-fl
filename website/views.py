@@ -276,6 +276,10 @@ def reports():
 
     # Code for the second visualization
     goals_count = Goal.query.filter(Goal.user_id == current_user.id).count()
+    # goals_count = Goal.query.filter(
+    # and_(Goal.user_id == current_user.id, Goal.status == "C")
+    # ).count()
+    #need to edit report, will do later. 
     print(finished_tasks_json)
     return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count)
 
@@ -692,6 +696,12 @@ def delete_journal():
 '''
 
 
+
+
+
+
+
+
 @views.route('/goals')
 @login_required
 def goals():
@@ -710,6 +720,7 @@ def save_goal():
         achievable = data.get('achievable')
         relevant = data.get('relevant')
         timely = data.get('timely')
+        status = data.get('status')
 
         goal_entry = Goal(
             user_id=user_id,
@@ -717,7 +728,8 @@ def save_goal():
             measurable=measurable,
             achievable=achievable,
             relevant=relevant,
-            timely=timely
+            timely=timely,
+            status=status
         )
 
         db.session.add(goal_entry)
@@ -728,6 +740,24 @@ def save_goal():
         print(str(e))
         return jsonify({'message': 'Failed to save goal entry'}), 500
 
+
+@views.route('/complete_goal/<int:goal_id>', methods=['PUT'])
+def complete_goal(goal_id):
+    try:
+        goal = Goal.query.filter_by(id=goal_id, user_id=current_user.id).first()
+
+        if goal:
+            goal.status = "C"
+            db.session.commit()
+            return jsonify({'message': 'Goal marked as completed successfully'})
+        else:
+            return jsonify({'message': 'Goal not found or does not belong to the current user'}), 404
+    except Exception as e:
+        print(str(e))
+        return jsonify({'message': 'Failed to mark goal as completed'}), 500
+    
+
+    
 
 @views.route('/pride', methods=['GET', 'POST'])
 @login_required

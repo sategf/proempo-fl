@@ -77,6 +77,7 @@ class Goal(db.Model):
     relevant = db.Column(db.String(1000))
     timely = db.Column(db.String(1000))
     date = db.Column(db.DateTime(timezone=True), default=get_current_time_in_et)
+    status = db.Column(db.String(1))
 
 
 class Pride(db.Model):
