@@ -12,7 +12,7 @@ from datetime import date, datetime
 import csv
 import plotly.graph_objs as go
 from datetime import datetime, timedelta
-from sqlalchemy import func
+from sqlalchemy import and_, func
 
 views = Blueprint('views', __name__)
 
@@ -275,11 +275,10 @@ def reports():
 
 
     # Code for the second visualization
-    goals_count = Goal.query.filter(Goal.user_id == current_user.id).count()
-    # goals_count = Goal.query.filter(
-    # and_(Goal.user_id == current_user.id, Goal.status == "C")
-    # ).count()
-    #need to edit report, will do later. 
+    # goals_count = Goal.query.filter(Goal.user_id == current_user.id).count()
+    goals_count = Goal.query.filter(
+    and_(Goal.user_id == current_user.id, Goal.status == "C")
+    ).count()
     print(finished_tasks_json)
     return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count)
 
