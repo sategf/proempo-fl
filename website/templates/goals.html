@@ -269,7 +269,7 @@
     const timely = document.querySelector('textarea[name="timely"]').value;
 
     if (!specific || !measurable || !achievable || !relevant || !timely) {
-      alert('Please answer all the questions below.');
+      alert("Please answer all the questions in the 'smart' approach.");
       return false;
     }
 
@@ -322,7 +322,7 @@
             alert("No goals available to mark as completed. If you have a goal, please refresh the page.");
         }
     } else {
-        alert("Please fill in all the text boxes.");
+        alert("All questions must be answered before processing the goal.");
     }
   }
 
@@ -342,7 +342,7 @@
         }
     })
     .catch((error) => {
-        alert("An error has occurred while marking the goal as completed.");
+        alert("An error has occurred while marking the goal as completed. Please try again later or report the issue.");
     });
   }
 </script>
