@@ -72,10 +72,10 @@
         </div>
       </li>
     </ul>
-    <div class="save-btn" id="save-button-container">
+    <div class="save-btn btn" id="save-button-container">
       <button class="save-button" onclick="saveGoalEntry()">Save My Goal</button>
     </div>
-    <div class="complete-btn" id="complete-button-container">
+    <div class="complete-btn btn" id="complete-button-container">
       <button class="complete-button" onclick="completedGoal()">Goal Completed</button>
     </div>
 
@@ -195,20 +195,28 @@
         height: 180px;
     }
 
-  .save-btn {
+  .save-btn, .complete-btn {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 30px;
   }
+
+  .complete-btn {
+    margin-top: 10px;
+  }
   
-  .save-button {
+  .save-button, .complete-button {
     background-color: #925bae9c;
     padding: 10px 60px;
     color: white;
     border-radius: 10px;
     border: none;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
+  }
+
+  .complete-button {
+    padding: 10px 50px;
   }
 
   .save-button:hover {
@@ -216,19 +224,12 @@
       color: black;
     }
 
-    .complete-button {
-    background-color: #925bae9c;
-    padding: 10px 40px;
-    color: white;
-    border-radius: 10px;
-    border: none;
-    margin-bottom: 1px;
-  }
 
   .complete-button:hover {
-    background-color: #ffb700ad;
+    background-color: #10bfd688;
     color: black;
   }
+
     .explanation {
       margin: 60px 30px;
       border-radius: 10px;
