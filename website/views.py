@@ -521,17 +521,17 @@ def submit_support_form():
         try:
             # Get form data
             issue_title = request.form['issue_title']
-            username = request.form['username']
+            email = request.form['email']
             description = request.form['description']
 
-            sender_email = username  # User's email or username
+            
             recipient_email = 'proempohelpdesk@gmail.com'  # Help desk email
 
             # Create an EmailMessage
             message = EmailMessage()
             message.set_content(description)
             message['Subject'] = issue_title
-            message['From'] = sender_email  # Use the user's email as the sender
+            message['From'] = email  # Use the user's email as the sender
             message['To'] = recipient_email  # Set the recipient as the help desk email
 
             # Set up your SMTP server and send the email

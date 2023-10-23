@@ -76,7 +76,7 @@
       <button class="save-button" onclick="saveGoalEntry()">Save My Goal</button>
     </div>
     <div class="complete-btn" id="complete-button-container">
-      <button class="complete-button" onclick="completedGoal()">I Completed the goal</button>
+      <button class="complete-button" onclick="completedGoal()">Goal Completed</button>
     </div>
 
     <div class="explanation">
@@ -203,7 +203,7 @@
   }
   
   .save-button {
-    background-color: #2495409c;
+    background-color: #925bae9c;
     padding: 10px 60px;
     color: white;
     border-radius: 10px;
@@ -216,6 +216,19 @@
       color: black;
     }
 
+    .complete-button {
+    background-color: #925bae9c;
+    padding: 10px 40px;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 1px;
+  }
+
+  .complete-button:hover {
+    background-color: #ffb700ad;
+    color: black;
+  }
     .explanation {
       margin: 60px 30px;
       border-radius: 10px;
@@ -255,7 +268,7 @@
     const timely = document.querySelector('textarea[name="timely"]').value;
 
     if (!specific || !measurable || !achievable || !relevant || !timely) {
-      alert('Please answer all the questions');
+      alert('Please answer all the questions below.');
       return false;
     }
 
@@ -305,10 +318,10 @@
         if (goalId !== null) {
             markGoalAsCompleted(goalId);
         } else {
-            alert("No goals available to mark as completed. If you do have a goal, refresh the page");
+            alert("No goals available to mark as completed. If you have a goal, please refresh the page.");
         }
     } else {
-        alert("Please fill in all the textareas.");
+        alert("Please fill in all the text boxes.");
     }
   }
 
@@ -328,7 +341,7 @@
         }
     })
     .catch((error) => {
-        alert("An error occurred while marking the goal as completed.");
+        alert("An error has occurred while marking the goal as completed.");
     });
   }
 </script>
