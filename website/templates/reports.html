@@ -10,22 +10,43 @@
             <h5 align="center">Amount of tasks I completed this week</h5>
             <canvas id="taskChart" width="300" height="150"></canvas>
         </div>
-
-        <div class="goals-count-container">
-            <h5 align="center">Number of Goals Achieved </h5>
-            <div id="goalsCount" class="goals-count">{{ goals_count }}</div>
-            <ul>
-                {% if latest_completed_goals %}
-                    <h5>Latest Completed <a href=/goals>Goals</a></h5>
-                    {% for goal in latest_completed_goals %}
-                        <li>{{ goal.specific }}</li>
-                    {% endfor %}
-                {% elif no_goals_message %} 
-                    <p>{{ no_goals_message|safe }}</p>
-                {% endif %}
-            </ul>
+        <div class="goals-and-frequent-container">
+            <div class="goals-count-container">
+                <h5 align="center">Goals Achieved</h5>
+                <div id="goalsCount" class="goals-count">{{ goals_count }}</div>
+                <ul>
+                    {% if latest_completed_goals %}
+                        <h6>Latest Completed <a href=/goals>Goals</a></h6>
+                        {% for goal in latest_completed_goals %}
+                            <li>{{ goal.specific }}</li>
+                        {% endfor %}
+                    {% elif no_goals_message %}
+                        <p>{{ no_goals_message|safe }}</p>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="frequent-day-container">
+                <h5>My most frequent day rating</h5>
+                <div id="dayFrequency" class="day-rate">
+                    {% if most_popular_rating == 'Good' %}
+                    <img src="../static/well.png" alt="Well">
+                    <p>Good! I am doing amazing</p>
+                    {% elif most_popular_rating == 'Excellent' %}
+                    <img src="../static/veryWell.png" alt="Excellent">
+                    <p>Fantastic! I will keep it up></p>
+                    {% elif most_popular_rating == 'Bad' %}
+                    <img src="../static/bad.png" alt="Bad">
+                    <p>Oh no. Here are some resources to help you feel better: (resources to be added soon)</p>
+                    {% elif most_popular_rating == 'Horrible' %}
+                    <img src="../static/horrible.png" alt="Horrible">
+                    <p>Oh no. Here are some resources to help you feel better: (resources to be added soon)</p>
+                    {% else %}
+                    <img src="../static/noMood.png" alt="No Mood Logged">
+                    <p>Hmmm... It appears that you have not logged any day ratings. Please add this data so that we can generate your report.</p>
+                {% endif %}</div>
+            </div>
         </div>
-</div>
+    </div>
 </div>
 
 <style>
@@ -46,46 +67,69 @@
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
         box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+        display: ;
     }
+
     ul {
         text-align: center;
         list-style-position: inside;
         padding: 0px;
     }
 
-
-
+    .goals-and-frequent-container {
+        display: flex; /* Display children horizontally */
+        justify-content: space-between; /* Space between children */
+    }
 
     .goals-count-container {
-    text-align: center;
-    padding: 20px;
-    background-color: #b691cfb2;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    margin-top: 50px;
-}
-
-/* Style for the animated number */
-.goals-count {
-    font-size: 36px;
-    font-weight: bold;
-    color: #242628; /* Customize the color */
-    animation: countUp 2s ease-out forwards;
-}
-
-@keyframes countUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+        text-align: center;
+        padding: 20px;
+        background-color: rgb(236, 227, 255);
+        border-radius: 10px;
+        box-shadow: 0 0 30px rgb(215, 201, 244);
+        margin-top: 50px;
+        max-width: 430px;
+        flex: 1;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    .frequent-day-container {
+        text-align: center;
+        padding: 20px;
+        background-color: rgb(236, 227, 255);
+        border-radius: 10px;
+        box-shadow: 0 0 30px rgb(215, 201, 244);
+        margin-top: 50px;
+        max-width: 430px;
+        flex: 1; 
     }
-}
+    
+    
+    h6 {
+        padding-top: 20px;
+    }
+
+    .goals-count {
+        font-size: 36px;
+        font-weight: bold;
+        color: #242628;
+        animation: countUp 2s ease-out forwards;
+    }
+
+    .frequent-day-container img {
+        max-width: 150px;
+    }
+
+    @keyframes countUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
-
-
 
 <script>
     // data for the first chart
@@ -112,8 +156,5 @@
             }
         }
     });
-
-    
-
 </script>
 {% endblock %}

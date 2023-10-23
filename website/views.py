@@ -286,6 +286,21 @@ def reports():
     finished_tasks_list = [{'date': date, 'finished_count': count} for date, count in data_dict.items()]
     finished_tasks_json = json.dumps(finished_tasks_list)
 
+    # Query to find the most popular day-rating
+    most_popular_day_rating = (
+        db.session.query(Journal.day_rating, func.count().label('count'))
+        .filter(Journal.user_id == current_user.id)
+        .group_by(Journal.day_rating)
+        .order_by(func.count().desc())
+        .limit(1)
+        .first()
+    )
+
+    most_popular_rating = most_popular_day_rating[0] if most_popular_day_rating else "No data available"
+    # !!!!! need to handle what happens when there is a tie
+
+
+
 
     # Code for the second visualization
     goals_count = Goal.query.filter(
@@ -297,9 +312,9 @@ def reports():
     ).order_by(Goal.date.desc()).limit(3).all()
 
     if goals_count > 0:
-        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, latest_completed_goals=latest_completed_goals)
+        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, latest_completed_goals=latest_completed_goals, most_popular_rating=most_popular_rating)
     else:
-        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message="It appears as if you have not set any goals. <a href=/goals>Begin setting goals.</a>")
+        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message="It appears as if you have not set any goals. <a href=/goals>Begin setting goals.</a>", most_popular_rating=most_popular_rating)
 
 
 
