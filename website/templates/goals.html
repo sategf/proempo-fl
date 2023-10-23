@@ -304,6 +304,8 @@
         .then((response) => response.json())
         .then((data) => {
           alert(data.message);
+          location.reload(true);
+
         })
         .catch((error) => {
           alert(error);
@@ -319,7 +321,7 @@
         if (goalId !== null) {
             markGoalAsCompleted(goalId);
         } else {
-            alert("No goals available to mark as completed. If you have a goal, please refresh the page.");
+            alert("No goals available to mark as completed. If you have a goal written, save it first.");
         }
     } else {
         alert("All questions must be answered before processing the goal.");
