@@ -62,7 +62,7 @@
       <h1 id="title" align="center">Tasks</h1>
     </div>
     <div class="form-container">
-      <form method="POST" class="d-flex flex-column">
+      <form action="/tasks" method="POST" class="d-flex flex-column">
         <div class="form-group" align="center">
           <label for="dueDate">Due Date: (Optional)</label>
           <input
@@ -103,11 +103,22 @@
           Add Task
         </button>
       </form>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Sort by
+      </button>
+      <div class="dropdown-menu" aria-labelledby="sortDropdownButton">
+        <a class="dropdown-item" href="/tasks?sort_method=default">Oldest to Newest</a>
+        <a class="dropdown-item" href="/tasks?sort_method=newest">Newest to Oldest</a>
+        <a class="dropdown-item" href="/tasks?sort_method=due_date">Due Date</a>
+        <a class="dropdown-item" href="/tasks?sort_method=data">Alphabetically</a>
+      </div>
+    </div>
     </div>
 
     {% if user.finished_tasks|length > 0 or user.tasks|length > 0 %}
     <ul class="list-group list-group-flush" id="tasks">
-      {% for task in user.tasks %}
+      {% for task in tasks %}
       <li
         class="list-group-item"
         style="

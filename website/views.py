@@ -189,7 +189,7 @@ def tasks():
     if request.method == 'POST':
         task_data = request.form.get('task')  # Gets the task from the HTML
         due_date_str = request.form.get('dueDate')  # Gets the due date string
-        due_time_str = request.form.get('dueTime') # Gets due time
+        due_time_str = request.form.get('dueTime')  # Gets due time
 
         if len(task_data) < 1:
             flash('You must enter a task!', category='error')
@@ -207,7 +207,7 @@ def tasks():
             new_task = Task(
                 data=task_data,
                 due_date=due_date,
-                due_time=due_time,  
+                due_time=due_time,
                 user_id=current_user.id
             )
 
@@ -215,7 +215,20 @@ def tasks():
             db.session.commit()
             flash('Task added!', category='success')
 
-    return render_template("tasks.html", user=current_user)
+    selected_sort = request.args.get('sort_method', 'default')
+
+    user_id = current_user.id
+
+    if selected_sort == 'due_date':
+        tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.due_date, Task.due_time)
+    elif selected_sort == 'data':
+        tasks = Task.query.filter(Task.user_id == user_id).order_by(func.lower(Task.data))
+    elif selected_sort == 'newest':
+        tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.date.desc())
+    else:
+        tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.date)
+
+    return render_template('tasks.html', user=current_user, tasks=tasks, selected_sort=selected_sort)
 
 
 @views.route('/archivedtasks')
