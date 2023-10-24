@@ -320,23 +320,6 @@ def reports():
 
 
 
-'''
-@views.route('/journal', methods = ['GET', 'POST'])
-@login_required
-def journal():
-    if request.method == 'POST':
-        journal_content = request.form.get('dearJournalContent')  
-        journal_gratitude = request.form.get('gratitudeContent')
-        journal_rating = request.form.get('dayRating')
-        
-        
-
-        new_journal = Journal(data=journal_content, user_gratitude=journal_gratitude, user_rating=journal_rating, user_id=current_user.id)  # Provide the schema for the task
-        db.session.add(new_journal)  
-        db.session.commit()
-        flash('Journal added!', category='success')
-    return render_template("journal.html", user=current_user) 
-'''
 
 @views.route('/journal', methods=['GET', 'POST'])
 @login_required
@@ -706,31 +689,7 @@ def clear_all_completed_tasks():
     return jsonify({})
 
 
-'''
-@views.route('/save-journal-entry', methods=['POST'])
-def save_journal_entry():
-    try:
-        data = request.json
-        user_id = current_user.id
-        dear_journal_content = data['dearJournalContent']
-        grateful_content = ', '.join(data['gratitudeContent'])
-        day_rating = data['dayRating']
 
-        journal_entry = Journal(
-            user_id= user_id,
-            dear_journal_content=dear_journal_content,
-            grateful_content=grateful_content,
-            day_rating=day_rating
-        )
-
-        db.session.add(journal_entry)
-        db.session.commit()
-
-        return jsonify({'message': 'Journal entry saved successfully'})
-    except Exception as e:
-        print(str(e))
-        return jsonify({'message': 'Failed to save journal entry'}), 500
-'''
 
 @views.route('/player')
 def player():
@@ -738,19 +697,7 @@ def player():
     pauseIcon='<i class="fas fa-pause"></i>'
 
     return render_template('player.html', user=current_user, playIcon=playIcon, pauseIcon=pauseIcon)
-'''
-@views.route('/delete-journal', methods=['POST'])
-def delete_journal():  
-    journal_data = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
-    journal_id = journal_data['journalId']
-    journal = Journal.query.get(journal_id)
-    if journal and journal.user_id == current_user.id:
-        
-        db.session.delete(journal)
-        db.session.commit()
 
-    return jsonify({})
-'''
 
 
 
