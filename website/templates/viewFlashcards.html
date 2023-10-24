@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}View Flashcards{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}View Flashcards - ProEmPo{% endblock %} {% block content %}
 
 <div class="container">
     <h2 id="title" align="center">Study Your Flashcards</h2>
@@ -7,11 +7,11 @@
 <form action="/ViewFlashcards" method="POST" class="ui-form">
     <div class="ui-selection-dropdown">
         <div class="field">
-            <label for "lesson"> Select your Lesson:</label>
+            <label for "lesson" id="lable-lesson"> Select your Lesson:</label>
             <select id="lesson" name="lesson">
                 <option id="select" value="all"> --All Cards--</option>
                 {% for select_lesson in all_lessons %}
-                <option id="cLesson" value="{{ select_lesson.id }}">-{{ select_lesson.name }}-</option>
+                <option id="cLesson" value="{{ select_lesson.id }}">--{{ select_lesson.name }}--</option>
                 {% endfor %}
             </select>
             <button type="submit" class="btn btn-basic" id="filter">Filter</button>
@@ -168,15 +168,9 @@
         color: black;
     }
 
-    .ui-form {
-        max-width: 1500px;
-        background-color: white;
-        padding: 10px;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-        box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
-        margin-bottom: 40px;
-    }
+   #label-lesson {
+        font-weight: bolder;
+   }
 
     .option {
         text-align: center;

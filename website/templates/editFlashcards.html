@@ -1,0 +1,110 @@
+{% extends "base.html" %} {% block title %}Edit Flashcard - ProEmPo{% endblock %}
+{% block content %}
+
+<h2>Edit Flashcard</h2>
+
+<div class="container">
+    <form action="/EditFlashcard/{{ card.id }}" method="POST">
+
+        <div class="field">
+            <label for="lesson">Lesson:</label>
+            <select class="form" id="lesson" name="lesson">
+                <option id ="select" value="" disabled selected>--Select a lesson--</option>
+                {% for lesson in lessons %}
+
+                    <option id="option" value="{{ lesson.id }}" 
+                    {% if card.lesson_id == lesson.id %}selected{% endif %}>--{{ lesson.name }}--</option>
+
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="question">Question:</label>
+            <input type="text" class="form" id="question" name="question" value="{{ card.question }}">
+        </div>
+
+        <div class="field">
+            <label for="answer">Answer:</label>
+            <textarea class="form" id="answer" name="answer" rows="5">{{ card.answer }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-basic" id="submit">Save Changes</button>
+    </form>
+</div>
+
+<style>
+
+    
+
+    h2 {
+        background-color: rgba(152, 125, 209, 0.65);
+        margin-top: 40px;
+        margin-bottom: 0px;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        padding: 10px;
+        color: #ffffff;
+        box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+        text-align: center;
+    }
+
+    .container {
+        max-width: 1500px;
+        background-color: white;
+        padding: 10px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+        
+
+    }
+
+    #submit {
+        background-color: #a751bb;
+        border: black;
+        margin-bottom: 20px;
+        color: white;
+    }
+
+    #submit:hover {
+      background-color: #ffb700ad;
+      color: black;
+    }
+
+    textarea {
+        height: 200px;
+        width: 815px;
+        border-radius: 10px;
+        vertical-align: top;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    input {
+        border-radius: 10px;
+    }
+
+    select {
+        border-radius: 10px;
+    }
+    
+    #select {
+        text-align: center;
+    }
+
+    #option{
+        text-align: center;
+    }
+
+    #question {
+        width: 800px;
+    }
+
+    .field{
+        margin-top: 10px;
+    }
+        
+</style>
+{% endblock %}
+

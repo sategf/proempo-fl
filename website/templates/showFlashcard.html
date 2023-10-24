@@ -1,6 +1,4 @@
-{% extends "base.html" %} {% block title %}Flashcard{% endblock %} {% block content %}
-
-
+{% extends "base.html" %} {% block title %}Flashcard - ProEmPo{% endblock %} {% block content %}
 
     <div class="flashcard-container">
         <div class="flashcard">
@@ -12,7 +10,7 @@
                 <div class="answer">
                     Answer: {{ card.answer }}
                 </div>
-                <button class="btn btn-basic" id="edit">Edit Card</button>
+                <button class="btn btn-basic" id="edit" onclick="redirectToEdit('{{ card.id }}')">Edit Card</button>
                 <button class="btn btn-basic" id="redirect" onclick="redirectToView()">View All Cards</button>
                 
             </div>
@@ -22,6 +20,10 @@
     <script>
         function redirectToView() {
             window.location.href = '/ViewFlashcards';
+        }
+
+        function redirectToEdit(flashcard_id) {
+            window.location.href = '/EditFlashcard/' + flashcard_id;
         }
     </script>
 

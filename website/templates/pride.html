@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Confidence{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}Accomplishments - ProEmPo{% endblock %} {% block content %}
 
 <div class="container">
      <h2 id="title" align="center">Confidence</h2>
@@ -23,92 +23,19 @@
     </div>
 </div>
 
-<div id="pride-entries-length" data-length="{{ pride_entries|length }}"></div>
-
     <div class="postit-container">
         {% for entry in pride_entries %}
-        <div class="draggable-postit" id="postit-{{ entry.id }}">
+        <div class="post-it" id="postit-{{ entry.id }}">
+            <div class="header">
+                <h3>I am proud of...</h3>
+            </div>
             <div class="moment">
                 {{ entry.moment }}
-            </div>   
+            </div>
+            <button class="btn btn-basic" id="delete-card" onclick="confirmDeletePride('{{ entry.id }}')"><span aria-hidden="true" class="fa fa-times-rectangle-o"></span></button>    
         </div>
-        <button class="btn btn-danger" id="delete-card" onclick="confirmDeletePride('{{ entry.id }}')"><span aria-hidden="true" class="fa fa-trash"></span> Delete </button>    
         {% endfor %}
     </div>
-
-<script>
-    // Make the DIV element draggable:
-    dragElement(document.getElementsByClassName("draggable-postit"));
-    
-    function dragElement(elmnt) {
-
-        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-        if (document.getElementById(elmnt.id + "header")) {
-
-            document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-        
-        } else {
-
-            elmnt.onmousedown = dragMouseDown;
-
-        }
-    
-        function dragMouseDown(e) {
-            e = e || window.event;
-            e.preventDefault();
-            // get the mouse cursor position at startup
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            document.onmouseup = closeDragElement;
-            // call a function whenever the cursor moves
-            document.onmousemove = elementDrag;
-        }
-        
-        function elementDrag(e) {
-            e = e || window.event;
-            e.preventDefault();
-            // calculate the new cursor position:
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            // set the element's new position:
-            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-        }
-    
-        function closeDragElement() {
-        
-            document.onmouseup = null;
-            document.onmousemove = null;
-        }
-    }
-</script>
-
-<script>
-    function addDraggableElement() {
-        const moment = document.getElementById("moment").value;
-
-        // Create a new element
-        const newDiv = document.createElement("div");
-        newDiv.className = "draggable-postit";
-        newDiv.innerHTML = `<div id="mydivheader">I am proud of...</div><div class="moment">${moment}</div>`;
-
-        document.querySelector(".postit-container").appendChild(newDiv);
-
-        // Make the new element draggable
-        dragElement(newDiv);
-        
-        // Clear the input field after adding a new element
-        document.getElementById("moment").value = "";
-
-        return false; //so there is no submission
-    }
-
-    // adds a new element everytime you save
-    document.getElementById("save").addEventListener("click", addDraggableElement);
-
-</script>
 
 <script>
 
@@ -162,6 +89,47 @@
       
     }
 
+    .post-it {
+ 	    width:250px;
+        height:240px;
+        position:relative;
+        background:rgb(237, 149, 255);
+        overflow:hidden;
+        margin:30px auto;
+        padding:20px;
+        border-radius:0 0 0 30px/45px;
+        box-shadow:
+            inset 0 -40px 40px rgba(0,0,0,0.2),
+            inset 0 25px 10px rgba(0,0,0,0.2),
+            0 5px 6px 5px rgba(0,0,0,0.2);
+        line-height:1.7em;
+        font-size:19px;
+    }
+
+    .postit-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .post-it:before {
+ 	    content:"";
+        display:block;
+        position:absolute;
+        width:20px;
+        height:25px;
+        background: rgb(237, 149, 255);
+        box-shadow:
+            3px -2px 10px rgba(0,0,0,0.2),
+            inset 15px -15px 15px rgba(0,0,0,0.3);
+        left:0;
+        bottom:0;
+        z-index:2;
+        transform:skewX(25deg);
+    }
+
     .explanation p {
         color:rgb(136, 91, 192);
         text-align: center;
@@ -181,17 +149,9 @@
         color: black;
     }
 
-
-    .draggable-postit {
-        position: absolute;
-        z-index: 9;
-        background-color: purple;
-        text-align: center;
-        border: 1px solid #d3d3d3;
-        border-radius: 25px;
-        width: 200px;
-        height: 150px;
-        
+    .header {
+        color: white;
+        font-size: small;
     }
 
     .moment {
@@ -215,6 +175,12 @@
     #proud {
         font-size: large;
         color: rgb(136, 91, 192);
+    }
+
+    #delete-card {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
     }
 
 </style>

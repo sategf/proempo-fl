@@ -571,8 +571,6 @@ def thank_you():
     return render_template('thank_you.html') # thank you message for the user after submitting form
 
 
-
-
 @views.route('/ViewFlashcards', methods=["GET", "POST"])
 @login_required
 def show_flashcard():
@@ -658,6 +656,34 @@ def get_flashcard(flashcard_id):
     
     return render_template("showFlashcard.html", card=flashcard, user=current_user)
 
+
+
+@views.route('/EditFlashcard/<int:flashcard_id>', methods=["GET", "POST"])
+@login_required
+def edit_flashcard(flashcard_id):
+
+    flashcard = Card.query.get(flashcard_id)
+
+    if flashcard is None:
+        flash("Flashcard not found", "error")
+        return redirect('/ViewFlashcards')
+
+    if request.method == "POST":
+        #get the new values and store them
+        lesson_id = request.form.get("lesson")
+        question = request.form.get("question")
+        answer = request.form.get("answer")
+
+        #new flashcard values assigned 
+        flashcard.lesson_id = lesson_id
+        flashcard.question = question
+        flashcard.answer = answer
+
+        db.session.commit()
+        return redirect('/ViewFlashcards/' + str(flashcard_id))
+    
+    lessons = Lesson.query.filter_by(user_id=current_user.id).all()
+    return render_template("editFlashcards.html", card=flashcard, lessons=lessons, user=current_user)
 
 @views.route('/clear-all-completed-tasks', methods=['POST'])
 @login_required
