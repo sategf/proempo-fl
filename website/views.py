@@ -792,7 +792,31 @@ def complete_goal(goal_id):
         return jsonify({'message': 'Failed to mark goal as completed'}), 500
     
 
-    
+
+@views.route('/fetch_goals', methods=['GET'])
+@login_required
+def fetch_goals():
+    user_id = current_user.id
+    goals = Goal.query.filter_by(user_id=user_id).all()
+
+    # Serialize the goals to JSON
+    serialized_goals = []
+    for goal in goals:
+        serialized_goal = {
+            'id': goal.id,
+            'specific': goal.specific,
+            'measurable': goal.measurable,
+            'achievable': goal.achievable,
+            'relevant': goal.relevant,
+            'timely': goal.timely,
+            'status': goal.status
+        }
+        serialized_goals.append(serialized_goal)
+
+    return jsonify({'goals': serialized_goals})
+
+
+
 
 @views.route('/pride', methods=['GET', 'POST'])
 @login_required

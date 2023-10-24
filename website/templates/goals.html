@@ -72,12 +72,31 @@
         </div>
       </li>
     </ul>
-    <div class="save-btn btn" id="save-button-container">
-      <button class="save-button" onclick="saveGoalEntry()">Save My Goal</button>
+
+
+    <div class="btn-container">
+      <div class="save-btn btn" >
+        <button class="save-button" onclick="saveGoalEntry()">Save My Goal</button>
+      </div>
+      <div class="complete-btn btn" >
+        <button class="complete-button" onclick="completedGoal()">Goal Completed</button>
+      </div>
+      <div class="see-all-goals-btn btn" >
+        <button class="see-all-goals-button" id="showGoalsBtn">See all goals</button>
+      </div>
     </div>
-    <div class="complete-btn btn" id="complete-button-container">
-      <button class="complete-button" onclick="completedGoal()">Goal Completed</button>
-    </div>
+
+
+<!-- modal -->
+<div class="modal" id="goalsModal" style="display: none;">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h2 style="color: black;">All Goals</h2>
+    <ul id="goalsList">
+      <!-- the list of goals will be populated here -->
+    </ul>
+  </div>
+</div>
 
     <div class="explanation">
       <p>When it comes to goal-setting, Proempo adopts the 'smart' goal approach.
@@ -87,13 +106,7 @@
       <p class="itemized">&bull; Achievable: Goals should be realistic and attainable.</p>
       <p class="itemized">&bull; Relevant: Goals should align with your objectives and values.</p>
       <p class="itemized">&bull; Timely: Goals should have a defined time frame.</p>
-      <p>This framework enhances goal-setting precision and effectiveness.
-        In this implementation of the smart framework, you will focus on one main goal at the time. 
-        When you have completed the goal, come back and create a new one by updating 
-        your answers to the questions.</p>
-      <p>This page is designed to always have a goal in the background. Once you accomplish one, 
-        you set another. When you set a second goal automatically means you accomplished the first. 
-      </p>
+      <p>This framework enhances goal-setting precision and effectiveness.</p>
   </div>
   </div>
   
@@ -195,29 +208,30 @@
         height: 180px;
     }
 
-  .save-btn, .complete-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-  }
+    .btn-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  padding: 10px 100px;
+}
 
-  .complete-btn {
-    margin-top: 10px;
-  }
-  
-  .save-button, .complete-button {
-    background-color: #925bae9c;
-    padding: 10px 60px;
-    color: white;
-    border-radius: 10px;
-    border: none;
-    margin-bottom: 0px;
-  }
+.save-button,
+.complete-button,
+.see-all-goals-button {
+  flex: 1; 
+  background-color: #925bae9c;
+  padding: 10px 60px;
+  color: white;
+  border-radius: 10px;
+  border: none;
+}
 
-  .complete-button {
-    padding: 10px 50px;
-  }
+
+.see-all-goals-button:hover {
+  background-color: #d6101088;
+  color: black;
+}
 
   .save-button:hover {
       background-color: #ffb700ad;
@@ -237,6 +251,7 @@
       padding: 30px;
       background-color: rgba(187, 170, 223, 0.65);;
     }
+
     .explanation p {
       color: rgb(68, 62, 62);
       text-align: left; 
@@ -256,7 +271,24 @@
       font-style: italic; 
       cursor: pointer;
       color: black;
+    }
+
+
+    .modal {
+  display: none;
+  position: fixed;
+  background-color: #e7ddf7;
+  border: 1px solid #400078;
+  border-radius: 20px;
+  padding: 10px;
+  z-index: 1;
+  max-width: 600px; 
+  right: 0;
+  margin: 100px auto; 
+  margin-bottom: 100px;
 }
+
+
   </style>
 
 
@@ -349,6 +381,70 @@
   }
 </script>
 
+
+<script>
+  // when the user clicks "See all goals" button
+document.getElementById("showGoalsBtn").addEventListener("click", function () {
+  // display the modal
+  var modal = document.getElementById("goalsModal");
+  modal.style.display = "block";
+
+  fetch("/fetch_goals") 
+    .then((response) => response.json())
+    .then((data) => {
+      var goalsList = document.getElementById("goalsList");
+      goalsList.innerHTML = ""; // Clear the list
+
+      data.goals.forEach(function (goal) {
+        var listItem = document.createElement("li");
+        listItem.textContent = goal.specific;
+
+        // if the goal is pending add a button to mark as completed
+        if (goal.status === "P") {
+          var markCompletedBtn = document.createElement("button");
+          markCompletedBtn.textContent = "Mark as Completed";
+          markCompletedBtn.addEventListener("click", function () {
+            markGoalAsCompleted(goal.id);
+
+            listItem.removeChild(markCompletedBtn);
+          });
+          listItem.appendChild(markCompletedBtn);
+        }
+
+        goalsList.appendChild(listItem);
+      });
+    });
+});
+
+// Function to mark a goal as completed
+function markGoalAsCompleted(goalId) {
+  fetch(`/complete_goal/${goalId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.message === "Goal marked as completed successfully") {
+      } else {
+        alert("Failed to mark the goal as completed. Try again later.");
+      }
+    })
+    .catch((error) => {
+      alert("An error occurred.");
+    });
+    location.reload(true);
+}
+
+
+// Close the modal when the user clicks the close button
+document.getElementById("closeModal").addEventListener("click", function () {
+  var modal = document.getElementById("goalsModal");
+  modal.style.display = "none";
+});
+
+</script>
 
 
   
