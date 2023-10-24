@@ -844,7 +844,7 @@ def fetch_goals():
 
 
 
-@views.route('/pride', methods=['GET', 'POST'])
+@views.route('/accomplishments', methods=['GET', 'POST'])
 @login_required
 def pride():
 
@@ -872,6 +872,6 @@ def delete_pride(pride_id):
     db.session.delete(moment)
     db.session.commit()
 
-    return redirect("/pride")
+    return redirect("/accomplishments")
     
 

@@ -1,19 +1,19 @@
 {% extends "base.html" %} {% block title %}Accomplishments - ProEmPo{% endblock %} {% block content %}
 
 <div class="container">
-     <h2 id="title" align="center">Confidence</h2>
+     <h2 id="title" align="center">Accomplishments</h2>
 </div>
 
 <div class="main" >
     <div class="explanation" style="text-align: center;">
-    <img src="../static/Confidence.png" alt="image" class="Confidence-img"> 
+    <img src="../static/Accomplishments.png" alt="image" class="Accomplishments-img"> 
         <p>Welcome to this page, where we encourage you to recognize your greatness!</p>
         <p>Take some time to reflect on the accomplishments and qualities that make you proud of yourself.</p>
         <p>Embracing your journey is a unique and ongoing process, one that's all about you.</p>
     </div>
 
     <div id="form">
-        <form action="/pride" method="POST" class="ui form">
+        <form action="/accomplishments" method="POST" class="ui form">
 
             <label id="proud" for="moment">What are you proud of?</label>
             <textarea id="moment" name="moment" placeholder="List your thoughts that your are proud of here..." required></textarea>
