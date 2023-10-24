@@ -168,22 +168,22 @@
     </style>
 
 <script>
-    // script for handling the timer
+    // JavaScript for handling the timer
     let timer;
     let isPaused = false;
     let currentTime = 0;
-    let workTime = 25 * 60; 
-    let shortBreakTime = 5 * 60; 
-    let longBreakTime = 15 * 60; 
+    let workTime = 25 * 60;
+    let shortBreakTime = 5 * 60;
+    let longBreakTime = 15 * 60;
     let cycleCount = 0;
-    
+
     function updateTimerDisplay() {
         const minutes = Math.floor(currentTime / 60);
         const seconds = currentTime % 60;
         const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         document.getElementById('timer').textContent = formattedTime;
     }
-    
+
     function startTimer() {
         isPaused = false;
         timer = setInterval(() => {
@@ -192,10 +192,10 @@
                 updateTimerDisplay();
             } else {
                 clearInterval(timer);
-                if (cycleCount < 3) { // Check if it's time for a short break or long break
+                if (cycleCount < 3) {
                     if (cycleCount === 2) {
                         currentTime = longBreakTime;
-                        cycleCount = 0; // Reset the cycle count
+                        cycleCount = 0;
                     } else {
                         currentTime = shortBreakTime;
                         cycleCount++;
@@ -203,9 +203,9 @@
                     playPingSound();
                     updateTimerDisplay();
                     startTimer();
-                } else { // Time for a long break
+                } else {
                     currentTime = longBreakTime;
-                    cycleCount = 0; // Reset the cycle count
+                    cycleCount = 0;
                     playPingSound();
                     updateTimerDisplay();
                     startTimer();
@@ -218,7 +218,7 @@
         const audio = new Audio("../static/subtle.mp3");
         audio.play();
     }
-    
+
     document.getElementById('startButton').addEventListener('click', () => {
         if (isPaused) {
             startTimer();
@@ -226,22 +226,38 @@
             const workTimeInput = parseInt(document.getElementById('workTime').value, 10) * 60;
             const shortBreakTimeInput = parseInt(document.getElementById('shortBreakTime').value, 10) * 60;
             const longBreakTimeInput = parseInt(document.getElementById('longBreakTime').value, 10) * 60;
-            
-            workTime = workTimeInput || workTime;
-            shortBreakTime = shortBreakTimeInput || shortBreakTime;
-            longBreakTime = longBreakTimeInput || longBreakTime;
-            
+
+            // Limit the input work time value to 300 minutes (5 hours)
+            if (workTimeInput > 300 * 60) {
+                alert('Work time cannot exceed 300 minutes (5 hours).');
+                return;
+            }
+            // Limit the input short break value to 120 minutes (2 hours)
+            if (shortBreakTimeInput > 120 * 60) {
+                alert('Short break time cannot exceed 120 minutes (2 hours).');
+                return;
+            }
+            // Limit the input long break value to 300 minutes (5 hours)
+            if (longBreakTimeInput > 300 * 60) {
+                alert('Long break time cannot exceed 300 minutes (5 hours).');
+                return;
+            }
+
+            workTime = workTimeInput;
+            shortBreakTime = shortBreakTimeInput;
+            longBreakTime = longBreakTimeInput;
+
             currentTime = workTime;
             updateTimerDisplay();
             startTimer();
         }
     });
-    
+
     document.getElementById('pauseButton').addEventListener('click', () => {
         clearInterval(timer);
         isPaused = true;
     });
-    
+
     document.getElementById('resetButton').addEventListener('click', () => {
         clearInterval(timer);
         isPaused = false;
@@ -249,6 +265,7 @@
         updateTimerDisplay();
     });
 </script>
+
 
 <script>
     // JavaScript for handling task selection
