@@ -3,7 +3,7 @@
 <div class="container">
     <h2 id="title" align="center">Study Your Flashcards</h2>
 </div>
-
+<div class="container2">
 <form action="/ViewFlashcards" method="POST" class="ui-form">
     <div class="ui-selection-dropdown">
         <div class="field">
@@ -39,6 +39,7 @@
 <br>
 
 <button class="btn btn-basic" id="redirect" onclick="redirectToCreate()">Create More Flashcards</button>
+</div>
 
 <script>
     <!-- This is a script for the answer button. It toggles the answer based on the card id -->
@@ -91,12 +92,12 @@
 
 
 <style>
-
-    h2 {
-            
+    h2 {   
         background-color: rgba(152, 125, 209, 0.65);
         margin-top: 40px;
         margin-bottom: 0px;
+        margin-right: -15px;
+        margin-left: -15px;
         border-top-left-radius: 30px;
         border-top-right-radius: 30px;
         padding: 10px;
@@ -104,7 +105,21 @@
         box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
     }
     
+    .container2 {
+        max-width: 1500px;
+        background-color: white;
+        padding: 10px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+        margin-bottom: 40px;
+        text-align: center;
+    }
     
+    .field {
+        margin-left: 30px;
+        margin-top: 30px;
+    }
     
     /* Container for the flashcards */
     .flashcard-container {
@@ -113,6 +128,7 @@
         justify-content: space-between;
         gap: 15px;
         text-align: center;
+        margin: 30px;
     }
 
     /* Styles for individual flashcards */
@@ -145,6 +161,7 @@
         background-color: #a751bb;
         border: none;
         color: white;
+        margin-left: 15px;
     }
 
   #filter:hover {
