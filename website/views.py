@@ -386,7 +386,7 @@ def delete_task():
 
     if task and task.user_id == current_user.id:
         # Create a archived with the same data and due date as the original task
-        archivedtask = ArchivedTask(data=task.data, user_id=current_user.id, due_date=task.due_date, date=task.date)
+        archivedtask = ArchivedTask(data=task.data, user_id=current_user.id, due_date=task.due_date, due_time=task.due_time, date=task.date, was_completed=0)
 
         # Add and commit changes to the database
         db.session.add(archivedtask)
@@ -404,7 +404,7 @@ def delete_finished_task():
 
     if finished_task and finished_task.user_id == current_user.id:
         # Create a Task with the same data and due date as the FinishedTask
-        archivedtask = ArchivedTask(data=finished_task.data, user_id=current_user.id, due_date=finished_task.due_date, date=finished_task.date)
+        archivedtask = ArchivedTask(data=finished_task.data, user_id=current_user.id, due_date=finished_task.due_date, due_time=finished_task.due_time, date=finished_task.date, was_completed=1)
 
         # Add and commit changes to the database
         db.session.add(archivedtask)
@@ -436,7 +436,7 @@ def mark_task():
 
     if task and task.user_id == current_user.id:
         # Create a FinishedTask with the same data and due date as the original task
-        finished_task = FinishedTask(data=task.data, user_id=current_user.id, due_date=task.due_date, date=task.date)
+        finished_task = FinishedTask(data=task.data, user_id=current_user.id, due_date=task.due_date, due_time=task.due_time, date=task.date)
 
         # Add and commit changes to the database
         db.session.add(finished_task)
@@ -455,7 +455,7 @@ def unmark_task():
 
     if finished_task and finished_task.user_id == current_user.id:
         # Create a Task with the same data and due date as the FinishedTask
-        task = Task(data=finished_task.data, user_id=current_user.id, due_date=finished_task.due_date, date=finished_task.date)
+        task = Task(data=finished_task.data, user_id=current_user.id, due_date=finished_task.due_date, due_time=finished_task.due_time, date=finished_task.date)
 
         # Add and commit changes to the database
         db.session.add(task)
@@ -473,18 +473,27 @@ def return_task():
 
     archived_task = ArchivedTask.query.get(archived_task_id)
 
-    if archived_task and archived_task.user_id == current_user.id:
+    if archived_task and archived_task.user_id == current_user.id and archived_task.was_completed == 0:
         # Create a Task with the same data and due date as the FinishedTask
-        task = Task(data=archived_task.data, user_id=current_user.id, due_date=archived_task.due_date, date=archived_task.date)
+        task = Task(data=archived_task.data, user_id=current_user.id, due_date=archived_task.due_date, due_time=archived_task.due_time, date=archived_task.date)
 
         # Add and commit changes to the database
         db.session.add(task)
         db.session.delete(archived_task)
         db.session.commit()
 
+    elif archived_task and archived_task.user_id == current_user.id and archived_task.was_completed == 1:
+        finished_task = FinishedTask(data=archived_task.data, user_id=current_user.id, due_date=archived_task.due_date, due_time=archived_task.due_time, date=archived_task.date)
+
+        # Add and commit changes to the database
+        db.session.add(finished_task)
+        db.session.delete(archived_task)
+        db.session.commit()
+
+
     return jsonify({})
 
-
+'''
 @views.route('/archive-task', methods=['POST'])
 @login_required
 def archive_task():
@@ -502,7 +511,7 @@ def archive_task():
         db.session.commit()
 
     return jsonify({})
-
+'''
 @views.route('/About')
 @login_required
 def about():
@@ -678,7 +687,9 @@ def clear_all_completed_tasks():
             data=task.data,
             user_id=current_user.id,
             due_date=task.due_date,
-            date=task.date
+            due_time=task.due_time,
+            date=task.date,
+            was_completed=1
         )
 
         db.session.add(archived_task)

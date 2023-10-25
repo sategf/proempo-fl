@@ -33,6 +33,7 @@ class ArchivedTask(db.Model):
     due_time = db.Column(db.Time)
     due_date = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    was_completed = db.Column(db.Boolean)
 
 class Journal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
