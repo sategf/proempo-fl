@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Feynman - ProEmPo{% endblock %}
 {% block content %}
-<div>
-    <h2 class="title">Feynman Practice</h2>
-</div>
+<div class="container">
+    <div class="box">
+      <div class="title-box">
+        <h1 id="title" align="center">Feynman Practice</h1>
+      </div>
+<div class="container2">
 <div class="feynman-info">
     <a id="feynmanInfoLink" href="#">How Do I Begin?</a>
 </div>
@@ -18,21 +21,42 @@
         </p>
         <p>Now, close this popup and begin. </p>
     </div>
-</div>
+    </div>
 <div class="main">
     <div class="page">
         <div class="page_content">
             <div class="text_content">
                 <h2 class="page_title" contenteditable="true" onfocus="clearPlaceholder(this)">Write topic here</h2>
                 <p class="editable" contenteditable="true" onfocus="clearPlaceholder(this)">Write description here</p>
+            </div>   
+        </div>
     </div>
-    
+</div>
 </div>
 <style>
-    .title {
-        padding-top: 20px;
-        text-align: center;
+    h1 {
+      background-color: rgba(152, 125, 209, 0.65);
+      margin-top: 40px;
+      margin-bottom: 0px;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      padding: 10px;
+      color: #ffffff;
+      box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
     }
+
+
+    .container2 {
+        max-width: 1500px;
+        background-color: white;
+        padding: 10px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+        margin-bottom: 40px;
+    }
+
+
     .main {
         max-width: 90%;
         margin: 30px auto;
@@ -42,6 +66,7 @@
 
     .feynman-info {
         text-align: center;
+        margin-top: 20px;
     }
 
     #feynmanInfoLink {
@@ -56,7 +81,7 @@
     }
 
     .popup {
-        background-color: white;
+        background-color: rgba(236, 227, 247, 0.693);
         border-radius: 10px;
         color: black;
         width: 90%;
@@ -77,11 +102,12 @@
         flex-direction: column;
         overflow: hidden;
         padding-left: 30px;
-        background: repeating-linear-gradient(#0000 0 calc(1.2rem - 1px), #b9ddf4 0 1.2rem) right bottom / 100% 100%, linear-gradient(rgba(108, 55, 242, 0.792) 0 0) 30px 0/2px 100% #fff;
+        background: repeating-linear-gradient(#f8efef90 0 calc(1.2rem - 1px), #b9ddf4 0 1.2rem) right bottom / 100% 100%, linear-gradient(rgba(108, 55, 242, 0.792) 0 0) 30px 0/2px 100% #fff;
         background-repeat: no-repeat;
         line-height: 1.2rem;
         height: 75vh;
-        -webkit-mask: radial-gradient(circle .8rem at 2px 50%, #0000 98%, #000) 0 0/100% 2.4rem;
+        -webkit-mask: radial-gradient(circle .8rem at 2px 50%, #0000 98%, #2b0707) 0 0/100% 2.4rem;
+
     }
 
     .page_content {
