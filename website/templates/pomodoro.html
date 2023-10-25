@@ -1,9 +1,12 @@
 {% extends "base.html" %} {% block title %}Pomodoro - ProEmPo{% endblock %} {% block content
     %}
-    <div class="timer-container">
-        <h1>Pomodoro Timer</h1>
+    <div class="container">
+            <div class="box">
+              <div class="title-box">
+                <h1 id="title" align="center">Pomodoro Timer</h1>
+    </div>
+    <div class="timer-container">   
         <div id="timer">25:00</div>
-    
         <div class="button-container">
             <button id="startButton">Start</button>
             <button id="pauseButton">Pause</button>
@@ -64,14 +67,27 @@
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
         }
+
+    h1 {
+      background-color: rgba(152, 125, 209, 0.65);
+      margin-top: 40px;
+      margin-bottom: 0px;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      padding: 10px;
+      color: #ffffff;
+      box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+    }
         
     .timer-container {
+        max-width: 1500px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+        margin-bottom: 40px;
         background-color: #ffffff;
-        padding: 20px;
-        border-radius: 20px;
+        padding: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        margin: 10vh auto;
-        max-width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -81,7 +97,7 @@
         display: flex;
         justify-content: space-between;
         width: 80%;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
     }
 
     .button-container button {
@@ -92,7 +108,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
         width: 80%;
     }
 
@@ -104,11 +120,15 @@
 
     .input-container {
         flex-basis: calc(33.33%);
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
 
     #pomodoroInfoLink {
         color: #8c83cf;
+    }
+
+    .pomodoro-info {
+        margin-bottom: 30px;
     }
 
     .popup {
@@ -130,8 +150,8 @@
     }
 
     #timer {
-        font-size: 48px;
-        margin: 20px 0;
+        font-size: 55px;
+        margin: 45px 0;
     }
 
     button {
@@ -162,7 +182,7 @@
 
     #taskSelection {
             text-align: center;
-            margin-bottom: 15px; 
+            margin-bottom: 30px; 
         }
 
     </style>
