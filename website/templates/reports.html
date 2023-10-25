@@ -2,6 +2,86 @@
 {% block title %}Reports - ProEmPo{% endblock %}
 {% block content %}
 
+<style>
+    h1 {
+        background-color: rgba(152, 125, 209, 0.65);
+        margin-top: 40px;
+        margin-bottom: 0px;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        padding: 10px;
+        color: #ffffff;
+        box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+    }
+
+    .reports-container {
+        background-color: #fcfcfc;
+        padding: 50px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
+        display: ;
+    }
+
+    ul {
+        text-align: center;
+        list-style-position: inside;
+        padding: 0px;
+    }
+
+    .goals-and-frequent-container {
+        display: flex; /* Display children horizontally */
+        justify-content: space-between; /* Space between children */
+    }
+
+    .goals-count-container {
+        text-align: center;
+        padding: 20px;
+        background-color: rgb(236, 227, 255);
+        border-radius: 10px;
+        margin-top: 50px;
+        max-width: 430px;
+        flex: 1;
+    }
+
+    .frequent-day-container {
+        text-align: center;
+        padding: 20px;
+        background-color: rgb(236, 227, 255);
+        border-radius: 10px;
+        margin-top: 50px;
+        max-width: 430px;
+        flex: 1; 
+    }
+    
+    
+    h6 {
+        padding-top: 20px;
+    }
+
+    .goals-count {
+        font-size: 40px;
+        font-weight: bold;
+        color: #242628;
+        animation: countUp 2s ease-out forwards;
+    }
+
+    .frequent-day-container img {
+        max-width: 150px;
+    }
+
+    @keyframes countUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="container">
     <h1 align="center">Reports</h1>
@@ -49,87 +129,6 @@
     </div>
 </div>
 
-<style>
-    h1 {
-        background-color: rgba(152, 125, 209, 0.65);
-        margin-top: 40px;
-        margin-bottom: 0px;
-        border-top-left-radius: 30px;
-        border-top-right-radius: 30px;
-        padding: 10px;
-        color: #ffffff;
-        box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
-    }
-
-    .reports-container {
-        background-color: #fcfcfc;
-        padding: 50px;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
-        display: ;
-    }
-
-    ul {
-        text-align: center;
-        list-style-position: inside;
-        padding: 0px;
-    }
-
-    .goals-and-frequent-container {
-        display: flex; /* Display children horizontally */
-        justify-content: space-between; /* Space between children */
-    }
-
-    .goals-count-container {
-        text-align: center;
-        padding: 20px;
-        background-color: rgb(236, 227, 255);
-        border-radius: 10px;
-        box-shadow: 0 0 30px rgb(215, 201, 244);
-        margin-top: 50px;
-        max-width: 430px;
-        flex: 1;
-    }
-
-    .frequent-day-container {
-        text-align: center;
-        padding: 20px;
-        background-color: rgb(236, 227, 255);
-        border-radius: 10px;
-        box-shadow: 0 0 30px rgb(215, 201, 244);
-        margin-top: 50px;
-        max-width: 430px;
-        flex: 1; 
-    }
-    
-    
-    h6 {
-        padding-top: 20px;
-    }
-
-    .goals-count {
-        font-size: 40px;
-        font-weight: bold;
-        color: #242628;
-        animation: countUp 2s ease-out forwards;
-    }
-
-    .frequent-day-container img {
-        max-width: 150px;
-    }
-
-    @keyframes countUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
 
 <script>
     // data for the first chart
