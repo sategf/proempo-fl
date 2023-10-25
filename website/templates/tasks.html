@@ -54,6 +54,32 @@
     border-radius: 10px;
     box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
   }
+
+  .dropdown2 {
+    position: relative;
+    display: inline-block;
+    float: left;
+}
+
+  .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 200%;
+
+      z-index: 1;
+      left: -500%; /* Adjust the value as needed to move it to the left */
+  }
+
+  iframe {
+      width: 750px;
+      height: 400px; /* You can adjust the height as needed */
+      border: none; /* Remove iframe border */
+  }
+
+  .dropdown {
+    float: right;
+  }
 </style>
 
 <div class="container">
@@ -103,19 +129,36 @@
           Add Task
         </button>
       </form>
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Sort by
-      </button>
-      <div class="dropdown-menu" aria-labelledby="sortDropdownButton">
-        <a class="dropdown-item" href="/tasks?sort_method=default">Oldest to Newest</a>
-        <a class="dropdown-item" href="/tasks?sort_method=newest">Newest to Oldest</a>
-        <a class="dropdown-item" href="/tasks?sort_method=due_date">Due Date</a>
-        <a class="dropdown-item" href="/tasks?sort_method=data">Alphabetically</a>
-      </div>
+    
+    
     </div>
-    </div>
-
+    <ul class="list-group list-group-flush" id="tasks">
+      <li class="list-group-item">
+          <div>
+              <div class="dropdown2">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Archived Tasks
+                  </button>
+                  <div class="dropdown-menu" style=".dropdown-menu.show{
+                    width:750px;
+                  }">
+                      <iframe src="/archivedtasks"></iframe>
+                  </div>
+              </div>
+          </div>
+          <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Sort by
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortDropdownButton">
+                  <a class="dropdown-item" href="/tasks?sort_method=default">Oldest to Newest (Default)</a>
+                  <a class="dropdown-item" href="/tasks?sort_method=newest">Newest to Oldest</a>
+                  <a class="dropdown-item" href="/tasks?sort_method=due_date">Due Date</a>
+                  <a class="dropdown-item" href="/tasks?sort_method=data">Alphabetically</a>
+              </div>
+          </div>
+      </li>
+  </ul>
     {% if user.finished_tasks|length > 0 or user.tasks|length > 0 %}
     <ul class="list-group list-group-flush" id="tasks">
       {% for task in tasks %}
@@ -213,15 +256,7 @@
     </center>
     {% endif %}
 
-    <center>
-      <a
-        href="/archivedtasks"
-        target="popup"
-        onclick="window.open('/archivedtasks','popup','width=600,height=600'); return false;"
-      >
-        Archived Tasks
-      </a>
-    </center>
+    
     <br />
   </div>
 </div>
@@ -248,5 +283,4 @@
     });
   }
 </script>
-
 {% endblock %}

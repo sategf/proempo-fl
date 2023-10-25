@@ -41,6 +41,7 @@ function returnTask(archivedTaskId) {
     method: "POST",
     body: JSON.stringify({ archivedTaskId: archivedTaskId }),
   }).then((_res) => {
+    window.top.location.reload();
     window.location.href = "/archivedtasks";
   });
 }
