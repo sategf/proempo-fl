@@ -80,6 +80,11 @@
   .dropdown {
     float: right;
   }
+  .dropdown-menu.show {
+    display: block;
+    background-color: #f7eefd;
+    width: 750px;
+}
 </style>
 
 <div class="container">
@@ -139,10 +144,8 @@
                   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Archived Tasks
                   </button>
-                  <div class="dropdown-menu" style=".dropdown-menu.show{
-                    width:750px;
-                  }">
-                      <iframe src="/archivedtasks"></iframe>
+                  <div class="dropdown-menu" >
+                      <iframe src="/archivedtasks" style="background-color: #f7eefdd3;"></iframe>
                   </div>
               </div>
           </div>
