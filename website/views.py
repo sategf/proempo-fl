@@ -517,6 +517,11 @@ def archive_task():
 def about():
     return render_template("About.html", user=current_user)
 
+@views.route('Settings')
+@login_required
+def setting():
+    return render_template("Settings.html",user=current_user)
+
 @views.route('/Support', methods=['GET'])
 @login_required
 def support():
