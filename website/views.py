@@ -368,6 +368,17 @@ def journal():
 
     return render_template('journal.html', user=current_user, previous_entries=previous_entries, selected_entry=selected_entry, date=date)
 
+@views.route('/scan-Journal', methods=['POST'])
+@login_required
+def scan_Journal():
+    content = "dear_journal_content"
+    if content.includes("hurt", "suicide", "kill", "murder"):
+      return jsonify({'message': "Your journal contained concerning words. What is hurting you?"})
+    
+    db.session.commit()
+    return jsonify({'message': "Your journal contained concerning words. What is hurting you?"})
+
+
 def is_entry_exists_for_today():
     today = date.today()
 
