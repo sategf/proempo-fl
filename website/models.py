@@ -48,6 +48,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
+    language = db.Column(db.String(50))
     tasks = db.relationship('Task')
     finished_tasks = db.relationship('FinishedTask')
     archivedtasks = db.relationship('ArchivedTask')

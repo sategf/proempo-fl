@@ -1,8 +1,17 @@
 {% extends "base.html" %} {% block title %}Settings - ProEmPo{% endblock %} {% block content %}
 
-<h1 align="center">Settings</h1>
-
-
+<h1 align="center">{{title}}</h1>
+<div class="settings-container">
+    <form action="/settings" method="POST" class="d-flex flex-column">
+        <label for="language">{{selectLanguage}}</label>
+        <select id="language" name="language">
+            <option value="en" {% if user.language == "en" %}selected{% endif %}>English</option>
+            <option value="ro" {% if user.language == "ro" %}selected{% endif %}>Romanian</option>
+        </select>
+        <br>
+        <input type="submit" value="{{save}}">
+    </form>
+</div>
 <style>
     /* Define your CSS styles here */
     body {
@@ -12,7 +21,7 @@
         padding: 0;
     }
 
-    .about-container {
+    .settings-container {
         max-width: 800px;
         margin: auto;
         padding: 20px;
