@@ -95,9 +95,27 @@
         text-align: left;
     } 
     Add any additional styles you need */
+
+    .new-thing {
+        flex: 2;
+        background-color: #fcfcfc;
+        border-radius: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        margin-top:20px;
+    }
+
 </style>
 </head>
 <body>
+    <div class="new-thing">
+        <!--<h2 align="left"><u>Quote of the Day:</u></h2>-->
+            {% if qod %}
+                <p style="font-family: 'MorningDew', Arial, sans-serif; font-size:50px; margin-bottom:0px;">"{{ qod[0] }}" - {{ qod[1] }}</p>
+            {% else %}
+                <p>No quote today.</p>
+            {% endif %}
+    </div>
     <br>
     <div class="content-container">
         <div id="clock-box">
@@ -108,15 +126,11 @@
             </div>
         </div>
         <div id="quote-container">
+            <h1 align="center">Welcome to ProEmPo, {{ user.username }}</h1>
             <br>
             <h1 align="center"><u>Today is {{ currentDay }}</u></h1>
             <br>
-            <h2 align="left"><u>Quote of the Day:</u></h2>
-            {% if qod %}
-                <p style="font-family: 'MorningDew', Arial, sans-serif; font-size:42px;">"{{ qod[0] }}" - {{ qod[1] }}</p>
-            {% else %}
-                <p>No quote today.</p>
-            {% endif %}
+            
             <a
                 href="/player"
                 target="popup"
