@@ -33,38 +33,74 @@
             {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" id="home" href="/">
-                <i class="fa fa-house"></i>&nbsp;Home</a
+                <i class="fa fa-house"></i>&nbsp;
+                {% if user.language == "ro" %}
+                Pagina Principală
+                {% else %}
+                Home
+                {% endif %}</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link" id="Help" href="/help">
-                <i class="fa fa-brain"></i>&nbsp;Self Help</a
+                <i class="fa fa-brain"></i>&nbsp;
+                {% if user.language == "ro" %}
+                Ajutor Personal
+                {% else %}
+                Self Help
+                {% endif %}</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link" id="To do" href="/tasks">
-                <i class="fa fa-list"></i>&nbsp;Tasks</a
+                <i class="fa fa-list"></i>&nbsp;
+                {% if user.language == "ro" %}
+                Sarcini
+                {% else %}
+                Tasks
+                {% endif %}</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link" id="Journal" href="/journal">
-                <i class="fa fa-book-open"></i>&nbsp;Daily Check-In</a
+                <i class="fa fa-book-open"></i>&nbsp;
+                {% if user.language == "ro" %}
+                Verificare Zilnică
+                {% else %}
+                Daily Check-In
+                {% endif %}</a
               >
             </li>
               <li class="nav-item">
                 <a class="nav-link" id="reports" href="/reports">
-                  <i class="fa-solid fa-chart-column">‌</i>&nbsp;Reports</a
+                  <i class="fa-solid fa-chart-column">‌</i>&nbsp;
+                  {% if user.language == "ro" %}
+                  Rapoarte
+                  {% else %}
+                  Reports
+                  {% endif %}</a
                 >
               </li>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="FAQ" href="/FAQ">
-                <i class="fa fa-circle-question"></i>&nbsp;FAQ</a
+                <i class="fa fa-circle-question"></i>&nbsp;
+                {% if user.language == "ro" %}
+                FAQ
+                {% else %}
+                FAQ
+                {% endif %}</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link" id="Support" href="/Support">
-                <i class="fa fa-circle-user"></i>&nbsp;Support</a
+                <i class="fa fa-circle-user"></i>&nbsp;
+                {% if user.language == "ro" %}
+                Asistență
+                {% else %}
+                Support
+                {% endif %}
+                </a
               >
               <!--Support link on nav bar-->
             </li>
@@ -75,17 +111,31 @@
             {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" id="About" href="/About">
-                <i class="fa fa-circle-info"></i>&nbsp;About</a>
+                <i class="fa fa-circle-info"></i>&nbsp;
+                {% if user.language == "ro" %}
+                Despre
+                {% else %}
+                About
+                {% endif %}</a>
               <!--About link on nav bar-->
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="Settings" href="/Settings">
-                <i class ="fa fa-cog"></i>&nbsp;Settings</a>
+              <a class="nav-link" id="Settings" href="/settings">
+                <i class ="fa fa-cog"></i>&nbsp;
+                {% if user.language == "ro" %}
+                Setări
+                {% else %}
+                Settings
+                {% endif %}</a>
                 <!--Settings link on nav bar-->
             </li>
             <li class="nav-item">
               <a class="nav-link" id="logout" href="/logout">
-                Logout&nbsp;<i class="fa fa-right-from-bracket"></i
+                {% if user.language == "ro" %}
+                Deconectare
+                {% else %}
+                Logout
+                {% endif %}&nbsp;<i class="fa fa-right-from-bracket"></i
               ></a>
             </li>
             {% else %}

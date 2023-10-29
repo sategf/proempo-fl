@@ -43,7 +43,17 @@ support_email = "proempohelpdesk@gmail.com"
 def home():
     qod = generate_quote()
     currentDay = todays_date()
-    return render_template("home.html", user=current_user, qod=qod, currentDay=currentDay)
+    print(current_user.language)
+    if current_user.language == "ro":
+        welcome = "Bun venit la ProEmPo, "
+        currentDay = "Astăzi este " + today.strftime("%d.%m.%Y")
+        openNoisePlayer = "Deschide playerul de zgomot alb"
+    else:
+        welcome = "Welcome to ProEmPo, "
+        currentDay = "Today is " + currentDay
+        openNoisePlayer = "Open Noise Player"
+
+    return render_template("home.html", user=current_user, qod=qod, currentDay=currentDay, welcome=welcome, openNoisePlayer=openNoisePlayer)
 
 today = date.today()
 
@@ -127,49 +137,95 @@ def pomodoro():
 @views.route('/FAQ')
 @login_required
 def faq():
-    accordion_items = [
-        {
-            "id": "section1",
-            "title": "Getting Started",
-            "content": "",
-            "nested_items": [
-                {"id": "nested1", "title": "Is there a tutorial or onboarding process to help me navigate the application for the first time?", "content": "Sorry, the website doesn't offer any process at the moment, come back for future updates."},
-                {"id": "nested2", "title": "What is the pricing model for your website? Are there any free or trial versions available?", "content": "This website is free, there is no pricing model nor any trial versions."},
-                {"id": "nested3", "title": "What is the pomodoro technique? How can I use it on the website?", "content": "The pomodoro technique is a time management method based on 25-minute stretches of focused work broken by five-minute breaks. You can use the technique located in the Self-Help page."},
-                {"id": "nested4", "title": "What is the feynman technique? How can I use it on the website?", "content": "The feynman technique is a four-step process for understanding any topic. It rejects automated recall in favor of true comprehension gained through selection, research, writing, explaining, and refining. You can find it located in the self-help page."},
-                {"id": "nested5", "title": "What is white noise? How can white noise help me while using this website?", "content": "White noise is a consistent and uniform sound that contains equal power across all audible frequencies. It can help you by masking background noise, improving focus and concentration,  and having a consistent sound environment."},
-                {"id": "nested6", "title": "Where can I go to contact support if any of the issues listed in the page aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."}
-            ],
-        },
-        {
-            "id": "section2",
-            "title": "Mental Health",
-            "content": "",
-            "nested_items": [
-                {"id": "nested8", "title": "What is the relationship between mental health and productivity?", "content": "The state of your mental health and how productive you are, have a very interconnected relationship but, many people choose to ignore this relationship. Mental health consists of many things such as stress, anxiety, and depression. Typically, someone who has any of these challenges will experience lower levels of engagement, creativity and problem solving. Proempo looks keep a positive relationship between these two factors of life."},
-                {"id": "nested9", "title": "How will Proempo help me manage my stress and anxiety?", "content": "As students, here at Proempo, we have a lot of empathy towards people struggling to control their thoughts and are very stressed about deadlines. Organizing your life is a great way to get started with handling your stress and/or anxiety. By keeping all your activities, schoolwork, or just general notes and reminders in one centrally located place that is easily accessible. Having this will layout how much time you have to do these tasks. You will be at ease seeing that your tasks are completed. Proempo also offers a journaling section to help with anxiety delt in your daily life."},
-                {"id": "nested10", "title": "What is the point of journaling?", "content": "Journalling is a great activity to help yourself. While journaling there are no outside factors to worry about except “Me, myself and I”. This is a safe space where you can heave all your pent-up thoughts and feelings onto a page. As time goes on you will have many journals telling you how you felt during a particular day and the reason that day followed that outcome. Looking back at these journals will show you how much you have developed as a person and learn from your past self."},
-                {"id": "nested11", "title": "What is burnout and what to do if I experience it?", "content": "Burnout is a state of physical and/or emotional exhaustion that can come to effect someone’s identity and sense of feeling accomplished. Steps to help reduce burnout starts with seeking support from family members or colleagues to help you collaborate and cope with what you are feeling. You could go ahead and try an activity or hobby you really enjoy that gets you relaxed or even exercise. The “cure” to burnout is taking a break from either work or school or other factors that might be causing this."},
-                {"id": "nested12", "title": "Where can I go to seek support?", "content": "If in need of serious help or support beyond our services here are some resources to look into: Suicide and Crisis lifeline: 988, Therapy."}
-            
-            ],
-        },
-        {
-            "id": "section3",
-            "title": "Productivity",
-            "content": "",
-            "nested_items": [
-                {"id": "nested13", "title": "What features does the website offer to enhance productivity?", "content": "The features offered in the website are the pomodoro method, feynman technique, which are both located in the self-help page."},
-                {"id": "nested14", "title": "Can you provide tips for settings and achieving productivity goals?", "content": "Our tips to utilizing this website for setting and achieving goals are creating tasks, using the pomodoro method, creating flashcards, and taking a break to prevent burnout."},
-                {"id": "nested15", "title": "How does time management play a role in productivity? Can your website assist with this?", "content": "Time management plays a crucial role in productivity by helping individuals prioritize tasks, allocate time efficiently, and minimize distractions. Effective time management enables better organization and allows individuals to accomplish more in less time, leading to increased productivity. Our website can offer users with creating a task withing the tasks page, using the pomodoro method to set a timer along with completing the tasks created from the task page, creating flashcards in the self-help page, etc. Please check the self-help page if you want to enhance your productivity."},
-                {"id": "nested16", "title": "What are some strategies for overcoming procrastination and maintaining focus?", "content": "Our website can list some strategies. Break tasks into smaller steps. Set specific, achievable goals. Use a timer for focused work like the pomodoro method. Minimize distractions with our built-in white noise player. Reward yourself for completing tasks. Create a dedicated workspace. Prioritize tasks based on importance and urgency."},
-                {"id": "nested17", "title": "how can I effectively priortize tasks and projects to optimize my productivity?", "content": "This question is in progress. Come back for future updates."},
-                {"id": "nested18", "title": "How can I track my progress and measure my productivity gains using the website?", "content": "You can track progress in the website with the provided graphs and charts to measure your current productivity progress."},
-            ],
-        },
-       
-    ]
-    return render_template("FAQ.html", user=current_user, accordion_items=accordion_items)
+    if current_user.language == "ro":
+        accordion_items = [
+    {
+        "id": "section1",
+        "title": "Începerea",
+        "content": "",
+        "nested_items": [
+            {"id": "nested1", "title": "Există un tutorial sau un proces de inițiere care să mă ajute să navighez în aplicație pentru prima dată?", "content": "Ne pare rău, site-ul nu oferă niciun proces în acest moment. Reveniți pentru actualizări viitoare."},
+            {"id": "nested2", "title": "Care este modelul de preț pentru site-ul dvs.? Există versiuni gratuite sau de încercare disponibile?", "content": "Acest site este gratuit, nu există un model de preț sau versiuni de încercare."},
+            {"id": "nested3", "title": "Ce este tehnica pomodoro? Cum o pot utiliza pe site?", "content": "Tehnica pomodoro este o metodă de gestionare a timpului bazată pe sesiuni de lucru concentrate de 25 de minute întrerupte de pauze de cinci minute. Puteți utiliza această tehnică în pagina de Ajutor personal."},
+            {"id": "nested4", "title": "Ce este tehnica Feynman? Cum o pot utiliza pe site?", "content": "Tehnica Feynman este un proces în patru pași pentru înțelegerea oricărui subiect. Ea respinge reținerea automată în favoarea înțelegerii autentice obținute prin selecție, cercetare, scriere, expunere și rafinare. Puteți găsi această tehnică în pagina de Ajutor personal."},
+            {"id": "nested5", "title": "Ce este zgomotul alb? Cum mă poate ajuta zgomotul alb în timp ce utilizez acest site?", "content": "Zgomotul alb este un sunet constant și uniform care conține putere egală la toate frecvențele auzibile. Vă poate ajuta prin mascarea zgomotului de fundal, îmbunătățirea concentrării și a atenției și crearea unui mediu sonor constant."},
+            {"id": "nested6", "title": "Unde pot să merg pentru a lua legătura cu suportul dacă nu sunt disponibile problemele listate pe pagină?", "content": "Puteți vizita pagina de Suport din bara de navigație și să vă listați problemele acolo."}
+        ],
+    },
+    {
+        "id": "section2",
+        "title": "Sănătatea Mintală",
+        "content": "",
+        "nested_items": [
+            {"id": "nested8", "title": "Care este relația dintre sănătatea mintală și productivitate?", "content": "Starea sănătății mintale și nivelul de productivitate au o relație foarte strânsă, însă mulți oameni aleg să ignore această relație. Sănătatea mintală constă în multe aspecte, cum ar fi stresul, anxietatea și depresia. De obicei, o persoană care se confruntă cu aceste provocări va avea niveluri mai scăzute de implicare, creativitate și rezolvare a problemelor. Proempo încearcă să mențină o relație pozitivă între aceste două aspecte ale vieții."},
+            {"id": "nested9", "title": "Cum mă va ajuta Proempo să gestionez stresul și anxietatea?", "content": "Ca studenți, noi, la Proempo, avem multă empatie față de oamenii care luptă să-și controleze gândurile și sunt foarte stresați din cauza termenelor limită. Organizarea vieții tale este un mod excelent de a începe să faci față stresului și/sau anxietății. Păstrând toate activitățile, temele școlare sau pur și simplu notele și amintirile generale într-un loc central ușor accesibil. Acest lucru va arăta cât timp ai pentru a face aceste sarcini. Te vei simți în siguranță văzând că ai completat sarcinile. Proempo oferă și o secțiune de jurnalizare pentru a ajuta cu anxietatea trăită în viața ta de zi cu zi."},
+            {"id": "nested10", "title": "Care este scopul jurnalizării?", "content": "Jurnalizarea este o activitate excelentă pentru a te ajuta pe tine însuți. În timpul jurnalizării, nu există factori externi de care să-ți faci griji, în afara lui „Eu, eu și eu”. Acesta este un spațiu sigur în care poți elibera toate gândurile și sentimentele acumulate pe o pagină. Pe măsură ce trece timpul, vei avea multe jurnale care îți vor arăta cum te-ai simțit într-o zi anume și motivul pentru care acea zi a avut acel rezultat. Privind înapoi la aceste jurnale, vei vedea cât de mult te-ai dezvoltat ca persoană și vei învăța din trecutul tău."},
+            {"id": "nested11", "title": "Ce este epuizarea și ce trebuie să fac dacă o experimentez?", "content": "Epuizarea este o stare de oboseală fizică și/sau emoțională care poate afecta identitatea cuiva și sentimentul de a fi realizat. Pașii pentru a reduce epuizarea încep cu căutarea de sprijin din partea membrilor familiei sau colegilor pentru a vă ajuta să colaborați și să faceți față a ceea ce simțiți. Puteți să încercați să vă dedicați timp unei activități sau hobby pe care îl apreciați și care vă relaxează sau chiar să faceți exerciții. „Leacul” pentru epuizare constă în a lua o pauză de la muncă sau școală sau de la alte factori care ar putea cauza această stare."},
+            {"id": "nested12", "title": "Unde pot să merg pentru a cere ajutor?", "content": "Dacă aveți nevoie de ajutor serios sau de suport dincolo de serviciile noastre, iată câteva resurse pe care le puteți verifica: Linia de viață pentru suicid și criză: 988, Terapie."}
+        ],
+    },
+    {
+        "id": "section3",
+        "title": "Productivitate",
+        "content": "",
+        "nested_items": [
+            {"id": "nested13", "title": "Ce funcționalități oferă site-ul pentru a îmbunătăți productivitatea?", "content": "Funcționalitățile oferite pe site sunt metoda pomodoro și tehnica Feynman, ambele fiind disponibile în pagina de Ajutor personal."},
+            {"id": "nested14", "title": "Puteți oferi sfaturi pentru stabilirea și atingerea obiectivelor de productivitate?", "content": "Sfaturile noastre pentru utilizarea acestui site în stabilirea și atingerea obiectivelor includ crearea de sarcini, utilizarea metodei pomodoro, crearea de carduri cu întrebări și realizarea de pauze pentru a preveni epuizarea."},
+            {"id": "nested15", "title": "Cum joacă gestionarea timpului un rol în productivitate? Poate site-ul dvs. să ajute în acest sens?", "content": "Gestionarea timpului joacă un rol crucial în productivitate, ajutând persoanele să-și prioritizeze sarcinile, să aloce timp eficient și să minimizeze distragerile. O gestionare eficientă a timpului permite o mai bună organizare și le permite persoanelor să realizeze mai mult în mai puțin timp, ceea ce duce la o productivitate mai mare. Site-ul nostru poate oferi utilizatorilor crearea unei sarcini în pagina de sarcini, utilizarea metodei pomodoro pentru a seta un cronometru, împreună cu finalizarea sarcinilor create din pagina de sarcini, crearea de carduri cu întrebări în pagina de Ajutor personal, etc. Vă rugăm să verificați pagina de Ajutor personal dacă doriți să vă îmbunătățiți productivitatea."},
+            {"id": "nested16", "title": "Care sunt câteva strategii pentru a învinge procrastinarea și a menține concentrarea?", "content": "Site-ul nostru poate lista câteva strategii. Descompuneți sarcinile în pași mai mici. Stabiliți obiective specifice și realizabile. Utilizați un cronometru pentru muncă concentrată, precum metoda pomodoro. Minimizați distragerile cu ajutorul player-ului nostru de zgomot alb încorporat. Răsfățați-vă pentru finalizarea sarcinilor. Creați un spațiu de lucru dedicat. Prioritizați sarcinile în funcție de importanță și urgență."},
+            {"id": "nested17", "title": "Cum pot să prioritizez eficient sarcinile și proiectele pentru a-ți optimiza productivitatea?", "content": "Această întrebare este în lucru. Reveniți pentru actualizări viitoare."},
+            {"id": "nested18", "title": "Cum pot să urmăresc progresul și să măsurăm câștigurile de productivitate folosind site-ul?", "content": "Puteți urmări progresul pe site cu ajutorul graficelor și diagramele furnizate pentru a măsura progresul dvs. actual de productivitate."}
+        ],
+    },
+]
+        FAQtitle = "Întrebări frecvente"
+        subtitle = "Dacă aveți alte întrebări, vă rugăm să consultați celelalte secțiuni de mai jos."
+    else:
+        accordion_items = [
+            {
+                "id": "section1",
+                "title": "Getting Started",
+                "content": "",
+                "nested_items": [
+                    {"id": "nested1", "title": "Is there a tutorial or onboarding process to help me navigate the application for the first time?", "content": "Sorry, the website doesn't offer any process at the moment, come back for future updates."},
+                    {"id": "nested2", "title": "What is the pricing model for your website? Are there any free or trial versions available?", "content": "This website is free, there is no pricing model nor any trial versions."},
+                    {"id": "nested3", "title": "What is the pomodoro technique? How can I use it on the website?", "content": "The pomodoro technique is a time management method based on 25-minute stretches of focused work broken by five-minute breaks. You can use the technique located in the Self-Help page."},
+                    {"id": "nested4", "title": "What is the feynman technique? How can I use it on the website?", "content": "The feynman technique is a four-step process for understanding any topic. It rejects automated recall in favor of true comprehension gained through selection, research, writing, explaining, and refining. You can find it located in the self-help page."},
+                    {"id": "nested5", "title": "What is white noise? How can white noise help me while using this website?", "content": "White noise is a consistent and uniform sound that contains equal power across all audible frequencies. It can help you by masking background noise, improving focus and concentration,  and having a consistent sound environment."},
+                    {"id": "nested6", "title": "Where can I go to contact support if any of the issues listed in the page aren't available?", "content": "You can visit the Support page in the navigation bar and list your issues there."}
+                ],
+            },
+            {
+                "id": "section2",
+                "title": "Mental Health",
+                "content": "",
+                "nested_items": [
+                    {"id": "nested8", "title": "What is the relationship between mental health and productivity?", "content": "The state of your mental health and how productive you are, have a very interconnected relationship but, many people choose to ignore this relationship. Mental health consists of many things such as stress, anxiety, and depression. Typically, someone who has any of these challenges will experience lower levels of engagement, creativity and problem solving. Proempo looks keep a positive relationship between these two factors of life."},
+                    {"id": "nested9", "title": "How will Proempo help me manage my stress and anxiety?", "content": "As students, here at Proempo, we have a lot of empathy towards people struggling to control their thoughts and are very stressed about deadlines. Organizing your life is a great way to get started with handling your stress and/or anxiety. By keeping all your activities, schoolwork, or just general notes and reminders in one centrally located place that is easily accessible. Having this will layout how much time you have to do these tasks. You will be at ease seeing that your tasks are completed. Proempo also offers a journaling section to help with anxiety delt in your daily life."},
+                    {"id": "nested10", "title": "What is the point of journaling?", "content": "Journalling is a great activity to help yourself. While journaling there are no outside factors to worry about except “Me, myself and I”. This is a safe space where you can heave all your pent-up thoughts and feelings onto a page. As time goes on you will have many journals telling you how you felt during a particular day and the reason that day followed that outcome. Looking back at these journals will show you how much you have developed as a person and learn from your past self."},
+                    {"id": "nested11", "title": "What is burnout and what to do if I experience it?", "content": "Burnout is a state of physical and/or emotional exhaustion that can come to effect someone’s identity and sense of feeling accomplished. Steps to help reduce burnout starts with seeking support from family members or colleagues to help you collaborate and cope with what you are feeling. You could go ahead and try an activity or hobby you really enjoy that gets you relaxed or even exercise. The “cure” to burnout is taking a break from either work or school or other factors that might be causing this."},
+                    {"id": "nested12", "title": "Where can I go to seek support?", "content": "If in need of serious help or support beyond our services here are some resources to look into: Suicide and Crisis lifeline: 988, Therapy."}
+                
+                ],
+            },
+            {
+                "id": "section3",
+                "title": "Productivity",
+                "content": "",
+                "nested_items": [
+                    {"id": "nested13", "title": "What features does the website offer to enhance productivity?", "content": "The features offered in the website are the pomodoro method, feynman technique, which are both located in the self-help page."},
+                    {"id": "nested14", "title": "Can you provide tips for settings and achieving productivity goals?", "content": "Our tips to utilizing this website for setting and achieving goals are creating tasks, using the pomodoro method, creating flashcards, and taking a break to prevent burnout."},
+                    {"id": "nested15", "title": "How does time management play a role in productivity? Can your website assist with this?", "content": "Time management plays a crucial role in productivity by helping individuals prioritize tasks, allocate time efficiently, and minimize distractions. Effective time management enables better organization and allows individuals to accomplish more in less time, leading to increased productivity. Our website can offer users with creating a task withing the tasks page, using the pomodoro method to set a timer along with completing the tasks created from the task page, creating flashcards in the self-help page, etc. Please check the self-help page if you want to enhance your productivity."},
+                    {"id": "nested16", "title": "What are some strategies for overcoming procrastination and maintaining focus?", "content": "Our website can list some strategies. Break tasks into smaller steps. Set specific, achievable goals. Use a timer for focused work like the pomodoro method. Minimize distractions with our built-in white noise player. Reward yourself for completing tasks. Create a dedicated workspace. Prioritize tasks based on importance and urgency."},
+                    {"id": "nested17", "title": "how can I effectively priortize tasks and projects to optimize my productivity?", "content": "This question is in progress. Come back for future updates."},
+                    {"id": "nested18", "title": "How can I track my progress and measure my productivity gains using the website?", "content": "You can track progress in the website with the provided graphs and charts to measure your current productivity progress."},
+                ],
+            },
+        
+        ]
+        FAQtitle = "Frequently Asked Questions"
+        subtitle = "If you have other questions, please check out the other sections below."
+    return render_template("FAQ.html", user=current_user, accordion_items=accordion_items, FAQtitle=FAQtitle, subtitle=subtitle)
 
 
 
@@ -528,10 +584,24 @@ def archive_task():
 def about():
     return render_template("About.html", user=current_user)
 
-@views.route('Settings')
+@views.route('/settings', methods=['GET', 'POST'])
 @login_required
 def setting():
-    return render_template("Settings.html",user=current_user)
+    if request.method == 'POST':
+        new_language = request.form.get('language')
+        current_user.language = new_language
+        db.session.commit()
+        return redirect("/settings")
+    
+    if current_user.language == "ro":
+        selectLanguage = "Selectați limba preferată:"
+        title = "Setări"
+        save = "Salvează "
+    else:
+        selectLanguage = "Select your preferred language:"
+        title = "Settings"
+        save = "Save"
+    return render_template("settings.html",user=current_user, selectLanguage=selectLanguage, title=title, save=save)
 
 @views.route('/Support', methods=['GET'])
 @login_required
