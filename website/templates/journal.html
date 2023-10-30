@@ -218,7 +218,7 @@
 function scanJournal() {
     content = "dear_journal_content"
     if (content.includes("hurt", "suicide", "kill", "murder")) {
-      console.log("Your journal contained concerning words. What is hurting you?")
+      return jsonify({'message': "Your journal contained concerning words. What is hurting you?"})
     }
   }
 </script>
