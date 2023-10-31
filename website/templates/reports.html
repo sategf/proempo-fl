@@ -80,6 +80,10 @@
             transform: translateY(0);
         }
     }
+
+    .linearGraph {
+        margin-top: 50px;
+    }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -126,6 +130,11 @@
                 {% endif %}</div>
             </div>
         </div>
+        <div class="linearGraph">
+            <h5 align="center">My Day Rating History</h5>
+            <canvas id="dayRatingChart" width="300" height="150"></canvas>
+        </div>
+        
     </div>
 </div>
 
@@ -156,4 +165,53 @@
         }
     });
 </script>
+
+<script>
+    var dayRatingData = {{ day_rating_json | safe }};
+    var dates = dayRatingData.map(function(item) { return item.date; });
+    var ratings = dayRatingData.map(function(item) { return item.rating; });
+
+    var ctx = document.getElementById('dayRatingChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'User Day Ratings',
+                data: ratings,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                pointRadius: 5,  
+                tension: 0.4
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 0,
+                    max: 4,
+                    ticks: {
+                        stepSize: 1,
+                        callback: function(value, index, values) {
+                            if (value === 1) return 'Horrible';
+                            if (value === 2) return 'Bad';
+                            if (value === 3) return 'Good';
+                            if (value === 4) return 'Excellent';
+                            return '';
+                        }
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    enabled: false  
+                }
+            }
+        }
+    });
+</script>
+
+
+
+
 {% endblock %}
