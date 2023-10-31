@@ -8,6 +8,16 @@
             <option value="en" {% if user.language == "en" %}selected{% endif %}>English</option>
             <option value="ro" {% if user.language == "ro" %}selected{% endif %}>Română</option>
         </select>
+        <label for="Categories">{{Categories}}</label>
+    <ul>
+        <li>
+          <section>
+                 
+              <li><a href="General">General</a></li>
+              <li><a href="Accessibility">Accessibility</a></li>
+            
+          </section>
+        </li>
         <br>
         <input type="submit" value="{{save}}">
     </form>

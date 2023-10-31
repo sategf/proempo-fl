@@ -367,19 +367,10 @@ def reports():
         and_(Goal.user_id == current_user.id, Goal.status == "C")
     ).order_by(Goal.date.desc()).limit(3).all()
 
-    day_ratings = Journal.query.filter_by(user_id=current_user.id).with_entities(Journal.date, Journal.day_rating).all()
-
-    # Map day ratings to numerical values
-    converted_ratings = {'horrible': 1, 'bad': 2, 'good': 3, 'excellent': 4}
-    day_rating_data = [{'date': str(date), 'rating': converted_ratings.get(rating.lower(), 0)} for date, rating in day_ratings]
-
-    day_rating_json = json.dumps(day_rating_data)
-    print(day_rating_json)
-
     if goals_count > 0:
-        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, latest_completed_goals=latest_completed_goals, most_popular_rating=most_popular_rating, day_rating_json=day_rating_json)
+        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, latest_completed_goals=latest_completed_goals, most_popular_rating=most_popular_rating)
     else:
-        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message="It appears as if you have not set any goals. <a href=/goals>Begin setting goals.</a>", most_popular_rating=most_popular_rating, day_rating_json=day_rating_json)
+        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message="It appears as if you have not set any goals. <a href=/goals>Begin setting goals.</a>", most_popular_rating=most_popular_rating)
 
 
 
@@ -606,11 +597,17 @@ def setting():
         selectLanguage = "Selectați limba preferată:"
         title = "Setări"
         save = "Salvează "
+        Categories = "Categorii"
+        General = "General"
+        Accessibility = "Accesibilitate"
     else:
         selectLanguage = "Select your preferred language:"
         title = "Settings"
         save = "Save"
-    return render_template("settings.html",user=current_user, selectLanguage=selectLanguage, title=title, save=save)
+        Categories = "Categories"
+        General = "General"
+        Accessibility = "Accessibility"
+    return render_template("settings.html",user=current_user, selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility)
 
 @views.route('/Support', methods=['GET'])
 @login_required
