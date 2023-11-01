@@ -29,7 +29,9 @@
     <nav class="navbar navbar-expand-sm navbar-light">
       <div class="container-fluid">
         <div class="navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav" style="text-align: center;
+        list-style-position: inside;
+        padding: 0px;">
             {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" id="home" href="/">
@@ -106,7 +108,7 @@
             </li>
             
           </ul>
-          <ul class="navbar-nav ml-auto">
+          <ul class="navbar-nav ml-auto" id="navbar">
             <!-- Align items to the right -->
             {% if user.is_authenticated %}
             <li class="nav-item">
@@ -262,6 +264,7 @@
         border-bottom-left-radius: 50px;
         border-bottom-right-radius: 50px;
         padding: 10px;
+        
       }
 
       /*.navbar-nav {

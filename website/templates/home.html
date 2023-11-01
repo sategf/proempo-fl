@@ -11,8 +11,8 @@
     }
 
     @font-face {
-        font-family: 'MorningDew';
-        src: url("{{ url_for('static', filename='Morning Dew Alt.otf') }}") format('opentype');
+        font-family: 'Courgette';
+        src: url("{{ url_for('static', filename='Courgette-Regular.ttf') }}") format('opentype');
     }
 
     .quote-container {
@@ -111,7 +111,7 @@
     <div class="new-thing">
         <!--<h2 align="left"><u>Quote of the Day:</u></h2>-->
             {% if qod %}
-                <p style="font-family: 'MorningDew', Arial, sans-serif; font-size:50px; margin-bottom:0px; text-align: center;">"{{ qod[0] }}" - {{ qod[1] }}</p>
+                <p style="font-family: 'Courgette', Arial, sans-serif; font-size:32px; margin-bottom:0px; text-align: center;">"{{ qod[0] }}" - {{ qod[1] }}</p>
             {% else %}
                 <p>No quote today.</p>
             {% endif %}

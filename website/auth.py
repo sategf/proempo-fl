@@ -72,14 +72,17 @@ def change_password():
 
         if not check_password_hash(current_user.password, current_password):
             flash('Current password is incorrect.', category='error')
+            return redirect("/settings")
         elif new_password != confirm_password:
             flash('New password and confirm password do not match.', category='error')
+            return redirect("/settings")
         elif len(new_password) < 6:
             flash('New password must be 6 or more characters.', category='error')
+            return redirect("/settings")
         else:
+            flash('Password successfully changed.', category='error')
             current_user.password = generate_password_hash(new_password, method='scrypt')
             db.session.commit()
-            flash('Password successfully changed.', category='success')
-            return redirect(url_for('auth.change_password'))
+            return redirect("/settings")
 
     return render_template("Settings.html", user=current_user)
