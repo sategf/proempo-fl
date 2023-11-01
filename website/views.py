@@ -610,6 +610,10 @@ def setting():
         Categories = "Categorii"
         General = "General"
         Accessibility = "Accesibilitate"
+        changepass = "Schimbare Parolă"
+        currentpass = "Parolă Curentă"
+        newpass = "Parolă Nouă"
+        confirmnewpass = "Confirmare Parolă Nouă"
     else:
         selectLanguage = "Select your preferred language:"
         title = "Settings"
@@ -617,7 +621,11 @@ def setting():
         Categories = "Categories"
         General = "General"
         Accessibility = "Accessibility"
-    return render_template("settings.html",user=current_user, selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility)
+        changepass = "Change Password"
+        currentpass = "Current Password"
+        newpass = "New Password"
+        confirmnewpass = "Confirm New Password"
+    return render_template("settings.html",user=current_user, selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility, changepass=changepass, currentpass=currentpass, newpass=newpass, confirmnewpass=confirmnewpass)
 
 @views.route('/Support', methods=['GET'])
 @login_required

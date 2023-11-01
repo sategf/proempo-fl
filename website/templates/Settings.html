@@ -8,7 +8,12 @@
             <option value="en" {% if user.language == "en" %}selected{% endif %}>English</option>
             <option value="ro" {% if user.language == "ro" %}selected{% endif %}>Română</option>
         </select>
-        <label for="Categories">{{Categories}}</label>
+        <input type="submit" value="{{save}}">
+    
+
+    </form>
+    <hr>
+    <label for="Categories">{{Categories}}</label>
     <ul>
         <li>
           <section>
@@ -18,9 +23,24 @@
             
           </section>
         </li>
-        <br>
-        <input type="submit" value="{{save}}">
-    </form>
+
+    </ul>
+        <hr>
+        <h5>{{changepass}}</h5>
+        <form method="POST" action="/change-password">
+
+            <label for="current_password">{{currentpass}}</label><br>
+            <input type="password" name="current_password" required>
+            <br>
+            <label for="new_password">{{newpass}}</label><br>
+            <input type="password" name="new_password" required>
+            <br>
+            <label for="confirm_password">{{confirmnewpass}}</label><br>
+            <input type="password" name="confirm_password" required>
+            <br>
+            <br>
+            <button type="submit">{{changepass}}</button>
+        </form>
 </div>
 <style>
     /* Define your CSS styles here */
