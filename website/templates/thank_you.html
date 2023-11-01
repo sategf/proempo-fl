@@ -1,6 +1,4 @@
-{% extends "base.html" %} {% block title %}Support - ProEmPo{% endblock %} {% block content %}
-
-
+{% extends "base.html" %}{% block title %}Thank you - ProEmPo{% endblock %} {% block content %}
 <style>
     /* Define your CSS styles here */
     body {
@@ -10,7 +8,7 @@
         padding: 0;
     }
 
-    .about-container {
+    .thank_you-container {
         max-width: 800px;
         margin: auto;
         padding: 20px;
@@ -20,16 +18,16 @@
     }
 
     h1 {
-    background-color: rgba(152, 125, 209, 0.65);
-    max-width: 800px;
-    margin: auto;
-    margin-top: 40px;
-    margin-bottom: 0px;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    padding: 10px;
-    color: #ffffff;
-    box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+        background-color: rgba(152, 125, 209, 0.65);
+        max-width: 800px;
+        margin: auto;
+        margin-top: 40px;
+        margin-bottom: 0px;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        padding: 10px;
+        color: #ffffff;
+        box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
     }
 
     p {
@@ -37,20 +35,39 @@
         color: #555;
         line-height: 1.5;
     }
+
+    .button-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .back-button {
+        flex: 1; 
+        background-color: #925bae9c;
+        color: white;
+        width: 200px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none; /* Remove underline */
+    }
+
+    .back-button:hover {
+      background-color: #ffb700ad;
+      color: black;
+    }
 </style>
 </head>
 <body>
 
-<div class="about-container">
+<div class="thank_you-container">
     <h2><center>Thank you for your Submission!</center></h2>
-    <p><center>Your support request has been received. We will get back to you as soon as possible.</center>
-        
-    </p>
+    <p><center>Your support request has been received. We will get back to you as soon as possible.</center></p>
+    
+    <div class="button-container">
+        <a href="/Support" class="back-button">Back to Support</a>
+    </div>
 </div>
 </body>
-
-
-
-
-
 {% endblock %}
