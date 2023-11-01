@@ -55,6 +55,7 @@ class User(db.Model, UserMixin):
     journals = db.relationship('Journal')
     lessons = db.relationship('Lesson')
     pride = db.relationship('Pride')
+    Support = db.relationship('Support')
 
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -86,3 +87,10 @@ class Pride(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     moment = db.Column(db.String(1000))
+
+class Support(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    issue_title = db.Column(db.String(100))
+    email = db.Column(db.String(150))
+    description = db.Column(db.String(1000))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

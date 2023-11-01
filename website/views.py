@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request, flash, jsonify, redirect,
 from flask_mail import Mail, Message
 from email.message import EmailMessage
 from flask_login import login_required, current_user
-from .models import Goal, Journal, Task, FinishedTask, ArchivedTask, Card, Lesson, Pride
+from .models import Goal, Journal, Task, FinishedTask, ArchivedTask, Card, Lesson, Pride, Support
 from sqlalchemy.orm import aliased
 from . import db
 import json, os, smtplib
@@ -632,45 +632,32 @@ def setting():
 def support():
     return render_template("Support.html", user=current_user)
 
-@views.route('/submit_support', methods=['POST'])
+@views.route('/submit_support', methods=['GET','POST'])
 def submit_support_form():
+
+    support_entries = []
+
     if request.method == 'POST':
         try:
             # Get form data
-            issue_title = request.form['issue_title']
-            email = request.form['email']
-            description = request.form['description']
-
+            new_title = request.form['issue_title']
+            new_email = request.form['email']
+            new_description = request.form['description']
             
-            recipient_email = 'proempohelpdesk@gmail.com'  # Help desk email
-
-            # Create an EmailMessage
-            message = EmailMessage()
-            message.set_content(description)
-            message['Subject'] = issue_title
-            message['From'] = email  # Use the user's email as the sender
-            message['To'] = recipient_email  # Set the recipient as the help desk email
-
-            # Set up your SMTP server and send the email
-            smtp_server = smtplib.SMTP('smtp.gmail.com', 587)  # Replace with your SMTP server and port
-            smtp_server.starttls()
-            smtp_server.login(mail_username, mail_password)  # Replace with your email and password
-            smtp_server.send_message(message)
-            smtp_server.quit()
-
-            return redirect(url_for('thank_you'))
-
+            new_form= Support(user_id=current_user.id,issue_title=new_title, email=new_email,description=new_description)
+            
+            db.session.add(new_form)
+            db.session.commit()
+            
+            return render_template('/thank_you.html', user=current_user)
         except Exception as e:
-            print("An error occurred while sending the email:", e)
+            print("An error occurred while saving the support submission:", e)
             # Handle the error, log it, or take appropriate action
             flash('Failed to submit the support request', category='error')
-    
-    return render_template("Support.html", user=current_user)
+
+    return render_template("Support.html", support_entries=support_entries, user=current_user)
 
 
-@app.route('/thank_you')
-def thank_you():
-    return render_template('thank_you.html') # thank you message for the user after submitting form
 
 
 @views.route('/ViewFlashcards', methods=["GET", "POST"])
