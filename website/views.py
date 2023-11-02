@@ -382,11 +382,6 @@ def reports():
         return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message="It appears as if you have not set any goals. <a href=/goals>Begin setting goals.</a>", most_popular_rating=most_popular_rating, day_rating_json=day_rating_json)
 
 
-
-
-
-
-
 @views.route('/journal', methods=['GET', 'POST'])
 @login_required
 def journal():
@@ -451,7 +446,6 @@ def is_entry_exists_for_today():
     entry_for_today = Journal.query.filter(Journal.date == today, Journal.user_id == current_user.id).first()
 
     return entry_for_today is not None
-
 
 
 @views.route('/delete-task', methods=['POST'])
@@ -909,36 +903,87 @@ def fetch_goals():
     return jsonify({'goals': serialized_goals})
 
 
-
+def get_iso_year_week(date):
+    year, week, _ = date.isocalendar()
+    return year, week
 
 @views.route('/accomplishments', methods=['GET', 'POST'])
 @login_required
 def pride():
 
-    pride_entries = []
+    current_year, current_week_number = get_iso_year_week(today)
 
+    recent_accomplishments = Pride.query.filter(
+        Pride.user_id == current_user.id,
+        Pride.year == current_year,
+        Pride.week_number == current_week_number,
+        Pride.status == False
+    ).all()
+
+
+    for accomplishment in recent_accomplishments:
+        #Update the status once it lands outside the current week
+        if current_week_number - accomplishment.week_number > 0:
+            accomplishment.status = True 
+    
     if request.method == 'POST':
-        #gets the info from the form
-        new_moment = request.form.get('moment')
-        #creates the pride object
-        pride_entry = Pride(user_id=current_user.id, moment=new_moment)
-        db.session.add(pride_entry)
-        db.session.commit()
-        #gets all the entries
-        pride_entries = Pride.query.all()
+        #max entries for the week check
+        maximum_entries = 5
+        entries_for_week = len(recent_accomplishments)
 
-    return render_template('pride.html', pride_entries=pride_entries, user=current_user)
+        if entries_for_week >= maximum_entries:
+            print("You have entered the maximum number of entries. Only 5 per week")
+        else:
+            new_moment = request.form.get('moment')
+            pride_entry = Pride(
+            user_id=current_user.id,
+            moment=new_moment,
+            year=current_year,
+            week_number=current_week_number,
+            status=False,
+        )
 
-
-@views.route('/DeletePride/<int:pride_id>', methods=["POST"])
-@login_required
-def delete_pride(pride_id):
-
-    moment=Pride.query.get(pride_id)
-
-    db.session.delete(moment)
-    db.session.commit()
-
-    return redirect("/accomplishments")
+            db.session.add(pride_entry)
+            db.session.commit()
+            
+    recent_accomplishments = Pride.query.filter(
+        Pride.user_id == current_user.id,
+        Pride.year == current_year,
+        Pride.week_number == current_week_number,
+        Pride.status == False
+    ).all()
+    
+    return render_template('pride.html', recent_accomplishments=recent_accomplishments, user=current_user)
     
 
+##@views.route('/DeletePride/<int:pride_id>', methods=["POST"])
+##@login_required
+##def delete_pride(pride_id):
+
+   ## moment=Pride.query.get(pride_id)
+
+##    db.session.delete(moment)
+  ##  db.session.commit()
+
+    ##return redirect("/accomplishments")
+    
+@views.route('/past-accomplishments', methods=['GET', 'POST'])
+@login_required
+def past_week_accomplishments():
+    
+    #This will get tthe current week number based on 52 week and the current year
+    current_year, current_week_number = get_iso_year_week(today)
+
+    error_message = ""
+
+    past_accomplishments = Pride.query.filter(
+        Pride.user_id == current_user.id,
+        Pride.year == current_year,
+        Pride.week_number < current_week_number ,
+        Pride.status == True
+    ).order_by(Pride.date.desc()).limit(5).all()
+
+    if not past_accomplishments:
+        error_message = "You havent listed any accomplishments last week"
+
+    return render_template('pastAccomplishments.html', past_accomplishments=past_accomplishments,error_message=error_message, user=current_user)
