@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block title %}Past Accomplishments - ProEmPo{% endblock %} {% block content %}
+
+
+<div class="postit-container">
+    {% if past_accomplishments %}
+        {% for entry in past_accomplishments %}
+        <div class="post-it" id="postit-{{ entry.id }}">
+            <div class="header">
+                <h3>I am proud of...</h3>
+            </div>
+            <div class="moment">
+                {{ entry.moment }}
+            </div>
+            <button class="btn btn-basic" id="delete-card" onclick="confirmDeletePride('{{ entry.id }}')"><span aria-hidden="true" class="fa fa-times-rectangle-o"></span></button>    
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+</div>
+
+{% endblock %}

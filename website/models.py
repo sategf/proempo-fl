@@ -60,7 +60,7 @@ class User(db.Model, UserMixin):
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     question = db.Column(db.String(1000))
-    answer = db.Column(db.String(100000))
+    answer = db.Column(db.String(1000))
     timestamp = db.Column(db.DateTime(timezone=True), index=True, default=get_current_time_in_et)
     lesson_id = db.Column(db.Integer, db.ForeignKey('lesson.id'))
     lessons = db.relationship('Lesson', back_populates='cards')
@@ -87,6 +87,10 @@ class Pride(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     moment = db.Column(db.String(1000))
+    date = db.Column(db.DateTime(timezone=True), default=get_current_time_in_et)
+    status = db.Column(db.Boolean, default=False)
+    week_number = db.Column(db.Integer)
+    year = db.Column(db.Integer)
 
 class Support(db.Model):
     id = db.Column(db.Integer, primary_key=True)
