@@ -627,6 +627,18 @@ def setting():
         confirmnewpass = "Confirm New Password"
     return render_template("settings.html",user=current_user, selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility, changepass=changepass, currentpass=currentpass, newpass=newpass, confirmnewpass=confirmnewpass)
 
+
+@views.route('/General')
+@login_required
+def general():
+    return render_template("General.html", user=current_user)
+
+@views.route('/Accessibility')
+@login_required
+def accessibility():
+    return render_template("Accessibility.html", user=current_user)
+
+
 @views.route('/Support', methods=['GET'])
 @login_required
 def support():
