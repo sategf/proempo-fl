@@ -414,9 +414,33 @@ def journal():
                 grateful_content=','.join(grateful_contents),
                 day_rating=day_rating
             )
+            
             db.session.add(journal_entry)
             db.session.commit()
-
+            if "suicide" in dear_journal_content:
+                db.session.commit()
+                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
+            elif "Suicide" in dear_journal_content:
+                db.session.commit()
+                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
+            elif "kill" in dear_journal_content:
+                db.session.commit()
+                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
+            elif "Kill" in dear_journal_content:
+                db.session.commit()
+                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
+            elif "murder" in dear_journal_content:
+                db.session.commit()
+                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
+            elif "Murder" in dear_journal_content:
+                db.session.commit()
+                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
+            elif "hurt" in dear_journal_content:
+                db.session.commit()
+                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
+            elif "Hurt" in dear_journal_content:
+                db.session.commit()
+                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
             return redirect(url_for('views.journal'))
     elif request.method == 'GET':
         previous_entries = Journal.query.filter(Journal.user_id == current_user.id).all()
@@ -426,19 +450,14 @@ def journal():
         if previous_entry_id:
             selected_entry = Journal.query.get(previous_entry_id)
     date = (datetime.now().date())
-
+    
     return render_template('journal.html', user=current_user, previous_entries=previous_entries, selected_entry=selected_entry, date=date)
-
-@views.route('/scan-Journal', methods=['POST'])
+'''
+@views.route('/scanJournal', methods=['POST'])
 @login_required
 def scan_Journal():
-    content = "dear_journal_content"
-    if content.includes("hurt", "suicide", "kill", "murder"):
-      return jsonify({'message': "Your journal contained concerning words. What is hurting you?"})
-    
-    db.session.commit()
-    return jsonify({'message': "Your journal contained concerning words. What is hurting you?"})
-
+    return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
+'''
 
 def is_entry_exists_for_today():
     today = date.today()
