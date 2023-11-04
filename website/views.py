@@ -623,6 +623,10 @@ def setting():
         Categories = "Categorii"
         General = "General"
         Accessibility = "Accesibilitate"
+        changeuser = "Schimbă Utilizatorul"
+        currentuser = "Utilizator Curent"
+        newuser = "Utilizator Nou"
+        confirmnewuser = "Confirma Noul Utilizator"
         changepass = "Schimbare Parolă"
         currentpass = "Parolă Curentă"
         newpass = "Parolă Nouă"
@@ -634,11 +638,15 @@ def setting():
         Categories = "Categories"
         General = "General"
         Accessibility = "Accessibility"
+        changeuser = "Change User"
+        currentuser = "Current User"
+        newuser = "New User"
+        confirmnewuser = "Confirm New User"
         changepass = "Change Password"
         currentpass = "Current Password"
         newpass = "New Password"
         confirmnewpass = "Confirm New Password"
-    return render_template("settings.html",user=current_user, selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility, changepass=changepass, currentpass=currentpass, newpass=newpass, confirmnewpass=confirmnewpass)
+    return render_template("settings.html",user=current_user, selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility, changeuser=changeuser, currentuser=currentuser, newuser=newuser, confirmnewuser=confirmnewuser, changepass=changepass, currentpass=currentpass, newpass=newpass, confirmnewpass=confirmnewpass)
 
 
 @views.route('/General')

@@ -86,3 +86,29 @@ def change_password():
             return redirect("/settings")
 
     return render_template("Settings.html", user=current_user)
+
+
+
+
+@auth.route('/change-username', methods=['GET', 'POST'])
+@login_required
+def change_username():
+    if request.method == 'POST':
+        current_username = request.form.get('current_username')
+        new_username = request.form.get('new_username')
+        confirm_username = request.form.get('confirm_username')
+        
+        if not (current_user.username, current_username):
+            flash('Current username is incorrect.', category='error')
+            return redirect("/settings")
+        elif new_username != confirm_username:
+            flash('New username and confirm username do not match.', category='error')
+            return redirect("/settings")
+        else:
+            flash('Username successfully changed.', category='error')
+            current_user.username = new_username
+            db.session.commit()
+            return redirect("/settings")
+
+    return render_template("Settings.html", user=current_user)
+    
