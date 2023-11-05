@@ -29,6 +29,23 @@ section {
     border-bottom-right-radius: 10px;
     box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
 }
+
+/* Add this CSS to style the "Submit" button */
+button.btn-primary {
+    background-color: #8b7cb3; /* Purple color */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 5px;
+    padding: 7px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button.btn-primary:hover {
+    background-color: #ffb700ad; /* Darker purple on hover */
+}
+
+
 </style>
 <h2>Contact Form</h2>
 <form action="/submit_support" method="post">
