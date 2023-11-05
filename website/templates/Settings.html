@@ -15,6 +15,22 @@
 
     </ul>
         <hr>
+        <h4>{{changeuser}}</h5>
+        <form method="POST" action="/change-username">
+
+            <label for="current_username">{{currentuser}}</label><br>
+            <input type="username" name="current_username" required>
+            <br>
+            <label for="new_username">{{newuser}}</label><br>
+            <input type="username" name="new_username" required>
+            <br>
+            <label for="confirm_username">{{confirmnewuser}}</label><br>
+            <input type="username" name="confirm_username" required>
+            <br>
+            <br>
+            <button type="submit">{{changeuser}}</button>
+        </form>
+        <hr>
         <h5>{{changepass}}</h5>
         <form method="POST" action="/change-password" class="container">
             <div class="form-group">
@@ -103,6 +119,46 @@
     .form-control{
         width: 50%;
     }
+     /* Style for the "Change Username" button */
+    form[action="/change-username"] button {
+        background-color: #8b7cb3;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        
+
+        margin: 0 auto;
+        display: block;
+    }
+
+    form[action="/change-username"] button:hover {
+        background-color: #ffb700ad;
+    }
+
+    /* Style for the "Change Password" button */
+    form[action="/change-password"] button {
+        background-color: #8b7cb3;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        
+
+        margin: 0 auto;
+        display: block;
+    }
+
+    form[action="/change-password"] button:hover {
+        background-color: #ffb700ad;
+    }
+
+
+
 </style>
 <br>
 <script>
