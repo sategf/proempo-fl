@@ -214,6 +214,16 @@
         });
       }
     </script>
+    <script>
+      function starTask(taskId) {
+        fetch("/star-task", {
+          method: "POST",
+          body: JSON.stringify({ taskId: taskId }),
+        }).then((_res) => {
+          window.location.href = "/tasks";
+        });
+      }
+    </script>
     <script type="text/javascript">
       function unMarkTask(finishedTaskId) {
         fetch("/unmark-task", {

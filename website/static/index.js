@@ -27,6 +27,15 @@ function markTask(taskId) {
   });
 }
 
+function starTask(taskId) {
+  fetch("/star-task", {
+    method: "POST",
+    body: JSON.stringify({ taskId: taskId }),
+  }).then((_res) => {
+    window.location.href = "/tasks";
+  });
+}
+
 function unMarkTask(finishedTaskId) {
   fetch("/unmark-task", {
     method: "POST",

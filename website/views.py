@@ -284,6 +284,18 @@ def tasks():
     else:
         tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.date)
 
+
+    '''To implement later
+    if selected_sort == 'due_date':
+        tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.starred.desc(), Task.due_date, Task.due_time)
+    elif selected_sort == 'data':
+        tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.starred.desc(), func.lower(Task.data))
+    elif selected_sort == 'newest':
+        tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.starred.desc(), Task.date.desc())
+    else:
+        tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.starred.desc(), Task.date)
+    '''
+
     return render_template('tasks.html', user=current_user, tasks=tasks, selected_sort=selected_sort)
 
 
@@ -535,6 +547,21 @@ def mark_task():
 
     return jsonify({})
 
+@views.route('/star-task', methods=['POST'])
+@login_required
+def star_task():
+    task_data = json.loads(request.data)
+    task_id = task_data['taskId']
+
+    task = Task.query.get(task_id)
+
+    if task and task.user_id == current_user.id:
+        # Toggle the starred status
+        task.starred = 1 if task.starred != 1 else 0
+        db.session.commit()
+
+    return jsonify({})
+
 @views.route('/unmark-task', methods=['POST'])
 @login_required
 def unmark_task():
@@ -618,10 +645,8 @@ def setting():
         Categories = "Categorii"
         General = "General"
         Accessibility = "Accesibilitate"
-        changeuser = "Schimbă Utilizatorul"
-        currentuser = "Utilizator Curent"
-        newuser = "Utilizator Nou"
-        confirmnewuser = "Confirma Noul Utilizator"
+        changeuser = "Schimbă Utilizator"
+        username = "Utilizator:"
         changepass = "Schimbare Parolă"
         currentpass = "Parolă Curentă"
         newpass = "Parolă Nouă"
@@ -639,10 +664,8 @@ def setting():
         Categories = "Categories"
         General = "General"
         Accessibility = "Accessibility"
-        changeuser = "Change User"
-        currentuser = "Current User"
-        newuser = "New User"
-        confirmnewuser = "Confirm New User"
+        changeuser = "Change Username"
+        username = "Username:"
         changepass = "Change Password"
         currentpass = "Current Password"
         newpass = "New Password"
@@ -655,7 +678,7 @@ def setting():
         language = "Language"
     return render_template("settings.html",user=current_user, 
                            selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility, changepass=changepass, 
-                           currentpass=currentpass, newpass=newpass, confirmnewpass=confirmnewpass, selfhelp=selfhelp, tasks=tasks, dailycheckin=dailycheckin, reports=reports, hidefeatures=hidefeatures, language=language)
+                           currentpass=currentpass, newpass=newpass, confirmnewpass=confirmnewpass, selfhelp=selfhelp, tasks=tasks, dailycheckin=dailycheckin, reports=reports, hidefeatures=hidefeatures, language=language, changeuser=changeuser, username=username)
 
 @views.route('/update_hide_self_help', methods=['POST'])
 @login_required

@@ -16,6 +16,7 @@ class Task(db.Model):
     date = db.Column(db.DateTime(timezone=True), default=get_current_time_in_et)
     due_time = db.Column(db.Time)
     due_date = db.Column(db.Date)
+    starred = db.Column(db.Boolean)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class FinishedTask(db.Model):

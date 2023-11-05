@@ -188,7 +188,13 @@
           {% endif %}
         </div>
         <div style="margin-left: auto; color: grey; padding-right: 5px">
-          {{ task.date.strftime('%I:%M %p %m/%d/%y') }}
+          <a href="#" onClick="starTask({{ task.id }})">
+            {% if task.starred != 1%}
+            <i class="fa-regular fa-star" style="color: #4d4d4d;"></a></i>
+            {% else %}
+            <i class="fa-solid fa-star" style="color: #ffd700;"></i></a></i>
+            {% endif %}
+          &nbsp;{{ task.date.strftime('%I:%M %p %m/%d/%y') }}
         </div>
         <button
           type="button"
@@ -288,5 +294,6 @@
       window.location.reload();
     });
   }
+}
 </script>
 {% endblock %}
