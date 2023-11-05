@@ -588,14 +588,9 @@ def archive_task():
 def about():
     return render_template("About.html", user=current_user)
 
-@views.route('/settings', methods=['GET', 'POST'])
+@views.route('/settings')
 @login_required
 def setting():
-    if request.method == 'POST':
-        new_language = request.form.get('language')
-        current_user.language = new_language
-        db.session.commit()
-        return redirect("/settings")
     
     if current_user.language == "ro":
         selectLanguage = "Selectați limba preferată:"
@@ -608,6 +603,12 @@ def setting():
         currentpass = "Parolă Curentă"
         newpass = "Parolă Nouă"
         confirmnewpass = "Confirmare Parolă Nouă"
+        hidefeatures = "Ascundeți Caracteristici"
+        selfhelp = "Ajoutor Personal"
+        tasks = "Sarcini"
+        dailycheckin = "Verificare Zilnică"
+        reports = "Rapoarte"
+        language = "Limba"
     else:
         selectLanguage = "Select your preferred language:"
         title = "Settings"
@@ -619,12 +620,72 @@ def setting():
         currentpass = "Current Password"
         newpass = "New Password"
         confirmnewpass = "Confirm New Password"
-    return render_template("settings.html",user=current_user, selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility, changepass=changepass, currentpass=currentpass, newpass=newpass, confirmnewpass=confirmnewpass)
+        hidefeatures = "Hide Features"
+        selfhelp = "Self Help"
+        tasks = "Tasks"
+        dailycheckin = "Daily Check-In"
+        reports = "Reports"
+        language = "Language"
+    return render_template("settings.html",user=current_user, 
+                           selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility, changepass=changepass, 
+                           currentpass=currentpass, newpass=newpass, confirmnewpass=confirmnewpass, selfhelp=selfhelp, tasks=tasks, dailycheckin=dailycheckin, reports=reports, hidefeatures=hidefeatures, language=language)
+
+@views.route('/update_hide_self_help', methods=['POST'])
+@login_required
+def update_hide_self_help():
+    user = current_user
+    data = request.get_json()
+    new_value = data.get('value')
+    user.hide_self_help = new_value
+    db.session.commit()
+
+
+
+@views.route('/update_hide_tasks', methods=['POST'])
+@login_required
+def update_hide_tasks():
+    user = current_user
+    data = request.get_json()
+    new_value = data.get('value')
+    user.hide_tasks = new_value
+    db.session.commit()
+
+
+@views.route('/update_hide_journal', methods=['POST'])
+@login_required
+def update_hide_journal():
+    user = current_user
+    data = request.get_json()
+    new_value = data.get('value')
+    user.hide_journal = new_value
+    db.session.commit()
+
+
+@views.route('/update_hide_reports', methods=['POST'])
+@login_required
+def update_hide_reports():
+    user = current_user
+    data = request.get_json()
+    new_value = data.get('value')
+    user.hide_reports = new_value
+    db.session.commit()
+
+
+@views.route('/update_language', methods=['POST'])
+@login_required
+def update_language():
+    user = current_user
+    data = request.get_json()
+    new_language = data.get('language')
+    user.language = new_language
+    db.session.commit()
 
 
 @views.route('/General')
 @login_required
 def general():
+
+
     return render_template("General.html", user=current_user)
 
 @views.route('/Accessibility')

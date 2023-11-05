@@ -48,7 +48,11 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
-    language = db.Column(db.String(50))
+    language = db.Column(db.String(2))
+    hide_self_help = db.Column(db.Boolean)
+    hide_tasks = db.Column(db.Boolean)
+    hide_journal = db.Column(db.Boolean)
+    hide_reports = db.Column(db.Boolean)
     tasks = db.relationship('Task')
     finished_tasks = db.relationship('FinishedTask')
     archivedtasks = db.relationship('ArchivedTask')
@@ -56,6 +60,7 @@ class User(db.Model, UserMixin):
     lessons = db.relationship('Lesson')
     pride = db.relationship('Pride')
     Support = db.relationship('Support')
+
 
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key = True)

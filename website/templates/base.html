@@ -43,16 +43,21 @@
                 {% endif %}</a
               >
             </li>
+            {% if user.hide_self_help != 1 %}
             <li class="nav-item">
               <a class="nav-link" id="Help" href="/help">
                 <i class="fa fa-brain"></i>&nbsp;
+                
                 {% if user.language == "ro" %}
                 Ajutor Personal
                 {% else %}
                 Self Help
-                {% endif %}</a
+                {% endif %}
+                </a
               >
             </li>
+            {% endif %}
+            {% if user.hide_tasks != 1 %}
             <li class="nav-item">
               <a class="nav-link" id="To do" href="/tasks">
                 <i class="fa fa-list"></i>&nbsp;
@@ -63,6 +68,8 @@
                 {% endif %}</a
               >
             </li>
+            {% endif %}
+            {% if user.hide_journal != 1 %}
             <li class="nav-item">
               <a class="nav-link" id="Journal" href="/journal">
                 <i class="fa fa-book-open"></i>&nbsp;
@@ -73,6 +80,8 @@
                 {% endif %}</a
               >
             </li>
+            {% endif %}
+            {% if user.hide_reports != 1 %}
               <li class="nav-item">
                 <a class="nav-link" id="reports" href="/reports">
                   <i class="fa-solid fa-chart-column">‌</i>&nbsp;
@@ -84,6 +93,7 @@
                 >
               </li>
             </li>
+            {% endif %}
             <li class="nav-item">
               <a class="nav-link" id="FAQ" href="/FAQ">
                 <i class="fa fa-circle-question"></i>&nbsp;
@@ -108,7 +118,9 @@
             </li>
             
           </ul>
-          <ul class="navbar-nav ml-auto" id="navbar">
+          <ul class="navbar-nav ml-auto" id="navbar" style="text-align: center;
+          list-style-position: inside;
+          padding: 0px;">
             <!-- Align items to the right -->
             {% if user.is_authenticated %}
             <li class="nav-item">
