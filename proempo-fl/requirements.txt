@@ -1,0 +1,9 @@
+Flask==2.3.0
+Jinja2==3.1.2
+Werkzeug==2.3.0
+click==8.1.7
+Flask-SQLAlchemy==3.1.1
+Flask-Login==0.6.2
+Flask-Mail==0.9.1
+pytz==2023.3.post1
+plotly==5.17.0

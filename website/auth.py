@@ -94,21 +94,18 @@ def change_password():
 @login_required
 def change_username():
     if request.method == 'POST':
-        current_username = request.form.get('current_username')
-        new_username = request.form.get('new_username')
-        confirm_username = request.form.get('confirm_username')
-        
-        if not (current_user.username, current_username):
-            flash('Current username is incorrect.', category='error')
-            return redirect("/settings")
-        elif new_username != confirm_username:
-            flash('New username and confirm username do not match.', category='error')
-            return redirect("/settings")
+        username = request.form.get('username')
+
+        user = User.query.filter_by(username=username).first()
+        if user:
+            flash('Username is already taken.', category='error')
+        elif len(username) < 2:
+            flash('Username must be at least 3 characters.', category='error')
         else:
             flash('Username successfully changed.', category='error')
-            current_user.username = new_username
+            current_user.username = username
             db.session.commit()
-            return redirect("/settings")
-
+            
+        return redirect("/settings")
     return render_template("Settings.html", user=current_user)
     
