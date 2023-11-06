@@ -21,7 +21,7 @@
                 <span class="input-group-text" id="inputGroup-sizing-sm">{{username}}</span>
                 <input type="text" name="username" class="form-control" required value="{{user.username}}">
             </div>
-            <button type="submit" class="btn btn-secondary btn-sm">{{changeuser}}</button>
+            <button type="submit" class="btn btn-secondary btn-sm" style="background-color: #8b7cb3;">{{changeuser}}</button>
         </form>
         <hr>
         <h5>{{changepass}}</h5>
@@ -38,7 +38,7 @@
                 <span class="input-group-text" id="inputGroup-sizing-sm">{{confirmnewpass}}</span>
                 <input type="password" name="confirm_password" class="form-control" required>
               </div>
-            <button type="submit" class="btn btn-secondary btn-sm">{{changepass}}</button>
+            <button type="submit" class="btn btn-secondary btn-sm" style="background-color: #8b7cb3;">{{changepass}}</button>
         </form>
         
         <hr>
@@ -109,6 +109,10 @@
 
     .input-group{
         width: 50%;
+    }
+
+    .form-switch .form-check-input:checked {
+        background-color:#8b7cb3;
     }
 </style>
 <br>
