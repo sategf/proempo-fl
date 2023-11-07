@@ -630,16 +630,16 @@ def about():
 def setting():
     
     if current_user.language == "ro":
-        selectLanguage = "Selectați limba preferată:"
+        selectLanguage = "Selectați limba dorită:"
         title = "Setări"
         save = "Salvează "
         Categories = "Categorii"
         General = "General"
         Accessibility = "Accesibilitate"
-        changeuser = "Schimbă Utilizator"
-        username = "Utilizator:"
-        changepass = "Schimbare Parolă"
-        currentpass = "Parolă Curentă"
+        changeuser = "Schimbă Numele de Utilizator"
+        username = "Nume de Utilizator:"
+        changepass = "Schimbare de Parolă"
+        currentpass = "Parola Curentă"
         newpass = "Parolă Nouă"
         confirmnewpass = "Confirmare Parolă Nouă"
         hidefeatures = "Ascundeți Caracteristici"
