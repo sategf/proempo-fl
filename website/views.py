@@ -429,30 +429,14 @@ def journal():
             
             db.session.add(journal_entry)
             db.session.commit()
-            if "suicide" in dear_journal_content:
+            list = ["suicide", "murder", "kill", "hurt"]
+            if any(word in dear_journal_content for word in list):
                 db.session.commit()
-                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
-            elif "Suicide" in dear_journal_content:
+                flash('Your journal contained concerning words. What is hurting you?', category='error')
+                
+            elif any(word in grateful_contents for word in list):
                 db.session.commit()
-                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
-            elif "kill" in dear_journal_content:
-                db.session.commit()
-                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
-            elif "Kill" in dear_journal_content:
-                db.session.commit()
-                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
-            elif "murder" in dear_journal_content:
-                db.session.commit()
-                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
-            elif "Murder" in dear_journal_content:
-                db.session.commit()
-                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
-            elif "hurt" in dear_journal_content:
-                db.session.commit()
-                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
-            elif "Hurt" in dear_journal_content:
-                db.session.commit()
-                return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
+                flash('Your journal contained concerning words. What is hurting you?', category='error')
             return redirect(url_for('views.journal'))
     elif request.method == 'GET':
         previous_entries = Journal.query.filter(Journal.user_id == current_user.id).all()
