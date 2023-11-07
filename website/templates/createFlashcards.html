@@ -19,7 +19,7 @@
 
             <div class="field1">
                 <label for="new_lesson_name">Or Create a new Lesson</label>
-                <input id="cLesson" type="text" id="new_lesson_name" name="new_lesson_name">
+                <input class="new-lesson" id="cLesson" type="text" id="new_lesson_name" name="new_lesson_name">
             </div>
 
             <div class="field1">
@@ -32,12 +32,13 @@
                 <textarea name="answer" id="" cols="50" rows="10"></textarea>
             </div>
 
+            <div class="button-container1">
             <button type="submit" class="btn btn-basic" id="submit">Submit</button>
+            </div>
         </form>
         <br>
-        <div>
-            <button class="btn btn-basic" id="redirect" onclick="redirectToView()">View your Flashcards</button>
-
+        <div class="button-container2">
+            <button class="btn btn-basic btn2" id="redirect" onclick="redirectToView()">View your Flashcards</button>
         </div>
     </div>
 </body> 
@@ -67,8 +68,17 @@
         box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
     }
 
+    .field {
+        margin-top: 20px;
+    }
+
     .field1{
         margin-top: 10px;
+    }
+
+    .field, .field1 {
+        padding-left: 20px;
+
     }
 
     button{
@@ -77,6 +87,18 @@
         cursor: pointer;
         background-color: blueviolet;
         text-decoration-color: white;
+        margin-left: 20px
+    }
+
+    .button-container1,
+    .button-container2 {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px; /* Adjust the top margin as needed */
+    }
+
+    .button-container2 {
+        margin-top: -20px;
     }
 
     #redirect {
@@ -116,7 +138,7 @@
 
     textarea {
         height: 200px;
-        width: 815px;
+        width: 85%;
         border-radius: 10px;
         vertical-align: top;
         padding: 10px;
@@ -125,6 +147,8 @@
 
     input {
         border-radius: 10px;
+        max-width: 85%;
+        border-width: 1px;
     }
 
     select {
@@ -140,11 +164,19 @@
     }
 
     #question {
-        width: 800px;
+        width: 730px;
     }
 
     #cLesson {
         width: 500px;
+    }
+
+    @media (max-width: 1000px) {
+        .field1 textarea, input {
+            display: block;
+            width: 85%; /* Adjust the width as needed */
+            margin-top: 10px; /* Add space at the top for separation */
+        }
     }
 
 </style>
