@@ -429,14 +429,16 @@ def journal():
             
             db.session.add(journal_entry)
             db.session.commit()
+            
             list = ["suicide", "murder", "kill", "hurt"]
             if any(word in dear_journal_content for word in list):
                 db.session.commit()
                 flash('Your journal contained concerning words. What is hurting you?', category='error')
-                
+                flash('If you are feeling unwell, please dont''t heisitate to contact 988 hotline.', category='error')
             elif any(word in grateful_contents for word in list):
                 db.session.commit()
                 flash('Your journal contained concerning words. What is hurting you?', category='error')
+                flash('If you are feeling unwell, please dont''t heisitate to contact 988 hotline.', category='error')
             return redirect(url_for('views.journal'))
     elif request.method == 'GET':
         previous_entries = Journal.query.filter(Journal.user_id == current_user.id).all()
@@ -452,9 +454,14 @@ def journal():
 @views.route('/scanJournal', methods=['POST'])
 @login_required
 def scan_Journal():
-    return jsonify({'message': 'Your journal contained concerning words. What is hurting you?'})
+    journal_entry = Journal.query.filter(Journal.date == today, Journal.user_id == current_user.id).first()
+    list = ["suicide", "murder", "kill", "hurt"]
+    if is_entry_exists_for_today():
+        if any(word in journal_entry for word in list):
+            db.session.commit()
+            return flash('Your journal contained concerning words. What is hurting you?', category='error')
+    return jsonify({})
 '''
-
 def is_entry_exists_for_today():
     today = date.today()
 
