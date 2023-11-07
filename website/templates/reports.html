@@ -84,6 +84,18 @@
     .linearGraph {
         margin-top: 50px;
     }
+
+    @media (max-width: 1200px) {
+        .goals-and-frequent-container {
+            flex-direction: column; 
+        }
+
+        .goals-count-container,
+        .frequent-day-container {
+            max-width: 100%; 
+            margin-top: 20px; 
+        }
+    }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
