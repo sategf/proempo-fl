@@ -1034,7 +1034,7 @@ def pride():
         entries_for_week = len(recent_accomplishments)
 
         if entries_for_week >= maximum_entries:
-            print("You have entered the maximum number of entries. Only 5 per week")
+            flash("You have entered the maximum number of entries. Only 5 per week")
         else:
             new_moment = request.form.get('moment')
             pride_entry = Pride(
@@ -1058,34 +1058,28 @@ def pride():
     return render_template('pride.html', recent_accomplishments=recent_accomplishments, user=current_user)
     
 
-##@views.route('/DeletePride/<int:pride_id>', methods=["POST"])
-##@login_required
-##def delete_pride(pride_id):
+@views.route('/DeletePride/<int:pride_id>', methods=["POST"])
+@login_required
+def delete_pride(pride_id):
 
-   ## moment=Pride.query.get(pride_id)
+    moment=Pride.query.get(pride_id)
+    db.session.delete(moment)
+    db.session.commit()
 
-##    db.session.delete(moment)
-  ##  db.session.commit()
-
-    ##return redirect("/accomplishments")
+    return redirect("/accomplishments")
     
 @views.route('/past-accomplishments', methods=['GET', 'POST'])
 @login_required
 def past_week_accomplishments():
-    
-    #This will get tthe current week number based on 52 week and the current year
-    current_year, current_week_number = get_iso_year_week(today)
 
     error_message = ""
 
     past_accomplishments = Pride.query.filter(
         Pride.user_id == current_user.id,
-        Pride.year == current_year,
-        Pride.week_number < current_week_number ,
         Pride.status == True
     ).order_by(Pride.date.desc()).limit(5).all()
 
     if not past_accomplishments:
-        error_message = "You havent listed any accomplishments last week"
+        error_message = "You havent listed any accomplishments in the past week"
 
     return render_template('pastAccomplishments.html', past_accomplishments=past_accomplishments,error_message=error_message, user=current_user)

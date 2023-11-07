@@ -7,20 +7,10 @@
     <div class="main" >
         <div class="explanation" style="text-align: center;">
         <img src="../static/confidence.png" alt="image" class="Accomplishments-img"> 
-            <p>Welcome to this page, where we encourage you to recognize your greatness!</p>
             <p>Take some time to reflect on the accomplishments and qualities that make you proud of yourself.</p>
             <p>Embracing your journey is a unique and ongoing process, one that's all about you.</p>
-        </div>
-
-        <div class="dropdown2">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Past Accomplishments
-            </button>
-            <div class="dropdown-menu" style=".dropdown-menu.show{
-            width: 750px;
-            }"</div>
-                <iframe src="/past-accomplishments" style="background-color: #f7eefdd3;"></iframe>
-            </div>
+            <br>
+            <p>Below you will be able to enter five Accomplishments or qualities per week</p>
         </div>
 
         <div id="form">
@@ -31,6 +21,17 @@
 
                 <button type="submit" class="btn btn-basic" id="save">Save</button>
             </form>
+        </div>
+    </div>
+    <div class="dropdown2">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Past Accomplishments
+        </button>
+        <div class="dropdown-menu" style=".dropdown-menu.show{
+        width: 750px;
+        }" 
+        </div>
+            <iframe src="/past-accomplishments" style="background-color: #f7eefdd3;"></iframe>
         </div>
     </div>
 
@@ -112,6 +113,7 @@
         padding: 10px;
     }
 
+   
     .post-it {
  	    width:250px;
         height:240px;
@@ -206,11 +208,12 @@
         right: 10px;
     }
 
-    #pastAccomplishmentsFrame {
-        width: 100%;
-        height: 300px; /* Set the desired height */
-        border: none; /* Remove border */
-    }
+
+    iframe {
+      width: 900px;
+      height: 400px; /* You can adjust the height as needed */
+      border: none; /* Remove iframe border */
+  }
 
 </style>
 {% endblock %}
