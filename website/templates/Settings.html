@@ -59,6 +59,30 @@
             <input class="form-check-input" type="checkbox" id="hide_reports" name="hide_reports" {% if user.hide_reports %}checked{% endif %}>
             <label class="form-check-label" for="hide_reports">{{reports}}</label>
         </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="hide_player" name="hide_player" {% if user.hide_player %}checked{% endif %}>
+            <label class="form-check-label" for="hide_player">{{player}}</label>
+        </div>
+        <hr>
+        <h5>{{taskpage}}</h5>
+        <form id="settings-form">
+            <label for="defaultsort">{{defaultsort}}</label>
+            <select id="defaultsort" name="defaultsort">
+                <option value="Task.date" {% if user.defaultsort == "Task.date" %}selected{% endif %}>{{oldesttonewest}}</option>
+                <option value="task.date DESC" {% if user.defaultsort == "task.date DESC" %}selected{% endif %}>{{newesttooldest}}</option>
+                <option value="Task.due_date, Task.due_time" {% if user.defaultsort == "Task.due_date, Task.due_time" %}selected{% endif %}>{{duedate}}</option>
+                <option value="lower(task.data)" {% if user.defaultsort == "lower(task.data)" %}selected{% endif %}>{{alphabetically}}</option>
+            </select>
+        </form>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="starred_at_top" name="starred_at_top" {% if user.starred_at_top %}checked{% endif %}>
+            <label class="form-check-label" for="starred_at_top">{{starredAtTop}}</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="make_all_buttons_purple" name="make_all_buttons_purple" {% if user.make_all_buttons_purple %}checked{% endif %}>
+            <label class="form-check-label" for="make_all_buttons_purple">{{makeAllButtonsPurple}}</label>
+        </div>
+
         <hr>
         <h5>{{language}}</h5>
         <form id="settings-form">
@@ -113,10 +137,60 @@
 
     .form-switch .form-check-input:checked {
         background-color:#8b7cb3;
+        border-color:#8b7cb3;
     }
 </style>
 <br>
 <script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const starredAtTop = document.getElementById('starred_at_top');
+        starredAtTop.addEventListener('click', function() {
+            const newValue = this.checked ? 1 : 0;
+            fetch('/update_starred_at_top', {
+                method: 'POST',
+                body: JSON.stringify({ value: newValue }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                location.reload();
+            });
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const makeAllButtonsPurple = document.getElementById('make_all_buttons_purple');
+        makeAllButtonsPurple.addEventListener('click', function() {
+            const newValue = this.checked ? 1 : 0;
+            fetch('/update_make_all_buttons_purple', {
+                method: 'POST',
+                body: JSON.stringify({ value: newValue }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                location.reload();
+            });
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const hideSelfHelpCheckbox = document.getElementById('hide_player');
+        hideSelfHelpCheckbox.addEventListener('click', function() {
+            const newValue = this.checked ? 1 : 0;
+            fetch('/update_hide_player', {
+                method: 'POST',
+                body: JSON.stringify({ value: newValue }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                location.reload();
+            });
+        });
+    });
     document.addEventListener('DOMContentLoaded', function() {
         const hideSelfHelpCheckbox = document.getElementById('hide_self_help');
         hideSelfHelpCheckbox.addEventListener('click', function() {
@@ -191,6 +265,25 @@
             fetch('/update_language', {
                 method: 'POST',
                 body: JSON.stringify({ language: newLanguage }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                location.reload();
+            });
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const settingsForm = document.getElementById('settings-form');
+        const defaultsortSelect = document.getElementById('defaultsort');
+        
+        defaultsortSelect.addEventListener('change', function() {
+            const newdefaultsort = this.value;
+            
+            fetch('/update_defaultsort', {
+                method: 'POST',
+                body: JSON.stringify({ defaultsort: newdefaultsort }),
                 headers: {
                     'Content-Type': 'application/json'
                 }

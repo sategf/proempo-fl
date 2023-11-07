@@ -94,6 +94,39 @@
               </li>
             </li>
             {% endif %}
+            {% if user.hide_player != 1 %}
+              <li class="nav-item">
+                <a class="nav-link" id="player" href="/player"
+                target="popup"
+                onclick="window.open('/player','popup','width=600,height=600'); return false;"">
+                  <i class="fa-solid fa-headphones">‌</i>&nbsp;
+                  {% if user.language == "ro" %}
+                  Zgomot Alb
+                  {% else %}
+                  Noise Player
+                  {% endif %}</a
+                >
+              </li>
+            </li>
+            {% endif %}
+            
+            
+          </ul>
+          <ul class="navbar-nav ml-auto" id="navbar" style="text-align: center;
+          list-style-position: inside;
+          padding: 0px;">
+          {% if user.is_authenticated %}
+            <!-- Align items to the right -->
+            <li class="nav-item">
+              <a class="nav-link" id="About" href="/About">
+                <i class="fa fa-circle-info"></i>&nbsp;
+                {% if user.language == "ro" %}
+                Despre
+                {% else %}
+                About
+                {% endif %}</a>
+              <!--About link on nav bar-->
+            </li>
             <li class="nav-item">
               <a class="nav-link" id="FAQ" href="/FAQ">
                 <i class="fa fa-circle-question"></i>&nbsp;
@@ -115,23 +148,6 @@
                 </a
               >
               <!--Support link on nav bar-->
-            </li>
-            
-          </ul>
-          <ul class="navbar-nav ml-auto" id="navbar" style="text-align: center;
-          list-style-position: inside;
-          padding: 0px;">
-            <!-- Align items to the right -->
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" id="About" href="/About">
-                <i class="fa fa-circle-info"></i>&nbsp;
-                {% if user.language == "ro" %}
-                Despre
-                {% else %}
-                About
-                {% endif %}</a>
-              <!--About link on nav bar-->
             </li>
             <li class="nav-item">
               <a class="nav-link" id="Settings" href="/settings">
@@ -316,10 +332,8 @@
         width: 100%;
         height: 2.5rem;
       }
-
     </style>
     {% endblock %}
-
   </body>
   <footer id="copyright">
     <p><center>&copy; Copyright 2023. All Rights Reserved.</center></p>

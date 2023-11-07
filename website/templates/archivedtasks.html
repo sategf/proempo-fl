@@ -1,6 +1,12 @@
 {% extends "base.html" %} {% block title %}Archived Tasks - ProEmPo{% endblock %} {% block
 content %}
 <style>
+  {% if user.make_all_buttons_purple %}
+  .btn {
+    background-color: #8b7cb3 !important;
+    border-color: #8b7cb3 !important
+  }
+  {% endif %}
   .container {
     max-width: 700px;
   }
@@ -66,7 +72,7 @@ content %}
       >
         <div>
           <button
-            class="btn btn-outline-primary"
+            class="{% if user.make_all_buttons_purple %}btn btn-primary{% else %}btn btn-outline-primary{% endif %}"
             onClick="returnTask({{ archivedtask.id }})"
           >
             <span id="" class="fa fa-rotate-left"></span>

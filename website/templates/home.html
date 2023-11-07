@@ -131,14 +131,14 @@
             <h1 align="center"><u>{{ currentDay }}</u></h1>
             <br>
             
-            <a
+            {% if 0 == 1 %}<a
                 href="/player"
                 target="popup"
                 onclick="window.open('/player','popup','width=600,height=600'); return false;"
             >
             <div class="white-noise-button">
                 <button class="btn btn-outline-info" id="white-noise-toggle">{{ openNoisePlayer }}</button></a>
-            </div>
+            </div> {% endif %}
 
         </div>
     </div>

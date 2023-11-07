@@ -12,7 +12,7 @@ from datetime import date, datetime
 import csv
 import plotly.graph_objs as go
 from datetime import datetime, timedelta
-from sqlalchemy import and_, func
+from sqlalchemy import and_, func, text
 
 views = Blueprint('views', __name__)
 
@@ -50,7 +50,7 @@ def home():
         openNoisePlayer = "Deschide playerul de zgomot alb"
     else:
         welcome = "Welcome to ProEmPo, "
-        currentDay = "Today is " + currentDay
+        currentDay = currentDay
         openNoisePlayer = "Open Noise Player"
 
     return render_template("home.html", user=current_user, qod=qod, currentDay=currentDay, welcome=welcome, openNoisePlayer=openNoisePlayer)
@@ -281,9 +281,10 @@ def tasks():
         tasks = Task.query.filter(Task.user_id == user_id).order_by(func.lower(Task.data))
     elif selected_sort == 'newest':
         tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.date.desc())
-    else:
+    elif selected_sort == 'oldest':
         tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.date)
-
+    else:
+        tasks = Task.query.filter(Task.user_id == user_id).order_by(text(current_user.defaultsort))
 
     '''To implement later
     if selected_sort == 'due_date':
@@ -295,7 +296,6 @@ def tasks():
     else:
         tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.starred.desc(), Task.date)
     '''
-
     return render_template('tasks.html', user=current_user, tasks=tasks, selected_sort=selected_sort)
 
 
@@ -630,16 +630,16 @@ def about():
 def setting():
     
     if current_user.language == "ro":
-        selectLanguage = "Selectați limba dorită:"
+        selectLanguage = "Selectați limba preferată:"
         title = "Setări"
         save = "Salvează "
         Categories = "Categorii"
         General = "General"
         Accessibility = "Accesibilitate"
-        changeuser = "Schimbă Numele de Utilizator"
-        username = "Nume de Utilizator:"
-        changepass = "Schimbare de Parolă"
-        currentpass = "Parola Curentă"
+        changeuser = "Schimbă Utilizator"
+        username = "Utilizator:"
+        changepass = "Schimbare Parolă"
+        currentpass = "Parolă Curentă"
         newpass = "Parolă Nouă"
         confirmnewpass = "Confirmare Parolă Nouă"
         hidefeatures = "Ascundeți Caracteristici"
@@ -648,6 +648,15 @@ def setting():
         dailycheckin = "Verificare Zilnică"
         reports = "Rapoarte"
         language = "Limba"
+        oldesttonewest = "Cel mai vechi la cel mai nou"
+        newesttooldest = "Cel mai nou la cel mai vechi"
+        duedate = "Data scadentă"
+        alphabetically = "Alfabetic"
+        defaultsort = "Sortare Implicită"
+        taskpage = "Pagina de Sarcini"
+        starredAtTop = "Show Starred Tasks at Top"
+        makeAllButtonsPurple = "Make All Buttons Purple"
+        player = "Zgomot Alb"
     else:
         selectLanguage = "Select your preferred language:"
         title = "Settings"
@@ -667,9 +676,41 @@ def setting():
         dailycheckin = "Daily Check-In"
         reports = "Reports"
         language = "Language"
+        oldesttonewest = "Oldest to Newest"
+        newesttooldest = "Newest to Oldest"
+        duedate = "Due Date"
+        alphabetically = "Alphabetically"
+        defaultsort = "Default Sort"
+        taskpage = "Task Page"
+        starredAtTop = "Show Starred Tasks at Top"
+        makeAllButtonsPurple = "Make All Buttons Purple"
+        player = "Noise Player"
     return render_template("settings.html",user=current_user, 
-                           selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility, changepass=changepass, 
-                           currentpass=currentpass, newpass=newpass, confirmnewpass=confirmnewpass, selfhelp=selfhelp, tasks=tasks, dailycheckin=dailycheckin, reports=reports, hidefeatures=hidefeatures, language=language, changeuser=changeuser, username=username)
+                           selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility,
+                            changepass=changepass, currentpass=currentpass, newpass=newpass, confirmnewpass=confirmnewpass, 
+                            selfhelp=selfhelp, tasks=tasks, dailycheckin=dailycheckin, reports=reports, hidefeatures=hidefeatures,
+                            language=language, changeuser=changeuser, username=username, oldesttonewest=oldesttonewest, 
+                            newesttooldest=newesttooldest, duedate=duedate, alphabetically=alphabetically, taskpage=taskpage, defaultsort=defaultsort, 
+                            starredAtTop=starredAtTop, makeAllButtonsPurple=makeAllButtonsPurple, player=player)
+
+
+@views.route('/update_starred_at_top', methods=['POST'])
+@login_required
+def update_starred_at_top():
+    user = current_user
+    data = request.get_json()
+    new_value = data.get('value')
+    user.starred_at_top = new_value
+    db.session.commit()
+
+@views.route('/update_make_all_buttons_purple', methods=['POST'])
+@login_required
+def update_make_all_buttons_purple():
+    user = current_user
+    data = request.get_json()
+    new_value = data.get('value')
+    user.make_all_buttons_purple = new_value
+    db.session.commit()
 
 @views.route('/update_hide_self_help', methods=['POST'])
 @login_required
@@ -680,7 +721,14 @@ def update_hide_self_help():
     user.hide_self_help = new_value
     db.session.commit()
 
-
+@views.route('/update_hide_player', methods=['POST'])
+@login_required
+def update_hide_player():
+    user = current_user
+    data = request.get_json()
+    new_value = data.get('value')
+    user.hide_player = new_value
+    db.session.commit()
 
 @views.route('/update_hide_tasks', methods=['POST'])
 @login_required
@@ -719,6 +767,15 @@ def update_language():
     data = request.get_json()
     new_language = data.get('language')
     user.language = new_language
+    db.session.commit()
+
+@views.route('/update_defaultsort', methods=['POST'])
+@login_required
+def update_defaultsort():
+    user = current_user
+    data = request.get_json()
+    new_defaultsort = data.get('defaultsort')
+    user.defaultsort = new_defaultsort
     db.session.commit()
 
 
