@@ -53,7 +53,9 @@ def home():
         currentDay = currentDay
         openNoisePlayer = "Open Noise Player"
 
-    return render_template("home.html", user=current_user, qod=qod, currentDay=currentDay, welcome=welcome, openNoisePlayer=openNoisePlayer)
+    entry_for_today = Journal.query.filter(Journal.date == today, Journal.user_id == current_user.id).first()
+
+    return render_template("home.html", user=current_user, qod=qod, currentDay=currentDay, welcome=welcome, openNoisePlayer=openNoisePlayer, entry_for_today=entry_for_today)
 
 today = date.today()
 
@@ -784,7 +786,6 @@ def accessibility():
 
 
 @views.route('/Support', methods=['GET'])
-@login_required
 def support():
     support = Support.query.all()
     return render_template("Support.html", user=current_user, support=support)
@@ -800,8 +801,11 @@ def submit_support_form():
             new_title = request.form['issue_title']
             new_email = request.form['email']
             new_description = request.form['description']
+            if current_user.id != None:
+                new_form= Support(user_id=current_user.username,issue_title=new_title, email=new_email,description=new_description)
+            else:
+                new_form= Support(user_id="No User",issue_title=new_title, email=new_email,description=new_description)
             
-            new_form= Support(user_id=current_user.id,issue_title=new_title, email=new_email,description=new_description)
             
             db.session.add(new_form)
             db.session.commit()
