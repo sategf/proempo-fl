@@ -423,15 +423,15 @@ def journal():
             db.session.add(journal_entry)
             db.session.commit()
             
-            list = ["suicide", "murder", "kill", "hurt"]
+            list = ["suicide", "murder", "kill", "hurt", "Suicide", "Murder", "Kill", "Hurt"]
             if any(word in dear_journal_content for word in list):
                 db.session.commit()
-                flash('Your journal contained concerning words. What is hurting you?', category='error')
-                flash('If you are feeling unwell, please dont''t heisitate to contact 988 hotline.', category='error')
+                flash('Your journal may contain thoughts that may harm yourself or others.', category='error')
+                flash('Help is out there. Call 988 or chat online. https://988lifeline.org/chat/', category='error')
             elif any(word in grateful_contents for word in list):
                 db.session.commit()
-                flash('Your journal contained concerning words. What is hurting you?', category='error')
-                flash('If you are feeling unwell, please dont''t heisitate to contact 988 hotline.', category='error')
+                flash('Your journal may contain thoughts that may harm yourself or others.', category='error')
+                flash('Help is out there. Call 988 or chat online. https://988lifeline.org/chat/', category='error')
             return redirect(url_for('views.journal'))
     elif request.method == 'GET':
         previous_entries = Journal.query.filter(Journal.user_id == current_user.id).all()
