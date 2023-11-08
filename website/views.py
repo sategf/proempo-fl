@@ -423,7 +423,7 @@ def journal():
             db.session.add(journal_entry)
             db.session.commit()
             
-            list = ["suicide", "murder", "kill", "hurt", "Suicide", "Murder", "Kill", "Hurt"]
+            list = ["suicide", "murder", "kill", "hurt", "die", "Suicide", "Murder", "Kill", "Hurt", "Die"]
             if any(word in dear_journal_content for word in list):
                 db.session.commit()
                 flash('Your journal may contain thoughts that may harm yourself or others.', category='error')

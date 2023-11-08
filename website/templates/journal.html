@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Daily Check-In - ProEmPo{% endblock %}
 {% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 <style>
   h1 {
     background-color: rgba(152, 125, 209, 0.65);
@@ -124,18 +126,19 @@
       <h1 id="title" align="center">Daily Check-In</h1>
     </div>
 <div class="main">
-  <form method="GET" action="{{ url_for('views.journal') }}">
+  <center>
+  <form method="GET" action="{{ url_for('views.journal') }}" id="previousentry">
     <label for="previous_entries">Select a previous entry:</label>
-    <select name="previous_entry">
+    <select name="previous_entry" id="previous_entry">
         <option value="" disabled selected>Select an entry</option>
         {% for entry in previous_entries|reverse %}
             <option value="{{ entry.id }}">{{ entry.date.strftime('%m/%d/%Y') }}</option>
         {% endfor %}
     </select>
-    <input type="submit" value="Go">
+    <input class="btn btn-light btn-sm" style="background-color: #8b7cb3; color:#ffffff" type="submit" value="Go">
 </form>
 <label for="date">Date:</label>
-<input readonly type="date" name="date" {% if selected_entry != None %}value="{{ selected_entry.date }}" {% else %}value="{{ date }}" {% endif %}><br>
+<input readonly type="date" name="date" {% if selected_entry != None %}value="{{ selected_entry.date }}" {% else %}value="{{ date }}" {% endif %}><br></center>
 <form method="POST">
   <ul class="section">
     <li class="item">
@@ -204,7 +207,7 @@
       </div>
     </li>
   </ul>
-  <center><input type="submit" {% if selected_entry %}disabled {% endif %} value="Save Entry"></center>
+  <center><input class="btn btn-light" style="background-color: #8b7cb3; color:#ffffff" type="submit" {% if selected_entry %}disabled {% endif %} value="Save Entry"></center>
   <!--<div class="save-btn" id="save-button-container">
     <input class="save-button" type="submit" {% if selected_entry %}disabled {% endif %} value="Save Entry">
   </div>-->
