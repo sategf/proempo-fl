@@ -1114,8 +1114,8 @@ def delete_pride(pride_id):
     moment=Pride.query.get(pride_id)
     db.session.delete(moment)
     db.session.commit()
-
-    return redirect("/accomplishments")
+    
+    return redirect(url_for('views.pride'))
     
 @views.route('/past-accomplishments', methods=['GET', 'POST'])
 @login_required

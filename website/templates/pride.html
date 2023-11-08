@@ -44,7 +44,7 @@
                 <div class="moment">
                     {{ entry.moment }}
                 </div>
-                <button class="btn btn-basic" id="delete-card" onclick="confirmDeletePride('{{ entry.id }}')"><span aria-hidden="true" class="fa fa-times-rectangle-o"></span></button>    
+                <button class="btn btn-basic" id="delete-card" type="button" onclick="confirmDeletePride('{{ entry.id }}')"><span aria-hidden="true" class="fa fa-times-rectangle-o"></span></button>    
             </div>
             {% endfor %}
         </div>
@@ -59,22 +59,21 @@
     function confirmDeletePride(prideId) {
         if (confirm("Are you sure you want to delete this post?")) {
 
-            deleteFlashcard(prideId);
+            deletePride(prideId);
         }
     }
 
     function deletePride(prideId){
-
         fetch('/DeletePride/' + prideId, {
-
             method: "POST",
-
         })
-
-        .then((_res) => {
-
-            window.location.reload();
-
+        .then((response) => {
+            if (response.redirected) {
+                window.location = response.url; 
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
         });
     }
 
