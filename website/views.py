@@ -286,16 +286,7 @@ def tasks():
     else:
         tasks = Task.query.filter(Task.user_id == user_id).order_by(text(current_user.defaultsort))
 
-    '''To implement later
-    if selected_sort == 'due_date':
-        tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.starred.desc(), Task.due_date, Task.due_time)
-    elif selected_sort == 'data':
-        tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.starred.desc(), func.lower(Task.data))
-    elif selected_sort == 'newest':
-        tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.starred.desc(), Task.date.desc())
-    else:
-        tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.starred.desc(), Task.date)
-    '''
+
     return render_template('tasks.html', user=current_user, tasks=tasks, selected_sort=selected_sort)
 
 
@@ -654,8 +645,8 @@ def setting():
         alphabetically = "Alfabetic"
         defaultsort = "Sortare Implicită"
         taskpage = "Pagina de Sarcini"
-        starredAtTop = "Show Starred Tasks at Top"
-        makeAllButtonsPurple = "Make All Buttons Purple"
+        starredAtTop = "Afișați Sarcinile Cu Stea În Partea De Sus"
+        makeAllButtonsPurple = "Faceți Toate Butoanele Violet"
         player = "Zgomot Alb"
     else:
         selectLanguage = "Select your preferred language:"
@@ -795,7 +786,8 @@ def accessibility():
 @views.route('/Support', methods=['GET'])
 @login_required
 def support():
-    return render_template("Support.html", user=current_user)
+    support = Support.query.all()
+    return render_template("Support.html", user=current_user, support=support)
 
 @views.route('/submit_support', methods=['GET','POST'])
 def submit_support_form():

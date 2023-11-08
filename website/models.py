@@ -58,6 +58,7 @@ class User(db.Model, UserMixin):
     hide_journal = db.Column(db.Boolean)
     hide_reports = db.Column(db.Boolean)
     hide_player = db.Column(db.Boolean)
+    is_admin = db.Column(db.Boolean)
     tasks = db.relationship('Task')
     finished_tasks = db.relationship('FinishedTask')
     archivedtasks = db.relationship('ArchivedTask')

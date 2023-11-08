@@ -159,10 +159,10 @@
                   Sort by
               </button>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortDropdownButton">
-                  <a class="dropdown-item" href="/tasks?sort_method=default">Oldest to Newest {% if user.defaultsort == "Task.date" %}(Default){% endif %}</a>
-                  <a class="dropdown-item" href="/tasks?sort_method=newest">Newest to Oldest {% if user.defaultsort == "task.date DESC" %}(Default){% endif %}</a>
-                  <a class="dropdown-item" href="/tasks?sort_method=due_date">Due Date {% if user.defaultsort == "Task.due_date, Task.due_time" %}(Default){% endif %}</a>
-                  <a class="dropdown-item" href="/tasks?sort_method=data">Alphabetically {% if user.defaultsort == "lower(task.data)" %}(Default){% endif %}</a>
+                  <a class="dropdown-item" href="/tasks?sort_method=default">Oldest to Newest {% if user.defaultsort == "Task.date" %}<b>(Default)</b>{% endif %}</a>
+                  <a class="dropdown-item" href="/tasks?sort_method=newest">Newest to Oldest {% if user.defaultsort == "task.date DESC" %}<b>(Default)</b>{% endif %}</a>
+                  <a class="dropdown-item" href="/tasks?sort_method=due_date">Due Date {% if user.defaultsort == "Task.due_date, Task.due_time" %}<b>(Default)</b>{% endif %}</a>
+                  <a class="dropdown-item" href="/tasks?sort_method=data">Alphabetically {% if user.defaultsort == "lower(task.data)" %}<b>(Default)</b>{% endif %}</a>
               </div>
           </div>
       </li>
