@@ -61,7 +61,8 @@
             <td>{{ support.issue_title }}</td>
             <td>{{ support.description }}</td>
             <td>{{ support.email }}</td>
-            <td><a href="mailto:{{ support.email }}?subject=Re:{{ support.issue_title }}&body=%0D%0A%0D%0AIn reply to:{{ support.description }}"><button type="button" class="btn btn-primary"><span aria-hidden="true" class="fa fa-envelope"></span></button></a></td>
+            <td><a href="mailto:{{ support.email }}?subject=Re:{{ support.issue_title }}&body=%0D%0A%0D%0AIn reply to:%0D%0A{{ support.description }}"><button type="button" class="btn btn-primary"><span aria-hidden="true" class="fa fa-envelope"></span></button></a>
+            <a href="https://mail.google.com/mail/?view=cm&tf=1&to={{ support.email }}&cc=&bcc=&su=Re:{{ support.issue_title }}&body=%0D%0A%0D%0AIn%20reply%20to:%0D%0A{{ support.description }}" target="_blank"><button type="button" class="btn btn-primary"><span aria-hidden="true" class="fa-brands fa-google"></span></button></a></td>
           </tr>
         </tbody>
         {% endfor %}
