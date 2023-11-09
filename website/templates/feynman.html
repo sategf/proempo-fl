@@ -26,12 +26,27 @@
     <div class="page">
         <div class="page_content">
             <div class="text_content">
-                <h2 class="page_title" contenteditable="true" onfocus="clearPlaceholder(this)">Write topic here</h2>
-                <p class="editable" contenteditable="true" onfocus="clearPlaceholder(this)">Write description here</p>
-            </div>   
+                <h2 class="page_title" contenteditable="true" onfocus="clearPlaceholder(this)">
+                    {% if latest_entry and latest_entry.title %}
+                        {{ latest_entry.title }}
+                    {% else %}
+                        Write topic here
+                    {% endif %}
+                </h2>
+                <p class="editable" contenteditable="true" onfocus="clearPlaceholder(this)">
+                    {% if latest_entry and latest_entry.description %}
+                        {{ latest_entry.description | safe }}
+                    {% else %}
+                        Write description here
+                    {% endif %}
+                </p>
+            </div>
         </div>
     </div>
+    
 </div>
+<button onclick="startNewEntry()">Start New</button>
+<button onclick="saveToDatabase()">Remember my thoughts for next time</button>
 </div>
 <style>
     h1 {
@@ -122,7 +137,76 @@
         font-size: 1.2em;
     }
 
+    button {
+        display: block;
+        margin: 0 auto;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #8b7cb3;
+        color: #fff;
+        cursor: pointer;
+        margin-bottom: 20px;
+    }
+
+    button:hover {
+        background-color: #ffb700ad;
+        color: black;
+    }
+
 </style>
+
+
+<script>
+    function startNewEntry() {
+        fetch('/start-new-entry', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('New entry created successfully');
+                // Reload the page to reflect the new entry
+                window.location.reload();
+            } else {
+                console.error('Failed to create a new entry');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+
+<script>
+    function saveToDatabase() {
+        const pageTitle = document.querySelector('.page_title').innerText;
+        const description = document.querySelector('.editable').innerText;
+
+        fetch('/save-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title: pageTitle, description: description }),
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Data saved successfully');
+                // Optionally, you can add further actions or user feedback here
+            } else {
+                alert('Failed to save data');
+            }
+        })
+        .catch(error => {
+            alert('Error:', error);
+        });
+    }
+</script>
+
 <script>
     function clearPlaceholder(element) {
         if (element.textContent.trim() === "Write topic here" || element.textContent.trim() === "Write description here") {

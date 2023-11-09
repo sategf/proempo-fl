@@ -109,3 +109,10 @@ class Support(db.Model):
     email = db.Column(db.String(150))
     description = db.Column(db.String(1000))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
+class Feynman(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    title = db.Column(db.String(1000)) 
+    description = db.Column(db.String(10000)) 

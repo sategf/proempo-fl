@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request, flash, jsonify, redirect,
 from flask_mail import Mail, Message
 from email.message import EmailMessage
 from flask_login import login_required, current_user
-from .models import Goal, Journal, Task, FinishedTask, ArchivedTask, Card, Lesson, Pride, Support
+from .models import Feynman, Goal, Journal, Task, FinishedTask, ArchivedTask, Card, Lesson, Pride, Support
 from sqlalchemy.orm import aliased
 from . import db
 import json, os, smtplib
@@ -125,7 +125,42 @@ def help():
 @views.route('/feynman')
 @login_required
 def feynman():
-    return render_template("feynman.html", user=current_user)
+    latest_entry = Feynman.query.filter_by(user_id=current_user.id).order_by(Feynman.id.desc()).first()
+
+    # Replacing newline characters with <br> tags for proper display in HTML
+    if latest_entry:
+        latest_entry.description = latest_entry.description.replace('\n', '<br>')
+
+    return render_template("feynman.html", user=current_user, latest_entry=latest_entry)
+
+@views.route('/start-new-entry', methods=['POST'])
+@login_required
+def start_new_entry():
+    new_feynman_entry = Feynman(user_id=current_user.id, title='', description='')
+    db.session.add(new_feynman_entry)
+    db.session.commit()
+
+    return redirect(url_for('views.feynman'))
+
+
+@views.route('/save-data', methods=['POST'])
+@login_required
+def save_data():
+    data = request.get_json()
+    title = data.get('title')
+    description = data.get('description')
+
+    # Save the data to the database for the current user
+    new_feynman_entry = Feynman(
+        user_id=current_user.id,
+        title=title,
+        description=description
+    )
+
+    db.session.add(new_feynman_entry)
+    db.session.commit()
+
+    return jsonify({'message': 'Data saved successfully'})
 
 @views.route('/pomodoro')
 @login_required
