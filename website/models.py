@@ -51,6 +51,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     language = db.Column(db.String(2))
     defaultsort = db.Column(db.String(10))
+    hide_second_hand = db.Column(db.Boolean)
     make_all_buttons_purple = db.Column(db.Boolean)
     starred_at_top = db.Column(db.Boolean)
     hide_self_help = db.Column(db.Boolean)

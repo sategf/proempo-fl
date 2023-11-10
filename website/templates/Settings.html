@@ -40,7 +40,12 @@
               </div>
             <button type="submit" class="btn btn-secondary btn-sm" style="background-color: #8b7cb3;">{{changepass}}</button>
         </form>
-        
+        <hr>
+        <h5>{{homepage}}</h5>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="hide_second_hand" name="hide_second_hand" {% if user.hide_second_hand %}checked{% endif %}>
+            <label class="form-check-label" for="hide_second_hand">{{hidesecondhand}}</label>
+        </div>
         <hr>
         <h5>{{hidefeatures}}</h5>
         <div class="form-check form-switch">
@@ -142,7 +147,22 @@
 </style>
 <br>
 <script>
-    
+    document.addEventListener('DOMContentLoaded', function() {
+        const hideSecondHandCheckbox = document.getElementById('hide_second_hand');
+        hideSecondHandCheckbox.addEventListener('click', function() {
+            const newValue = this.checked ? 1 : 0;
+            fetch('/update_hide_second_hand', {
+                method: 'POST',
+                body: JSON.stringify({ value: newValue }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                location.reload();
+            });
+        });
+    });
     document.addEventListener('DOMContentLoaded', function() {
         const starredAtTop = document.getElementById('starred_at_top');
         starredAtTop.addEventListener('click', function() {

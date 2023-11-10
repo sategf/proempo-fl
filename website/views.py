@@ -685,6 +685,8 @@ def setting():
         starredAtTop = "Afișați Sarcinile Cu Stea În Partea De Sus"
         makeAllButtonsPurple = "Faceți Toate Butoanele Violet"
         player = "Zgomot Alb"
+        homepage = "Pagina Principală"
+        hidesecondhand = "Ascunde Mâna a Doua"
     else:
         selectLanguage = "Select your preferred language:"
         title = "Settings"
@@ -713,13 +715,15 @@ def setting():
         starredAtTop = "Show Starred Tasks at Top"
         makeAllButtonsPurple = "Make All Buttons Purple"
         player = "Noise Player"
+        homepage = "Home Page"
+        hidesecondhand = "Hide Second Hand"
     return render_template("settings.html",user=current_user, 
                            selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility,
                             changepass=changepass, currentpass=currentpass, newpass=newpass, confirmnewpass=confirmnewpass, 
                             selfhelp=selfhelp, tasks=tasks, dailycheckin=dailycheckin, reports=reports, hidefeatures=hidefeatures,
                             language=language, changeuser=changeuser, username=username, oldesttonewest=oldesttonewest, 
                             newesttooldest=newesttooldest, duedate=duedate, alphabetically=alphabetically, taskpage=taskpage, defaultsort=defaultsort, 
-                            starredAtTop=starredAtTop, makeAllButtonsPurple=makeAllButtonsPurple, player=player)
+                            starredAtTop=starredAtTop, makeAllButtonsPurple=makeAllButtonsPurple, player=player, homepage=homepage, hidesecondhand=hidesecondhand)
 
 
 @views.route('/update_starred_at_top', methods=['POST'])
@@ -747,6 +751,15 @@ def update_hide_self_help():
     data = request.get_json()
     new_value = data.get('value')
     user.hide_self_help = new_value
+    db.session.commit()
+
+@views.route('/update_hide_second_hand', methods=['POST'])
+@login_required
+def update_hide_second_hand():
+    user = current_user
+    data = request.get_json()
+    new_value = data.get('value')
+    user.hide_second_hand = new_value
     db.session.commit()
 
 @views.route('/update_hide_player', methods=['POST'])
