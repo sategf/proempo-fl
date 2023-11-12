@@ -327,6 +327,11 @@ def regularMeditation():
 @views.route('/tasks', methods=['GET', 'POST'])
 @login_required
 def tasks():
+    if current_user.language == "ro":
+        taskTitle = "Sarcini"
+
+    else:
+        taskTitle = "Tasks"
     if request.method == 'POST':
         task_data = request.form.get('task')  # Gets the task from the HTML
         due_date_str = request.form.get('dueDate')  # Gets the due date string
@@ -372,7 +377,7 @@ def tasks():
         tasks = Task.query.filter(Task.user_id == user_id).order_by(text(current_user.defaultsort))
 
 
-    return render_template('tasks.html', user=current_user, tasks=tasks, selected_sort=selected_sort)
+    return render_template('tasks.html', user=current_user, taskTitle=taskTitle, tasks=tasks, selected_sort=selected_sort)
 
 
 @views.route('/archivedtasks')
@@ -386,6 +391,11 @@ def archivedtasks():
 @views.route('/reports')
 @login_required
 def reports():
+    if current_user.language == "ro":
+        reportsTitle = "Rapoarte"
+
+    else:
+        reportsTitle = "Reports"
     #code for the first graph on page
     end_date = datetime.now()
     start_date = end_date - timedelta(days=6) 
@@ -465,16 +475,20 @@ def reports():
     print(day_rating_json)
 
     if goals_count > 0:
-        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, latest_completed_goals=latest_completed_goals, most_popular_rating=most_popular_rating, day_rating_json=day_rating_json)
+        return render_template("reports.html", user=current_user, reportsTitle=reportsTitle, finished_tasks=finished_tasks_json, goals_count=goals_count, latest_completed_goals=latest_completed_goals, most_popular_rating=most_popular_rating, day_rating_json=day_rating_json)
     else:
-        return render_template("reports.html", user=current_user, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message="It appears as if you have not set any goals. <a href=/goals>Begin setting goals.</a>", most_popular_rating=most_popular_rating, day_rating_json=day_rating_json)
+        return render_template("reports.html", user=current_user, reportsTitle=reportsTitle, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message="It appears as if you have not set any goals. <a href=/goals>Begin setting goals.</a>", most_popular_rating=most_popular_rating, day_rating_json=day_rating_json)
 
 
 @views.route('/journal', methods=['GET', 'POST'])
 @login_required
 def journal():
     selected_entry = None  #Initialize selected_entry to None
+    if current_user.language == "ro":
+        journalTitle = "Verificare Zilnică"
 
+    else:
+        journalTitle = "Daily Check-In"
     today = datetime.now().date()
     entry_for_today = Journal.query.filter(Journal.date == today, Journal.user_id == current_user.id).first()
     if entry_for_today:
@@ -525,7 +539,7 @@ def journal():
             selected_entry = Journal.query.get(previous_entry_id)
     date = (datetime.now().date())
     
-    return render_template('journal.html', user=current_user, previous_entries=previous_entries, selected_entry=selected_entry, date=date)
+    return render_template('journal.html', user=current_user, journalTitle=journalTitle, previous_entries=previous_entries, selected_entry=selected_entry, date=date)
 '''
 @views.route('/scanJournal', methods=['POST'])
 @login_required
@@ -897,8 +911,13 @@ def accessibility():
 
 @views.route('/Support', methods=['GET'])
 def support():
+    if current_user.language == "ro":
+        supportTitle = "A Sustine"
+
+    else:
+        supportTitle = "Support"
     support = Support.query.all()
-    return render_template("Support.html", user=current_user, support=support)
+    return render_template("Support.html", user=current_user, supportTitle=supportTitle, support=support)
 
 @views.route('/submit_support', methods=['GET','POST'])
 def submit_support_form():
