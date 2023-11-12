@@ -160,33 +160,32 @@
 <div class="subcontainer">
   <div class="box">
     <div class="title-box">
-      <h1 id="title" align="center">Concentration Self-Work</h1>
+      <h1 id="title" align="center">{{cSelfWork}}</h1>
     </div>
     <section id="study">
       <div class="choices">
         <div class="choice">
           <img src="../static/pomodoroHelpPic.png" alt="Pomodoro Technique" />
           <h3>Pomodoro</h3>
-          <p>Try the Pomodoro Technique to boost your productivity.</p>
-          <a href="/pomodoro">Begin ></a>
+          <p>{{pomodoroDescription}}</p>
+          <a href="/pomodoro">{{begin}} ></a>
         </div>
         <div class="choice" id="flashcardsChoice">
           <img src="../static/flashcardsHelpPic.png" alt="Flashcards" />
-          <h3 id="flashcardsName">Flashcards</h3>
+          <h3 id="flashcardsName">{{flashcards}}</h3>
           <p id="flashcardsDescription">
-            Use flashcards to memorize information effectively.
+            {{flashcardsDescription}}
           </p>
-          <a class="createFlashcards" href="/CreateFlashcards">Create</a>
-          <a class="viewFlashcards" href="/ViewFlashcards">View</a>
+          <a class="createFlashcards" href="/CreateFlashcards">{{create}}</a>
+          <a class="viewFlashcards" href="/ViewFlashcards">{{view}}</a>
         </div>
         <div class="choice" id="rubberDuck">
           <img src="../static/feynmanhelpPic.png" alt="Rubber Duck method" />
           <h3 id="rubberDuckName">Feynman</h3>
           <p id="feynmanDescription">
-            Master complex subjects by explaining it to a smaller entity in
-            simple terms.
+           {{feynmanDescription}} 
           </p>
-          <a href="/feynman">Begin ></a>
+          <a href="/feynman">{{begin}} ></a>
         </div>
       </div>
     </section>
@@ -194,35 +193,35 @@
     <div class="subcontainer">
       <div class="box">
         <div class="title-box">
-          <h1 id="title" align="center">Inner Self-Work</h1>
+          <h1 id="title" align="center">{{iSelfWork}}</h1>
         </div>
         <section id="relaxation">
           <div class="choices">
             <div class="choice" id="gratitudeChoice">
               <img src="../static/gratitudeHelpPic.png" alt="Gratitude" />
-              <h3 id="prideName">Accomplishments</h3>
+              <h3 id="prideName">{{accomplishments}}</h3>
               <p id="prideDescription">
-              Work on your inner self by listing things that make you feel proud of yourself.
+              {{prideDescription}}
               </p>
-              <a href="/accomplishments">Begin > </a>
+              <a href="/accomplishments">{{begin}} > </a>
             </div>
             <div class="choice">
               <img src="../static/journalPic.png" alt="Journaling" />
-              <h3>Goals</h3>
-              <p>List your long term goals to help you remain focused on what is important to you.</p>
-              <a href="/goals">Begin > </a>
+              <h3>{{goals}}</h3>
+              <p>{{goalsDescription}}</p>
+              <a href="/goals">{{begin}} > </a>
             </div>
             <div class="choice" id="meditationChoice">
               <img src="../static/helpMeditation.png" alt="Meditation" />
-              <h3 id="meditationName">Meditation</h3>
+              <h3 id="meditationName">{{meditation}}</h3>
               <p id="meditationDescription">
-                Find peace and reduce stress through paced breathing.
+                {{meditationDescription}}
               </p>
               <a class="bearMeditation" href="/bearMeditation"
-                >Young Edition >
+                >{{youngEdition}} >
               </a>
               <a class="regularMeditation" href="/regularMeditation"
-                >College Edition >
+                >{{collegeEdition}} >
               </a>
             </div>
           </div>

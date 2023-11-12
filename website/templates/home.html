@@ -150,9 +150,9 @@
         {% if user.hide_journal != 1 %}
         <div id="clock-box" style="min-width:384px; max-width: 384px;">
         {% if entry_for_today == None %}
-        <br><h5 align="center"><i class="fa-solid fa-face-sad-tear fa-2xl" style="color: #b69ab6;"></i><br><br>It looks like you haven't completed your daily check-in for today.<br><br></h5><h6 align="center"><a href="/journal">Click here to fill out your journal.</a></h6>
+        <br><h5 align="center"><i class="fa-solid fa-face-sad-tear fa-2xl" style="color: #b69ab6;"></i><br><br>{{journalIncomplete}}<br><br></h5><h6 align="center"><a href="/journal">{{clickJournal}}</a></h6>
         {% else %}
-        <br><h5 align="center"><i class="fa-solid fa-face-smile-beam fa-2xl" style="color: #b69ab6;" ></i><br><br>Good Job, you filled out your daily check-in today!<br><br></h5>
+        <br><h5 align="center"><i class="fa-solid fa-face-smile-beam fa-2xl" style="color: #b69ab6;" ></i><br><br>{{journalComplete}}<br><br></h5>
         {% endif %}
         </div>
         {% endif %}

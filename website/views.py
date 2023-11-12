@@ -48,14 +48,21 @@ def home():
         welcome = "Bun venit la ProEmPo, "
         currentDay = "Astăzi este " + today.strftime("%d.%m.%Y")
         openNoisePlayer = "Deschide playerul de zgomot alb"
+        journalIncomplete = "Se pare că nu ați finalizat înregistrarea zilnică pentru astăzi."
+        clickJournal = "Faceți clic aici pentru a vă completa jurnalul."
+        journalComplete = "Bună treabă, ați completat azi check-in-ul zilnic!"
     else:
         welcome = "Welcome to ProEmPo, "
         currentDay = currentDay
         openNoisePlayer = "Open Noise Player"
-
+        journalIncomplete = "It looks like you haven't completed your daily check-in for today."
+        clickJournal = "Click here to fill out your journal."
+        journalComplete = "Good Job, you filled out your daily check-in today!"
     entry_for_today = Journal.query.filter(Journal.date == today, Journal.user_id == current_user.id).first()
 
-    return render_template("home.html", user=current_user, qod=qod, currentDay=currentDay, welcome=welcome, openNoisePlayer=openNoisePlayer, entry_for_today=entry_for_today)
+    return render_template("home.html", user=current_user, qod=qod, currentDay=currentDay, welcome=welcome,
+                            openNoisePlayer=openNoisePlayer, entry_for_today=entry_for_today, journalIncomplete=journalIncomplete, 
+                            clickJournal=clickJournal, journalComplete=journalComplete)
 
 today = date.today()
 
@@ -120,7 +127,48 @@ def toggle_white_noise():
 @views.route('/help')
 @login_required
 def help():
-    return render_template("help.html", user=current_user)
+    print(current_user.language)
+    if current_user.language == "ro":
+        cSelfWork = "Concentrare Auto-Munca"
+        pomodoroDescription = "Încercați Tehnica Pomodoro pentru a vă crește productivitatea."
+        flashcards = "Carduri Flash"
+        flashcardsDescription = "Folosiți carduri pentru a memora informații în mod eficient."
+        create = "Crea"
+        view = "Vedere"
+        feynmanDescription = "Stăpânește subiecte complexe explicând-o unei entități mai mici în termeni simpli."
+        iSelfWork = "Munca De Sine Interioară"
+        accomplishments = "Realizări"
+        prideDescription = "Lucrează la sinele tău interior enumerând lucruri care te fac să te simți mândru de tine."
+        begin = "Începe"
+        goals = "Goluri"
+        goalsDescription = "Enumerați-vă obiectivele pe termen lung pentru a vă ajuta să rămâneți concentrat pe ceea ce este important pentru dvs."
+        meditation = "Meditaţie"
+        meditationDescription = "Găsiți pacea și reduceți stresul prin respirație ritmată."
+        youngEdition = "Ediția Tânără"
+        collegeEdition = "Ediția Pentru Colegiu"
+    else:
+        cSelfWork = "Concentration Self-Work"
+        pomodoroDescription = "Try the Pomodoro Technique to boost your productivity."
+        flashcards = "Flashcards"
+        flashcardsDescription = "Use flashcards to memorize information effectively."
+        create = "Create"
+        view = "View"
+        feynmanDescription = "Master complex subjects by explaining it to a smaller entity in simple terms."
+        iSelfWork = "Inner Self-Work"
+        accomplishments = "Accomplishments"
+        prideDescription = "Work on your inner self by listing things that make you feel proud of yourself."
+        begin = "Begin"
+        goals = "Goals"
+        goalsDescription = "List your long term goals to help you remain focused on what is important to you."
+        meditation = "Meditation"
+        meditationDescription = "Find peace and reduce stress through paced breathing."
+        youngEdition = "Young Edition"
+        collegeEdition = "College Edition"
+    return render_template("help.html", user=current_user, cSelfWork=cSelfWork, pomodoroDescription=pomodoroDescription, 
+                           flashcards=flashcards, flashcardsDescription=flashcardsDescription, create=create, view=view, 
+                           feynmanDescription=feynmanDescription, iSelfWork=iSelfWork, accomplishments=accomplishments, 
+                           prideDescription=prideDescription, begin=begin, goals=goals, goalsDescription=goalsDescription, 
+                           meditation=meditation, meditationDescription=meditationDescription, youngEdition=youngEdition, collegeEdition=collegeEdition)
 
 @views.route('/feynman')
 @login_required
@@ -651,7 +699,21 @@ def archive_task():
 @views.route('/About')
 @login_required
 def about():
-    return render_template("About.html", user=current_user)
+    if current_user.language == "ro":
+        about = "Despre Noi"
+        aboutDescription1 = "Bine ati venit pe site-ul nostru! Misiunea noastră este să vă facem experiența online cât mai plăcută și informativă posibil cu privire la diferitele opțiuni de sănătate mintală și productivitate disponibile aici. Vă întrebați ce este ProEmPo? Ei bine, ai venit în locul potrivit! ProEmPo este un site web de sănătate mintală și productivitate conceput pentru a promova bunăstarea mintală, pentru a crește gradul de conștientizare cu privire la problemele de sănătate mintală și pentru a oferi resurse și sprijin. De asemenea, oferim resurse productive pentru cei care au nevoie să rămână concentrați pe îndeplinirea sarcinilor."
+        aboutDescription2 = "Echipa noastră este pasionată de furnizarea de conținut de înaltă calitate, care să răspundă nevoilor dumneavoastră. Lucrăm în mod constant pentru a îmbunătăți și extinde eforturile noastre pentru a ne asigura că aveți acces la cele mai relevante și interesante informații disponibile."
+        aboutDescription3 = "Vă mulțumim că ați vizitat site-ul nostru web și sperăm că îl găsiți util și captivant. Dacă aveți întrebări sau feedback, vă rugăm să nu ezitați "
+        contact = "contactaţi-ne"
+        aboutDescription4 = "Apreciem contribuția dvs. și așteptăm cu nerăbdare să auzim de la dvs."
+    else:
+        about = "About Us"
+        aboutDescription1 = "Welcome to our website! Our mission is to make your online experience as enjoyable and informative as possible on various mental health and productivity options available here. Are you wondering about what ProEmPo is? Well you came to the right place! ProEmPo is a mental health and productivity website designed to promote mental well-being, raise awareness about mental health issues, and provide resources and support. We also provide productive resources for those in need to stay focused on doing tasks."
+        aboutDescription2 = "Our team is passionate about delivering high-quality content that meets your needs. We are constantly working to improve and expand our efforts to ensure that you have access to the most relevant and interesting information available."
+        aboutDescription3 = "Thank you for visiting our website, and we hope you find it helpful and engaging. If you have any questions or feedback, please don't hesitate to "
+        contact = "contact us"
+        aboutDescription4 = "We value your input and look forward to hearing from you."
+    return render_template("About.html", user=current_user, about=about, aboutDescription1=aboutDescription1, aboutDescription2=aboutDescription2, aboutDescription3=aboutDescription3, contact=contact, aboutDescription4=aboutDescription4)
 
 @views.route('/settings')
 @login_required
