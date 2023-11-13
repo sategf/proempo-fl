@@ -273,7 +273,7 @@
     </script>
     <script>
       function deleteArchivedTask(archivedTaskId) {
-        if (confirm("Are you sure you want to permanently delete this task? Once a task is deleted it will no longer be factored into your statistics and charts. We recommend not deleting tasks unless you really want to.")) {
+        if (confirm("{{archiveWarning}}")) {
           fetch("/delete-archived-task", {
             method: "POST",
             body: JSON.stringify({ archivedTaskId: archivedTaskId }),

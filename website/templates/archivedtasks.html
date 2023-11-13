@@ -84,11 +84,11 @@ content %}
           {% endif %}
           {%  if archivedtask.due_date and archivedtask.due_time %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              Due Date: {{ archivedtask.due_date.strftime('%m/%d/%Y') }} at {{ archivedtask.due_time.strftime('%I:%M %p') }}
+              {{taskDueDate}} {{ archivedtask.due_date.strftime('%m/%d/%Y') }} {{at}} {{ archivedtask.due_time.strftime('%I:%M %p') }}
             </span>
           {% elif archivedtask.due_date %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              Due Date: {{ archivedtask.due_date.strftime('%m/%d/%Y') }} 
+              {{taskDueDate}} {{ archivedtask.due_date.strftime('%m/%d/%Y') }} 
             </span>
           {% endif %}
         </div>
@@ -107,7 +107,7 @@ content %}
     </ul>
     {% else %}
     <br />
-    <h2><center>Nothing Here...</center></h2>
+    <h2><center>{{noArchivedTasks}}</center></h2>
     {% endif %}
   </div>
 </div>

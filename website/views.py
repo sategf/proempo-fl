@@ -329,9 +329,38 @@ def regularMeditation():
 def tasks():
     if current_user.language == "ro":
         taskTitle = "Sarcini"
-
+        dueDate = "Data Scadentă: (Opțional)"
+        dueTime = "Termen Limită: (Opțional)"
+        taskEnter = "Sarcină:"
+        taskButton = "Adăugați o Sarcină"
+        congrats1 = "Felicitări! Nu ai sarcini!"
+        congrats2 = "Faceți o nouă sarcină mai sus."
+        taskDueDate = "Data Scadenței:"
+        at = "la"
+        archiveTaskButton = "Sarcini Arhivate"
+        sortBy = "Filtrează după"
+        oldToNew = "De la cel mai vechi la cel mai nou"
+        newToOld = "De la cel mai nou la cel mai vechi"
+        sortDueDate = "Data Scadenței"
+        alphabetically = "Alfabetic"
+        sortDefault = "(Mod Implicit)"
     else:
         taskTitle = "Tasks"
+        dueDate = "Due Date: (Optional)"
+        dueTime = "Due Time: (Optional)"
+        taskEnter = "Task:"
+        taskButton = "Add Task"
+        congrats1 = "Congratulations! You have no tasks!"
+        congrats2 = "Make a new task above."
+        taskDueDate = "Due Date:"
+        at = "at"
+        archiveTaskButton = "Archived Tasks"
+        sortBy = "Sort by"
+        oldToNew = "Oldest to Newest"
+        newToOld = "Newest to Oldest"
+        sortDueDate = "Due Date"
+        alphabetically = "Alphabetically"
+        sortDefault = "(Default)"
     if request.method == 'POST':
         task_data = request.form.get('task')  # Gets the task from the HTML
         due_date_str = request.form.get('dueDate')  # Gets the due date string
@@ -377,14 +406,23 @@ def tasks():
         tasks = Task.query.filter(Task.user_id == user_id).order_by(text(current_user.defaultsort))
 
 
-    return render_template('tasks.html', user=current_user, taskTitle=taskTitle, tasks=tasks, selected_sort=selected_sort)
+    return render_template('tasks.html', user=current_user, dueDate=dueDate, dueTime=dueTime, taskTitle=taskTitle, 
+                           tasks=tasks, taskEnter=taskEnter, taskButton=taskButton, congrats1=congrats1, congrats2=congrats2, 
+                           taskDueDate=taskDueDate, at=at, archiveTaskButton=archiveTaskButton, sortBy=sortBy, selected_sort=selected_sort,
+                           oldToNew=oldToNew, newToOld=newToOld, sortDueDate=sortDueDate, alphabetically=alphabetically, sortDefault=sortDefault)
 
 
 @views.route('/archivedtasks')
 @login_required
 def archivedtasks():
+    if current_user.language == "ro":
+        noArchivedTasks = "Nimic aici..."
+        archiveWarning = "Sigur doriți să ștergeți definitiv această sarcină? Odată ce o sarcină este ștearsă, aceasta nu va mai fi luată în considerare în statisticile și graficele dvs. Vă recomandăm să nu ștergeți sarcini decât dacă doriți cu adevărat."
+    else:
+        noArchivedTasks = "Nothing Here..."
+        archiveWarning = "Are you sure you want to permanently delete this task? Once a task is deleted it will no longer be factored into your statistics and charts. We recommend not deleting tasks unless you really want to."
     archivedtasks = ArchivedTask.query.filter_by(user_id=current_user.id).order_by(ArchivedTask.date).all()
-    return render_template('archivedtasks.html', archivedtasks=archivedtasks, user=current_user)
+    return render_template('archivedtasks.html', archivedtasks=archivedtasks, noArchivedTasks=noArchivedTasks, archiveWarning=archiveWarning, user=current_user)
     
 
 
@@ -486,9 +524,36 @@ def journal():
     selected_entry = None  #Initialize selected_entry to None
     if current_user.language == "ro":
         journalTitle = "Verificare Zilnică"
-
+        journalSelect = "Selectați o intrare anterioară:"
+        journalChoose = "Selectați o intrare"
+        journalButton = "Merge"
+        journalDate = "Data:"
+        dearJournal = "Draga Jurnalule,"
+        journalContent = "Astăzi, mi-am petrecut ziua gândindu-mă la..."
+        gratefulContent = "3 lucruri pentru care sunt recunoscător astăzi sunt:"
+        dayTitle = "Ziua mea a fost..."
+        rating_excellent = "Excelent"
+        rating_good = "Bun"
+        rating_bad = "Rău"
+        rating_horrible = "Oribil"
+        saveJournal = "Salvați Intrarea"
+        journalFooter = "Ceea ce este în mintea ta?"
     else:
         journalTitle = "Daily Check-In"
+        journalSelect = "Select a previous entry:"
+        journalChoose = "Select an entry"
+        journalButton = "Go"
+        journalDate = "Date:"
+        dearJournal = "Dear Journal,"
+        journalContent = "Today, I spent my day thinking about..."
+        gratefulContent = "3 things I am grateful for today are:"
+        dayTitle = "My day was..."
+        rating_excellent = "Excellent"
+        rating_good = "Good"
+        rating_bad = "Bad"
+        rating_horrible = "Horrible"
+        saveJournal = "Save Entry"
+        journalFooter = "What is on your mind?"
     today = datetime.now().date()
     entry_for_today = Journal.query.filter(Journal.date == today, Journal.user_id == current_user.id).first()
     if entry_for_today:
@@ -539,7 +604,7 @@ def journal():
             selected_entry = Journal.query.get(previous_entry_id)
     date = (datetime.now().date())
     
-    return render_template('journal.html', user=current_user, journalTitle=journalTitle, previous_entries=previous_entries, selected_entry=selected_entry, date=date)
+    return render_template('journal.html', user=current_user, journalTitle=journalTitle, journalSelect=journalSelect, journalChoose=journalChoose, journalButton=journalButton, journalDate=journalDate, dearJournal=dearJournal, journalContent=journalContent, gratefulContent=gratefulContent, dayTitle=dayTitle, rating_excellent=rating_excellent, rating_good=rating_good, rating_bad=rating_bad, rating_horrible=rating_horrible, saveJournal=saveJournal, journalFooter=journalFooter, previous_entries=previous_entries, selected_entry=selected_entry, date=date)
 '''
 @views.route('/scanJournal', methods=['POST'])
 @login_required

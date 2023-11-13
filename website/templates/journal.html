@@ -130,26 +130,26 @@
 <div class="main">
   <center>
   <form method="GET" action="{{ url_for('views.journal') }}" id="previousentry">
-    <label for="previous_entries">Select a previous entry:</label>
+    <label for="previous_entries">{{journalSelect}}</label>
     <select name="previous_entry" id="previous_entry">
-        <option value="" disabled selected>Select an entry</option>
+        <option value="" disabled selected>{{journalChoose}}</option>
         {% for entry in previous_entries|reverse %}
             <option value="{{ entry.id }}">{{ entry.date.strftime('%m/%d/%Y') }}</option>
         {% endfor %}
     </select>
-    <input class="btn btn-light btn-sm" style="background-color: #8b7cb3; color:#ffffff" type="submit" value="Go">
+    <input class="btn btn-light btn-sm" style="background-color: #8b7cb3; color:#ffffff" type="submit" value={{journalButton}}>
 </form>
-<label for="date">Date:</label>
+<label for="date">{{journalDate}}</label>
 <input readonly type="date" name="date" {% if selected_entry != None %}value="{{ selected_entry.date }}" {% else %}value="{{ date }}" {% endif %}><br></center>
 <form method="POST">
   <ul class="section">
     <li class="item">
       <div class="card">
         <div class="card_content">
-          <h2 class="card_title">Dear Journal,</h2>
+          <h2 class="card_title">{{dearJournal}}</h2>
           <div class="card_text">
             <!--<p name="dear_journal_content" contenteditable="true" required>Today, I spent my day thinking about... {% if selected_entry != None %}{{ selected_entry.dear_journal_content }}{% endif %}</p>-->
-            <p name="dear_journal_content" contenteditable="false" >Today, I spent my day thinking about...</p>
+            <p name="dear_journal_content" contenteditable="false" >{{journalContent}}</p>
             <textarea style="background-color: transparent; border: transparent;" name="dear_journal_content" rows="10" cols="26" required {% if selected_entry != None %}readonly{% else %}autofocus{% endif %}>{% if selected_entry != None %}{{ selected_entry.dear_journal_content }}{% endif %}</textarea><br>
           </div>
         </div>
@@ -158,7 +158,7 @@
     <li class="item">
       <div class="card">
         <div class="card_content">
-          <h2 class="card_title">3 things I am grateful for today are:</h2>
+          <h2 class="card_title">{{gratefulContent}}</h2>
           <div class="card_text">
             <div class="gratitude-item">
               <span class="number">1.</span>
@@ -182,26 +182,26 @@
     <li class="item">
       <div class="card">
         <div class="card_content">
-          <h2 class="card_title">My day was...</h2>
+          <h2 class="card_title">{{dayTitle}}</h2>
           <div class="card_text">
               <div>
                 <label>
-                  <input type="radio" name="day_rating" value="Excellent" required {% if selected_entry %}disabled {% endif %}{% if selected_entry and selected_entry.day_rating == 'Excellent' %}checked {% endif %}> <img src="../static/veryWell.png" alt=""> Excellent 
+                  <input type="radio" name="day_rating" value="Excellent" required {% if selected_entry %}disabled {% endif %}{% if selected_entry and selected_entry.day_rating == 'Excellent' %}checked {% endif %}> <img src="../static/veryWell.png" alt=""> {{rating_excellent}} 
                 </label>
               </div>
               <div>
                 <label>
-                  <input type="radio" name="day_rating" value="Good" required {% if selected_entry %}disabled {% endif %}{% if selected_entry and selected_entry.day_rating == 'Good' %}checked {% endif %}> <img src="../static/well.png" alt="" > Good
+                  <input type="radio" name="day_rating" value="Good" required {% if selected_entry %}disabled {% endif %}{% if selected_entry and selected_entry.day_rating == 'Good' %}checked {% endif %}> <img src="../static/well.png" alt="" > {{rating_good}}
                 </label>
               </div>
               <div>
                 <label>
-                  <input type="radio" name="day_rating" value="Bad" required {% if selected_entry %}disabled {% endif %}{% if selected_entry and selected_entry.day_rating == 'Bad' %}checked {% endif %}> <img src="../static/bad.png" alt=""> Bad
+                  <input type="radio" name="day_rating" value="Bad" required {% if selected_entry %}disabled {% endif %}{% if selected_entry and selected_entry.day_rating == 'Bad' %}checked {% endif %}> <img src="../static/bad.png" alt=""> {{rating_bad}}
                 </label>
               </div>
               <div>
                 <label>
-                  <input type="radio" name="day_rating" value="Horrible" required {% if selected_entry %}disabled {% endif %}{% if selected_entry and selected_entry.day_rating == 'Horrible' %}checked {% endif %}> <img src="../static/horrible.png" alt=""> Horrible
+                  <input type="radio" name="day_rating" value="Horrible" required {% if selected_entry %}disabled {% endif %}{% if selected_entry and selected_entry.day_rating == 'Horrible' %}checked {% endif %}> <img src="../static/horrible.png" alt=""> {{rating_horrible}}
                 </label>
               </div>
           </div>
@@ -216,7 +216,7 @@
   </form>
 </div>
   <center class="no-journals">
-    <h3>What is on your mind?</h3>
+    <h3>{{journalFooter}}</h3>
     <img src="../static/journaling.gif" />
 <script>
 

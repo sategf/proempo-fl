@@ -98,7 +98,7 @@
     <div class="form-container">
       <form action="/tasks" method="POST" class="d-flex flex-column">
         <div class="form-group" align="center">
-          <label for="dueDate">Due Date: (Optional)</label>
+          <label for="dueDate">{{dueDate}}</label>
           <input
             type="date"
             name="dueDate"
@@ -106,7 +106,7 @@
             class="form-control"
             style="width: auto"
           />
-          <label for="dueTime">Due Time: (Optional)</label>
+          <label for="dueTime">{{dueTime}}</label>
           <input
             type="time"
             name="dueTime"
@@ -118,7 +118,7 @@
         
 
         <div class="form-group" align="center">
-          <label for="task">Task:</label>
+          <label for="task">{{taskEnter}}</label>
           <textarea
             name="task"
             id="task"
@@ -134,7 +134,7 @@
           id="addTaskButton"
           class="btn btn-primary align-self-center"
         >
-          Add Task
+          {{taskButton}}
         </button>
       </form>
     
@@ -145,7 +145,7 @@
           <div>
               <div class="dropdown2">
                   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Archived Tasks
+                      {{archiveTaskButton}}
                   </button>
                   <div class="dropdown-menu" style=".dropdown-menu.show{
                     width: 750px;
@@ -156,13 +156,13 @@
           </div>
           <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Sort by
+                  {{sortBy}}
               </button>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortDropdownButton">
-                  <a class="dropdown-item" href="/tasks?sort_method=default">Oldest to Newest {% if user.defaultsort == "Task.date" %}<b>(Default)</b>{% endif %}</a>
-                  <a class="dropdown-item" href="/tasks?sort_method=newest">Newest to Oldest {% if user.defaultsort == "task.date DESC" %}<b>(Default)</b>{% endif %}</a>
-                  <a class="dropdown-item" href="/tasks?sort_method=due_date">Due Date {% if user.defaultsort == "Task.due_date, Task.due_time" %}<b>(Default)</b>{% endif %}</a>
-                  <a class="dropdown-item" href="/tasks?sort_method=data">Alphabetically {% if user.defaultsort == "lower(task.data)" %}<b>(Default)</b>{% endif %}</a>
+                  <a class="dropdown-item" href="/tasks?sort_method=default">{{oldToNew}} {% if user.defaultsort == "Task.date" %}<b>{{sortDefault}}</b>{% endif %}</a>
+                  <a class="dropdown-item" href="/tasks?sort_method=newest">{{newToOld}} {% if user.defaultsort == "task.date DESC" %}<b>{{sortDefault}}</b>{% endif %}</a>
+                  <a class="dropdown-item" href="/tasks?sort_method=due_date">{{sortDueDate}} {% if user.defaultsort == "Task.due_date, Task.due_time" %}<b>{{sortDefault}}</b>{% endif %}</a>
+                  <a class="dropdown-item" href="/tasks?sort_method=data">{{alphabetically}} {% if user.defaultsort == "lower(task.data)" %}<b>{{sortDefault}}</b>{% endif %}</a>
               </div>
           </div>
       </li>
@@ -188,11 +188,11 @@
           <span class="dataLine">{{ task.data }}</span>
           {%  if task.due_date and task.due_time %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              Due Date: {{ task.due_date.strftime('%m/%d/%Y') }} at {{ task.due_time.strftime('%I:%M %p') }}
+              {{taskDueDate}} {{ task.due_date.strftime('%m/%d/%Y') }} {{at}} {{ task.due_time.strftime('%I:%M %p') }}
             </span>
           {% elif task.due_date %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              Due Date: {{ task.due_date.strftime('%m/%d/%Y') }} 
+              {{taskDueDate}} {{ task.due_date.strftime('%m/%d/%Y') }} 
             </span>
           {% endif %}
         </div>
@@ -232,11 +232,11 @@
           <span class="dataLine">{{ task.data }}</span>
           {%  if task.due_date and task.due_time %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              Due Date: {{ task.due_date.strftime('%m/%d/%Y') }} at {{ task.due_time.strftime('%I:%M %p') }}
+              {{taskDueDate}} {{ task.due_date.strftime('%m/%d/%Y') }} {{at}} {{ task.due_time.strftime('%I:%M %p') }}
             </span>
           {% elif task.due_date %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              Due Date: {{ task.due_date.strftime('%m/%d/%Y') }} 
+              {{taskDueDate}} {{ task.due_date.strftime('%m/%d/%Y') }} 
             </span>
           {% endif %}
         </div>
@@ -276,11 +276,11 @@
             <span class="dataLine">{{ task.data }}</span>
             {%  if task.due_date and task.due_time %}
               <span class="dataLine" style="margin-left: 10px; color: grey">
-                Due Date: {{ task.due_date.strftime('%m/%d/%Y') }} at {{ task.due_time.strftime('%I:%M %p') }}
+                {{taskDueDate}} {{ task.due_date.strftime('%m/%d/%Y') }} {{at}} {{ task.due_time.strftime('%I:%M %p') }}
               </span>
             {% elif task.due_date %}
               <span class="dataLine" style="margin-left: 10px; color: grey">
-                Due Date: {{ task.due_date.strftime('%m/%d/%Y') }} 
+                {{taskDueDate}} {{ task.due_date.strftime('%m/%d/%Y') }} 
               </span>
             {% endif %}
           </div>
@@ -336,11 +336,11 @@
           <span class="dataLine"><s>{{ finishedtask.data }}</s></span>
           {%  if finishedtask.due_date and finishedtask.due_time %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              Due Date: {{ finishedtask.due_date.strftime('%m/%d/%Y') }} at {{ finishedtask.due_time.strftime('%I:%M %p') }}
+              {{taskDueDate}} {{ finishedtask.due_date.strftime('%m/%d/%Y') }} {{at}} {{ finishedtask.due_time.strftime('%I:%M %p') }}
             </span>
           {% elif finishedtask.due_date %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              Due Date: {{ finishedtask.due_date.strftime('%m/%d/%Y') }} 
+              {{taskDueDate}} {{ finishedtask.due_date.strftime('%m/%d/%Y') }} 
             </span>
           {% endif %}
         </div>
@@ -360,8 +360,8 @@
     {% endif %} {% else %}
     <br />
     <center class="no-tasks">
-      <h3>Congratulations! You have no tasks!</h3>
-      <h4>Make a new task above.</h4>
+      <h3>{{congrats1}}</h3>
+      <h4>{{congrats2}}</h4>
       <img src="../static/sleeping-bear.gif" />
     </center>
     {% endif %}
