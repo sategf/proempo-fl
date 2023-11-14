@@ -188,11 +188,11 @@
           <span class="dataLine">{{ task.data }}</span>
           {%  if task.due_date and task.due_time %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              {{taskDueDate}} {{ task.due_date.strftime('%m/%d/%Y') }} {{at}} {{ task.due_time.strftime('%I:%M %p') }}
+              {{taskDueDate}} {% if user.language == 'en' %} {{ task.due_date.strftime('%m/%d/%Y') }} {{at}} {{ task.due_time.strftime('%I:%M %p') }} {% else %} {{ task.due_date.strftime('%d.%m.%Y') }} {{at}} {{ task.due_time.strftime('%I:%M %p') }} {% endif %} 
             </span>
           {% elif task.due_date %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              {{taskDueDate}} {{ task.due_date.strftime('%m/%d/%Y') }} 
+              {{taskDueDate}} {% if user.language == 'en' %} {{ task.due_date.strftime('%m/%d/%Y') }} {% else %} {{ task.due_date.strftime('%d.%m.%Y') }} {% endif %} 
             </span>
           {% endif %}
         </div>
@@ -203,7 +203,7 @@
             {% else %}
             <i class="fa-solid fa-star" style="color: #ffd700;"></i></a></i>
             {% endif %}
-          &nbsp;{{ task.date.strftime('%I:%M %p %m/%d/%y') }}
+          &nbsp;{% if user.language == 'en' %} {{ task.date.strftime('%I:%M %p %m/%d/%y') }} {% else %} {{ task.date.strftime('%H:%M %d.%m.%Y') }} {% endif %} 
         </div>
         <button
           type="button"
@@ -232,11 +232,11 @@
           <span class="dataLine">{{ task.data }}</span>
           {%  if task.due_date and task.due_time %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              {{taskDueDate}} {{ task.due_date.strftime('%m/%d/%Y') }} {{at}} {{ task.due_time.strftime('%I:%M %p') }}
+              {{taskDueDate}} {% if user.language == 'en' %} {{ task.due_date.strftime('%m/%d/%Y') }} {{at}} {{ task.due_time.strftime('%I:%M %p') }} {% else %} {{ task.due_date.strftime('%d.%m.%Y') }} {{at}} {{ task.due_time.strftime('%H:%M') }} {% endif %} 
             </span>
           {% elif task.due_date %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              {{taskDueDate}} {{ task.due_date.strftime('%m/%d/%Y') }} 
+              {{taskDueDate}} {% if user.language == 'en' %} {{ task.due_date.strftime('%m/%d/%Y') }} {% else %} {{ task.due_date.strftime('%d.%m.%Y') }} {% endif %} 
             </span>
           {% endif %}
         </div>
@@ -247,8 +247,8 @@
             {% else %}
             <i class="fa-solid fa-star" style="color: #ffd700;"></i></a></i>
             {% endif %}
-          &nbsp;{{ task.date.strftime('%I:%M %p %m/%d/%y') }}
-        </div>
+            &nbsp;{% if user.language == 'en' %} {{ task.date.strftime('%I:%M %p %m/%d/%y') }} {% else %} {{ task.date.strftime('%H:%M %d.%m.%Y') }} {% endif %} 
+          </div>
         <button
           type="button"
           class="btn btn-danger"
@@ -276,11 +276,11 @@
             <span class="dataLine">{{ task.data }}</span>
             {%  if task.due_date and task.due_time %}
               <span class="dataLine" style="margin-left: 10px; color: grey">
-                {{taskDueDate}} {{ task.due_date.strftime('%m/%d/%Y') }} {{at}} {{ task.due_time.strftime('%I:%M %p') }}
+                {{taskDueDate}} {% if user.language == 'en' %} {{ task.due_date.strftime('%m/%d/%Y') }} {{at}} {{ task.due_time.strftime('%I:%M %p') }} {% else %} {{ task.due_date.strftime('%d.%m.%Y') }} {{at}} {{ task.due_time.strftime('%H:%M') }} {% endif %} 
               </span>
             {% elif task.due_date %}
               <span class="dataLine" style="margin-left: 10px; color: grey">
-                {{taskDueDate}} {{ task.due_date.strftime('%m/%d/%Y') }} 
+                {{taskDueDate}} {% if user.language == 'en' %} {{ task.due_date.strftime('%m/%d/%Y') }} {% else %} {{ task.due_date.strftime('%d.%m.%Y') }} {% endif %} 
               </span>
             {% endif %}
           </div>
@@ -291,8 +291,8 @@
               {% else %}
               <i class="fa-solid fa-star" style="color: #ffd700;"></i></a></i>
               {% endif %}
-            &nbsp;{{ task.date.strftime('%I:%M %p %m/%d/%y') }}
-          </div>
+              &nbsp;{% if user.language == 'en' %} {{ task.date.strftime('%I:%M %p %m/%d/%y') }} {% else %} {{ task.date.strftime('%H:%M %d.%m.%Y') }} {% endif %} 
+            </div>
           <button
             type="button"
             class="btn btn-danger"
@@ -336,16 +336,16 @@
           <span class="dataLine"><s>{{ finishedtask.data }}</s></span>
           {%  if finishedtask.due_date and finishedtask.due_time %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              {{taskDueDate}} {{ finishedtask.due_date.strftime('%m/%d/%Y') }} {{at}} {{ finishedtask.due_time.strftime('%I:%M %p') }}
+              {{taskDueDate}} {% if user.language == 'en' %} {{ finishedtask.due_date.strftime('%m/%d/%Y') }} {{at}} {{ finishedtask.due_time.strftime('%I:%M %p') }} {% else %} {{ finishedtask.due_date.strftime('%d.%m.%Y') }} {{at}} {{ finishedtask.due_time.strftime('%H:%M') }} {% endif %} 
             </span>
           {% elif finishedtask.due_date %}
             <span class="dataLine" style="margin-left: 10px; color: grey">
-              {{taskDueDate}} {{ finishedtask.due_date.strftime('%m/%d/%Y') }} 
+              {{taskDueDate}} {% if user.language == 'en' %} {{ finishedtask.due_date.strftime('%m/%d/%Y') }} {% else %} {{ finishedtask.due_date.strftime('%d.%m.%Y') }} {% endif %} 
             </span>
           {% endif %}
         </div>
         <div style="margin-left: auto; color: grey; padding-right: 5px">
-          {{ finishedtask.date.strftime('%I:%M %p %m/%d/%y') }}
+          {% if user.language == 'en' %} {{ finishedtask.date.strftime('%I:%M %p %m/%d/%y') }} {% else %} {{ finishedtask.date.strftime('%H:%M %d.%m.%Y') }} {% endif %} 
         </div>
         <button
           type="button"

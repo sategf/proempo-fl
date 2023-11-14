@@ -134,7 +134,7 @@
     <select name="previous_entry" id="previous_entry">
         <option value="" disabled selected>{{journalChoose}}</option>
         {% for entry in previous_entries|reverse %}
-            <option value="{{ entry.id }}">{{ entry.date.strftime('%m/%d/%Y') }}</option>
+            <option value="{{ entry.id }}">{% if user.language == 'en' %} {{ entry.date.strftime('%m/%d/%Y') }} {% else %} {{ entry.date.strftime('%d.%m.%Y') }} {% endif %}</option>
         {% endfor %}
     </select>
     <input class="btn btn-light btn-sm" style="background-color: #8b7cb3; color:#ffffff" type="submit" value={{journalButton}}>
