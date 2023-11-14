@@ -50,6 +50,8 @@ def home():
         openNoisePlayer = "Deschide playerul de zgomot alb"
         journalIncomplete = "Se pare că nu ați finalizat înregistrarea zilnică pentru astăzi."
         clickJournal = "Faceți clic aici pentru a vă completa jurnalul."
+        currenttasks = "Sarcini curente:"
+        notasks = "Nu aveți sarcini în prezent. Accesați sarcini pentru a face mai multe."
         journalComplete = "Bună treabă, ați completat azi check-in-ul zilnic!"
     else:
         welcome = "Welcome to ProEmPo, "
@@ -57,10 +59,14 @@ def home():
         openNoisePlayer = "Open Noise Player"
         journalIncomplete = "It looks like you haven't completed your daily check-in for today."
         clickJournal = "Click here to fill out your journal."
+        currenttasks = "Current Tasks:"
+        notasks = "You have no tasks currently. Go to tasks to make more."
         journalComplete = "Good Job, you filled out your daily check-in today!"
+    
     entry_for_today = Journal.query.filter(Journal.date == today, Journal.user_id == current_user.id).first()
+    tasks = Task.query.filter(Task.user_id == current_user.id).order_by(text(current_user.defaultsort))
 
-    return render_template("home.html", user=current_user, qod=qod, currentDay=currentDay, welcome=welcome,
+    return render_template("home.html", tasks=tasks, notasks=notasks, currenttasks=currenttasks, user=current_user, qod=qod, currentDay=currentDay, welcome=welcome,
                             openNoisePlayer=openNoisePlayer, entry_for_today=entry_for_today, journalIncomplete=journalIncomplete, 
                             clickJournal=clickJournal, journalComplete=journalComplete)
 

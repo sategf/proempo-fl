@@ -156,10 +156,24 @@
         {% endif %}
         </div>
         {% endif %}
+        {% if user.hide_tasks != 1 %}
         <div id="quote-container">
            
-
+            {% if user.tasks|length > 0  %}
+           <h3>{{ currenttasks }}</h3>
+           {% for task in tasks|reverse %}
+           <ul style="font-size: 20px; margin-bottom:0;!important">
+            <li style="font-size: 20px;">
+                {{ task.data }} {% if task.due_date != None %}<b style="color:rgb(255, 106, 106)">Due:{{task.due_date.strftime('%m/%d/%Y')}}</b>{% endif %} {% if task.starred != None %} <i class="fa-solid fa-star" style="color: #ffd700;"></i> {% endif %}
+            </li>
+           </ul>
+           {% endfor %}
+           {% else %}
+           <center>
+           <h3>{{ notasks }}</h3></center>
+           {% endif %}
         </div>
+        {% endif %}
     </div>
 
 </body>
