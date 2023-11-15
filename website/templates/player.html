@@ -73,7 +73,7 @@
         <div class="left-container">
             <!-- White Noise Player -->
             <div class="white-noise-button noise-button">
-                <button class="btn btn-outline-info" id="white-noise-toggle" data-noise-type="White">{{ playIcon|safe }}  White Noise</button>
+                <button class="btn btn-outline-info" id="white-noise-toggle" data-noise-type="{% if user.language == 'en' %} White {% else %} Alb {% endif %}">{{ playIcon|safe }}  {{whitenoise}}</button>
             </div>
             <audio loop id="white-noise" data-state="paused">
                 <source src="{{ url_for('static', filename='whitenoise.mp3') }}" type="audio/mpeg">
@@ -82,7 +82,7 @@
 
             <!-- Balanced Noise Player -->
             <div class="balanced-noise-button noise-button">
-                <button class="btn btn-outline-info" id="balanced-noise-toggle" data-noise-type="Bird">{{ playIcon|safe }}  Bird Noise</button>
+                <button class="btn btn-outline-info" id="balanced-noise-toggle" data-noise-type="{% if user.language == 'en' %} Bird {% else %} de Păsări {% endif %}">{{ playIcon|safe }}  {{birdnoise}}</button>
             </div>
             <audio loop id="balanced-noise" data-state="paused">
                 <source src="{{ url_for('static', filename='birdsounds.mp3') }}" type="audio/mpeg">
@@ -91,7 +91,7 @@
 
             <!-- Bright Noise Player -->
             <div class="bright-noise-button noise-button">
-                <button class="btn btn-outline-info" id="bright-noise-toggle" data-noise-type="Nature">{{ playIcon|safe }}  Nature Noise</button>
+                <button class="btn btn-outline-info" id="bright-noise-toggle" data-noise-type="{% if user.language == 'en' %} Nature {% else %}ul Naturii {% endif %}">{{ playIcon|safe }}  {{naturenoise}}</button>
             </div>
             <audio loop id="bright-noise" data-state="paused">
                 <source src="{{ url_for('static', filename='naturesounds.mp3') }}" type="audio/mpeg">
@@ -100,7 +100,7 @@
 
             <!-- rain Noise Player -->
             <div class="rain-noise-button noise-button">
-                <button class="btn btn-outline-info" id="rain-noise-toggle" data-noise-type="Rain">{{ playIcon|safe }}  Rain Noise</button>
+                <button class="btn btn-outline-info" id="rain-noise-toggle" data-noise-type="{% if user.language == 'en' %} Rain {% else %} de Ploaie {% endif %}">{{ playIcon|safe }}  {{rainnoise}}</button>
             </div>
             <audio loop id="rain-noise" data-state="paused">
                 <source src="{{ url_for('static', filename='Rain_noise_player.mp3') }}" type="audio/mpeg">
@@ -109,7 +109,7 @@
 
             <!-- Ocean Noise Player -->
             <div class="ocean-noise-button noise-button">
-                <button class="btn btn-outline-info" id="ocean-noise-toggle" data-noise-type="Ocean">{{ playIcon|safe }}  Ocean Noise</button>
+                <button class="btn btn-outline-info" id="ocean-noise-toggle" data-noise-type="{% if user.language == 'en' %} Ocean {% else %} Ocean {% endif %}">{{ playIcon|safe }}  {{oceannoise}}</button>
             </div>
             <audio loop id="ocean-noise" data-state="paused">
                 <source src="{{ url_for('static', filename='Ocean_noise_player.mp3') }}" type="audio/mpeg">
@@ -118,7 +118,7 @@
 
             <!-- Stream Noise Player -->
             <div class="stream-noise-button noise-button">
-                <button class="btn btn-outline-info" id="stream-noise-toggle" data-noise-type="Stream">{{ playIcon|safe }}  Stream Noise</button>
+                <button class="btn btn-outline-info" id="stream-noise-toggle" data-noise-type="{% if user.language == 'en' %} Stream {% else %} de Râu {% endif %}">{{ playIcon|safe }}  {{streamnoise}}</button>
             </div>
             <audio loop id="stream-noise" data-state="paused">
                 <source src="{{ url_for('static', filename='Stream_noise_player.mp3') }}" type="audio/mpeg">
@@ -127,7 +127,7 @@
 
             <!-- Underwater Noise Player -->
             <div class="underwater-noise-button noise-button">
-                <button class="btn btn-outline-info" id="underwater-noise-toggle" data-noise-type="Underwater">{{ playIcon|safe }}  Underwater Noise</button>
+                <button class="btn btn-outline-info" id="underwater-noise-toggle" data-noise-type="{% if user.language == 'en' %} Underwater {% else %} Subacvatic {% endif %}">{{ playIcon|safe }}  {{underwaternoise}}</button>
             </div>
             <audio loop id="underwater-noise" data-state="paused">
                 <source src="{{ url_for('static', filename='Underwater_noise_player.mp3') }}" type="audio/mpeg">
@@ -136,7 +136,7 @@
         </div>
         <div class="right-container" id="quote-container">
             <div id="timer-container">
-                <div>Time Playing Noises:</div>
+                <div>{{timeplayingnoises}}</div>
                 <h1 id="timer"> 00:00</h1>
             </div>
             <div class="volume-slider"><i class="fa fa-volume-high"></i>
@@ -169,12 +169,20 @@
         function toggleAudioAndText(audioElement, toggleButton) {
             if (audioElement.paused) {
                 audioElement.play();
+                {% if user.language == 'en' %}
                 toggleButton.innerHTML = '{{ pauseIcon|safe }} '+ '' + toggleButton.getAttribute('data-noise-type') + ' Noise';
+                {% else %}
+                toggleButton.innerHTML = '{{ pauseIcon|safe }} '+ '' + 'Zgomot' + toggleButton.getAttribute('data-noise-type');
+                {% endif %}
                 updateTimer();
                 pauseOtherAudio(audioElement.id);
             } else {
                 audioElement.pause();
+                {% if user.language == 'en' %}
                 toggleButton.innerHTML = '{{ playIcon|safe }} ' + toggleButton.getAttribute('data-noise-type') + ' Noise';
+                {% else %}
+                toggleButton.innerHTML = '{{ playIcon|safe }} ' + 'Zgomot' + toggleButton.getAttribute('data-noise-type');
+                {% endif %}
                 checkAllAudioPaused();
             }
         }
@@ -196,7 +204,11 @@
                     const toggleButton = document.getElementById(audioId + '-toggle');
                     if (!audio.paused) {
                         audio.pause();
+                        {% if user.language == 'en' %}
                         toggleButton.innerHTML = '{{ playIcon|safe }} ' + toggleButton.getAttribute('data-noise-type') + ' Noise';
+                        {% else %}
+                        toggleButton.innerHTML = '{{ playIcon|safe }} ' + 'Zgomot' + toggleButton.getAttribute('data-noise-type');
+                        {% endif %}
                     }
                 }
             });
@@ -288,6 +300,5 @@
         underwaterNoiseAudio.volume = volume;
 });
     </script>
-    
 </body>
 {% endblock %}

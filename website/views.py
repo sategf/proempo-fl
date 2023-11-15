@@ -1249,13 +1249,32 @@ def clear_all_completed_tasks():
 
 
 
-
 @views.route('/player')
 def player():
     playIcon='<i class="fas fa-play"></i>'
     pauseIcon='<i class="fas fa-pause"></i>'
 
-    return render_template('player.html', user=current_user, playIcon=playIcon, pauseIcon=pauseIcon)
+    if current_user.language == "ro":
+        whitenoise = "Zgomot Alb"
+        birdnoise = "Zgomot de Păsări"
+        naturenoise = "Zgomotul Naturii"
+        rainnoise = "Zgomot de Ploaie"
+        oceannoise = "Zgomot Ocean"
+        streamnoise = "Zgomot de Râu"
+        underwaternoise = "Zgomot Subacvatic"
+        timeplayingnoises = "Timpul de Redare:"
+    else:
+        whitenoise = "White Noise"
+        birdnoise = "Bird Noise"
+        naturenoise = "Nature Noise"
+        rainnoise = "Rain Noise"
+        oceannoise = "Ocean Noise"
+        streamnoise = "Stream Noise"
+        underwaternoise = "Underwater Noise"
+        timeplayingnoises = "Time Playing Noises:"
+
+    return render_template('player.html', user=current_user, playIcon=playIcon, pauseIcon=pauseIcon, whitenoise=whitenoise, birdnoise=birdnoise, naturenoise=naturenoise, rainnoise=rainnoise, oceannoise=oceannoise, streamnoise=streamnoise, underwaternoise=underwaternoise, timeplayingnoises=timeplayingnoises)
+
 
 
 
