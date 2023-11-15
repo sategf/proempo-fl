@@ -185,7 +185,31 @@ def feynman():
     if latest_entry:
         latest_entry.description = latest_entry.description.replace('\n', '<br>')
 
-    return render_template("feynman.html", user=current_user, latest_entry=latest_entry)
+
+    if current_user.language == "ro":
+        title="Metoda Feynman"
+        question="Cum încep?"
+        writeTitle= "Scrie titlul aici"
+        writeDescription="Scrie descrierea aici"
+        startNew = "începe Nou"
+        RememberThoughts="Salvează-mi gândurile pentru data viitoare"
+        explanation1="Metoda Feynman are 4 pași simpli:"
+        explanation2="După ce ați studiat subiectul, începeți să îl scrieți într-un limbaj simplu. Gândiți-vă la asta ca la explicarea subiectului ales unui copil mic. Dacă există lacune în înțelegerea dvs., completați-le și încercați din nou. Ideea principală este că, dacă nu reușiți să-l explicați simplu, nu îl înțelegeți suficient de bine și aveți nevoie de mai multă practică."
+        explanation3="Acum, închideți fereastra asta și începeți."
+    else:
+        title="Feynman Method"
+        question="How do I begin?"
+        writeTitle="Write topic here"
+        writeDescription="Write description here"
+        startNew = "Start New"
+        RememberThoughts ="Remember my thoughts for next time"
+        explanation1="The Feynman Method has 4 easy steps"
+        explanation2="After studying your topic, begin writing it down in simple language. Think of it as explaining your choosen topic to a toddler. If there are gaps in your understanding, fill them in and try again. The core point is that if you are unable to explain it simply, you don't understand it well enough and need more practice."
+        explanation3="Now, close this popup and begin."
+
+    return render_template("feynman.html", user=current_user, latest_entry=latest_entry, 
+                           title=title, question=question, writeTitle=writeTitle, writeDescription=writeDescription, startNew=startNew,
+                           RememberThoughts=RememberThoughts, explanation1=explanation1, explanation2=explanation2, explanation3=explanation3)
 
 @views.route('/start-new-entry', methods=['POST'])
 @login_required
@@ -222,7 +246,45 @@ def pomodoro():
     task_id = request.args.get('taskId')
     task_data = request.args.get('taskData')
     uncompleted_tasks = Task.query.filter_by(user_id=current_user.id).all()
-    return render_template('pomodoro.html', task_id=task_id, task_data=task_data, user=current_user, uncompleted_tasks=uncompleted_tasks)
+
+    if current_user.language == "ro":
+        title="Ceas Pomodoro"
+        start="Începe"
+        pause="Pauză"
+        reset="Resetă"
+        workTime="Timp de muncit (min)"
+        shortBreak="Pauză mică (min)"
+        longBreak="Pauză lungă (min)"
+        task = "În această sesiune voi lucra la:"
+        question="Ce este Pomodoro?"
+        explanation1="Tehnica Pomodoro este o metodă de gestionare a timpului care folosește un cronometru pentru a descompune munca în intervale."
+        explanation2="5 pași simpli:"
+        explanation3="1. Decideți asupra sarcinii pe care trebuie să o faceți"
+        explanation4="2. Setați timpul de lucru la 25 de minute (reglabil)"
+        explanation5="3. Lucrați la sarcina stabilită până când sună cronometrul"
+        explanation6="4. Luați o scurtă pauză de 5 minute (reglabilă)"
+        explanation7="5. După 4 sesiuni, luați o pauză mai lungă."
+    else: 
+        title="Pomodoro Timer"
+        start="Start"
+        pause="Pause"
+        reset="Reset"
+        workTime="Work Time (min)"
+        shortBreak="Short Break (min)"
+        longBreak="Long Break (min)"
+        question="What is Pomodoro?"
+        explanation1="The Pomodoro Technique is a time management method that uses a timer to break down work in intervals."
+        explanation2="5 easy steps:"
+        explanation3="1. Decide on the task that you need to do"
+        explanation4="2. Set the work time to 25 minutes (adjustable)"
+        explanation5="3. Work on the set task until the timer rings"
+        explanation6="4. Take a short 5 minute break (adjustable)"
+        explanation7="5. After 4 cycles, take a longer break."
+
+    return render_template('pomodoro.html', task_id=task_id, task_data=task_data, user=current_user, uncompleted_tasks=uncompleted_tasks, 
+                           title=title, start=start, pause=pause, reset=reset, workTime=workTime, shortBreak=shortBreak, longBreak=longBreak, 
+                           question=question, explanation1=explanation1, explanation2=explanation2, explanation3=explanation3, explanation4=explanation4, 
+                           explanation5=explanation5, explanation6=explanation6, explanation7=explanation7)
 
 
 @views.route('/FAQ')
@@ -1225,7 +1287,7 @@ def goals():
         explanation3="Măsurabile: obiectivele ar trebui să fie cuantificabile"
         explanation4="Realizabil: Obiectivele ar trebui să fie realiste"
         explanation5="Relevant: Obiectivele ar trebui să se alinieze cu obiectivele și valorile dumneavoastră."
-        explanatio6="Oportune: obiectivele ar trebui să aibă un interval de timp definit"
+        explanation6="Oportune: obiectivele ar trebui să aibă un interval de timp definit"
         explanation7="Acest cadru îmbunătățește precizia și eficacitatea stabilirii obiectivelor."
     else:
         mygoals="My Goals"
