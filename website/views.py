@@ -335,8 +335,8 @@ def regularMeditation():
 def tasks():
     if current_user.language == "ro":
         taskTitle = "Sarcini"
-        dueDate = "Data Scadentă: (Opțional)"
-        dueTime = "Termen Limită: (Opțional)"
+        dueDate = "Data Scadenței: (Opțional)"
+        dueTime = "Timp Cuvenit: (Opțional)"
         taskEnter = "Sarcină:"
         taskButton = "Adăugați o Sarcină"
         congrats1 = "Felicitări! Nu ai sarcini!"
@@ -367,6 +367,7 @@ def tasks():
         sortDueDate = "Due Date"
         alphabetically = "Alphabetically"
         sortDefault = "(Default)"
+
     if request.method == 'POST':
         task_data = request.form.get('task')  # Gets the task from the HTML
         due_date_str = request.form.get('dueDate')  # Gets the due date string
@@ -518,10 +519,33 @@ def reports():
     day_rating_json = json.dumps(day_rating_data)
     print(day_rating_json)
 
-    if goals_count > 0:
-        return render_template("reports.html", user=current_user, reportsTitle=reportsTitle, finished_tasks=finished_tasks_json, goals_count=goals_count, latest_completed_goals=latest_completed_goals, most_popular_rating=most_popular_rating, day_rating_json=day_rating_json)
+
+
+    if current_user.language == "ro":
+        chart1Title="Sarcinile pe care le-am finalizat în această săptămână"
+        goalsAchieved="Obiective Realizate"
+        latestCompletedGoals="Ultimele obiective îndeplinite"
+        mostFrequentDayRating="Evaluarea mea cea mai frecventă de zi"
+        myHistory="Istoricul evaluării zilei mele"
+        noDayRatings="Se pare că nu ați înregistrat nicio evaluare zilnică. Vă rugăm să adăugați aceste date pentru a vă putea genera raportul."
+        no_goals_message="Se pare că nu ți-ai stabilit niciun obiectiv."
     else:
-        return render_template("reports.html", user=current_user, reportsTitle=reportsTitle, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message="It appears as if you have not set any goals. <a href=/goals>Begin setting goals.</a>", most_popular_rating=most_popular_rating, day_rating_json=day_rating_json)
+        chart1Title="Amount of tasks I completed this week"
+        goalsAchieved="Goals Achieved"
+        latestCompletedGoals = "Latest Completed Goals"
+        mostFrequentDayRating="My mos frequent day rating"
+        myHistory="My Day Rating History"
+        noDayRatings="It appears that you have not logged any day ratings. Please add this data so that we can generate your report."
+        no_goals_message="It appears as if you have not set any goals."
+
+    if goals_count > 0:
+        return render_template("reports.html", user=current_user, reportsTitle=reportsTitle, finished_tasks=finished_tasks_json, goals_count=goals_count, latest_completed_goals=latest_completed_goals, most_popular_rating=most_popular_rating, day_rating_json=day_rating_json, 
+                               chart1Title=chart1Title, goalsAchieved=goalsAchieved, latestCompletedGoals=latestCompletedGoals,
+                               mostFrequentDayRating=mostFrequentDayRating, myHistory=myHistory, noDayRatings=noDayRatings)
+    else:
+        return render_template("reports.html", user=current_user, reportsTitle=reportsTitle, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message=no_goals_message, most_popular_rating=most_popular_rating, day_rating_json=day_rating_json, 
+                               chart1Title=chart1Title, goalsAchieved=goalsAchieved, latestCompletedGoals=latestCompletedGoals,
+                               mostFrequentDayRating=mostFrequentDayRating, myHistory=myHistory, noDayRatings=noDayRatings)
 
 
 @views.route('/journal', methods=['GET', 'POST'])
@@ -532,7 +556,7 @@ def journal():
         journalTitle = "Verificare Zilnică"
         journalSelect = "Selectați o intrare anterioară:"
         journalChoose = "Selectați o intrare"
-        journalButton = "Merge"
+        journalButton = "Aplică"
         journalDate = "Data:"
         dearJournal = "Draga Jurnalule,"
         journalContent = "Astăzi, mi-am petrecut ziua gândindu-mă la..."
@@ -542,7 +566,7 @@ def journal():
         rating_good = "Bun"
         rating_bad = "Rău"
         rating_horrible = "Oribil"
-        saveJournal = "Salvați Intrarea"
+        saveJournal = "Salvați"
         journalFooter = "Ceea ce este în mintea ta?"
     else:
         journalTitle = "Daily Check-In"
@@ -610,7 +634,11 @@ def journal():
             selected_entry = Journal.query.get(previous_entry_id)
     date = (datetime.now().date())
     
-    return render_template('journal.html', user=current_user, journalTitle=journalTitle, journalSelect=journalSelect, journalChoose=journalChoose, journalButton=journalButton, journalDate=journalDate, dearJournal=dearJournal, journalContent=journalContent, gratefulContent=gratefulContent, dayTitle=dayTitle, rating_excellent=rating_excellent, rating_good=rating_good, rating_bad=rating_bad, rating_horrible=rating_horrible, saveJournal=saveJournal, journalFooter=journalFooter, previous_entries=previous_entries, selected_entry=selected_entry, date=date)
+    return render_template('journal.html', user=current_user, journalTitle=journalTitle, journalSelect=journalSelect, 
+                           journalChoose=journalChoose, journalButton=journalButton, journalDate=journalDate, dearJournal=dearJournal, 
+                           journalContent=journalContent, gratefulContent=gratefulContent, dayTitle=dayTitle, rating_excellent=rating_excellent, 
+                           rating_good=rating_good, rating_bad=rating_bad, rating_horrible=rating_horrible, saveJournal=saveJournal, 
+                           journalFooter=journalFooter, previous_entries=previous_entries, selected_entry=selected_entry, date=date)
 '''
 @views.route('/scanJournal', methods=['POST'])
 @login_required
@@ -1169,12 +1197,6 @@ def player():
 
 
 
-
-
-
-
-
-
 @views.route('/goals')
 @login_required
 def goals():
@@ -1183,7 +1205,58 @@ def goals():
     if previous_goals is None:
         previous_goals = [] 
 
-    return render_template('goals.html', user=current_user, previous_goals=previous_goals)
+    if current_user.language == "ro":
+        mygoals="Obiectivele Mele"
+        specific = "Specific"
+        measurable = "Măsurabil"
+        achievable="Realizabil"
+        relevant="Relevant"
+        timely="Oportun"
+        specificQ="Ce obiectiv voi realiza?"
+        measurableQ="Cum o să ştiu că am realizat obiectivul?"
+        achievableQ="Obiectivul este realist?"
+        relevantQ="De ce este obiectul acesta important?"
+        timelyQ="Când voi realiza acest obiectiv?"
+        saveGoal="Salvează obiectivul"
+        goalCompleted="Obiectiv Terminat"
+        seeAllGoals="Vizualizează toate obiectivele"
+        explanation1="Când vine vorba de stabilirea obiectivelor, Proempo adoptă abordarea 'smart' a obiectivelor. Abordarea obiectivelor SMART este un cadru profesional de stabilire a obiectivelor cu cinci componente esențiale:"
+        explanation2="Specific: Obiectivele trebuie să fie clare și bine definite"
+        explanation3="Măsurabile: obiectivele ar trebui să fie cuantificabile"
+        explanation4="Realizabil: Obiectivele ar trebui să fie realiste"
+        explanation5="Relevant: Obiectivele ar trebui să se alinieze cu obiectivele și valorile dumneavoastră."
+        explanatio6="Oportune: obiectivele ar trebui să aibă un interval de timp definit"
+        explanation7="Acest cadru îmbunătățește precizia și eficacitatea stabilirii obiectivelor."
+    else:
+        mygoals="My Goals"
+        specific = "Specific"
+        measurable = "Measurable"
+        achievable="Achievable"
+        relevant="Relevant"
+        timely="Timely"
+        specificQ="What goal will I accomplish?"
+        measurableQ="How do I know when I reach this goal?"
+        achievableQ="Is this goal realistic with commitment?"
+        relevantQ="Why is this goal significant to me?"
+        timelyQ="When will I achieve this goal?"
+        saveGoal="Save My Goal"
+        goalCompleted="Goal Completed"
+        seeAllGoals="See all goals"
+        explanation1="When it comes to goal-setting, Proempo adopts the 'smart' goal approach. The SMART goal approach is a professional goal-setting framework with five essential components:"
+        explanation2="Specific: Goals must be clear and well-defined."
+        explanation3="Measurable: Goals should be quantifiable and trackable."
+        explanation4="Achievable: Goals should be realistic and attainable."
+        explanation5="Relevant: Goals should align with your objectives and values."
+        explanation6=" Timely: Goals should have a defined time frame."
+        explanation7="This framework enhances goal-setting precision and effectiveness."
+        
+    return render_template('goals.html', user=current_user, previous_goals=previous_goals, 
+                           mygoals=mygoals, specific=specific, measurable=measurable, achievable=achievable, relevant=relevant, 
+                           timely=timely, specificQ=specificQ, measurableQ=measurableQ, achievableQ=achievableQ, relevantQ=relevantQ,
+                           timelyQ=timelyQ, saveGoal=saveGoal, goalCompleted=goalCompleted, seeAllGoals=seeAllGoals, 
+                           explanation6=explanation6, explanation1=explanation1, explanation2=explanation2, 
+                           explanation3=explanation3, explanation4=explanation4, explanation5 = explanation5, 
+                           explanation7 = explanation7)
 
 
 
