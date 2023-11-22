@@ -112,6 +112,7 @@
 </style>
 </head>
 <body>
+    {% if user.hide_quote != 1 %}
     <div class="top-container">
         <!--<h2 align="left"><u>Quote of the Day:</u></h2>-->
             {% if qod %}
@@ -120,6 +121,7 @@
                 <p>No quote today.</p>
             {% endif %}
     </div>
+    {% endif %}
     <br>
     <div class="content-container">
         <div id="clock-box" style="">
