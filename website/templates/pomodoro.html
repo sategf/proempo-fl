@@ -3,37 +3,37 @@
     <div class="container">
             <div class="box">
               <div class="title-box">
-                <h1 id="title" align="center">Pomodoro Timer</h1>
+                <h1 id="title" align="center">{% if user.language == 'ro' %}Cronometrul Pomodoro{% else %}Pomodoro Timer{% endif %}</h1>
     </div>
     <div class="timer-container">   
         <div id="timer">25:00</div>
         <div class="button-container">
             <button id="startButton">Start</button>
-            <button id="pauseButton">Pause</button>
-            <button id="resetButton">Reset</button>
+            <button id="pauseButton">{% if user.language == 'ro' %}Pauză{% else %}Pause{% endif %}</button>
+            <button id="resetButton">{% if user.language == 'ro' %}Resetați{% else %}Pause{% endif %}</button>
         </div>
     
         <div class="time-inputs">
             <div class="input-container">
-                <label for="workTime">Work Time (min)</label>
+                <label for="workTime">{% if user.language == 'ro' %}Timp de lucru (min){% else %}Work Time (min){% endif %}</label>
                 <input type="number" id="workTime" value="25">
             </div>
     
             <div class="input-container">
-                <label for="shortBreakTime">Short Break (min)</label>
+                <label for="shortBreakTime">{% if user.language == 'ro' %}Pauza scurta (min){% else %}Short Break (min){% endif %}</label>
                 <input type="number" id="shortBreakTime" value="5">
             </div>
     
             <div class="input-container">
-                <label for="longBreakTime">Long Break (min)</label>
+                <label for="longBreakTime">{% if user.language == 'ro' %}Pauza lunga (min){% else %}Long Break (min){% endif %}</label>
                 <input type="number" id="longBreakTime" value="15">
             </div>
         </div>
 
         <div>
-            <label for="taskSelection">In this session, I will work on:</label>
+            <label for="taskSelection">{% if user.language == 'ro' %}În această sesiune voi lucra la:{% else %}In this session, I will work on:{% endif %}</label>
             <select id="taskSelection">
-              <option value="" disabled selected>Select a task</option>
+              <option value="" disabled selected>{% if user.language == 'ro' %}Selectați o sarcină{% else %}Select a task{% endif %}</option>
               {% for task in uncompleted_tasks %}
                 <option value="{{ task.id }}">{{ task.data }}</option>
               {% endfor %}
@@ -41,11 +41,20 @@
         </div>
 
         <div class="pomodoro-info">
-            <a id="pomodoroInfoLink" href="#">What is Pomodoro?</a>
+            <a id="pomodoroInfoLink" href="#">{% if user.language == 'ro' %}Pauza lunga (min){% else %}What is Pomodoro?{% endif %}</a>
         </div>
             <div id="popup" class="popup">
             <div class="popup-content">
                 <span class="close" id="closePopup">&times;</span>
+                {% if user.language == 'ro' %}
+                <p>Tehnica Pomodoro este o metodă de gestionare a timpului care utilizează un cronometru pentru a descompune munca în intervale.</p>
+                <p>5 pași simpli:</p>
+                <p>1. Decideți sarcina pe care trebuie să o faceți</p>
+                <p>2. Setați timpul de lucru la 25 de minute (reglabil)</p>
+                <p>3. Lucrați la sarcina stabilită până când sună cronometrul</p>
+                <p>4. Luați o scurtă pauză de 5 minute (reglabilă)</p>
+                <p>5. După 4 cicluri, faceți o pauză mai lungă. </p>
+                {% else %}
                 <p>The Pomodoro Technique is a time management method that uses a timer to break down work in intervals.</p>
                 <p>5 easy steps:</p>
                 <p>1. Decide on the task that you need to do</p>
@@ -53,6 +62,7 @@
                 <p>3. Work on the set task until the timer rings</p>
                 <p>4. Take a short 5 minute break (adjustable)</p>
                 <p>5. After 4 cycles, take a longer break. </p>
+                {% endif %}
             </div>
         </div>
         
