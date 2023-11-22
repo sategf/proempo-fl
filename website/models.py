@@ -54,6 +54,7 @@ class User(db.Model, UserMixin):
     hide_second_hand = db.Column(db.Boolean)
     make_all_buttons_purple = db.Column(db.Boolean)
     starred_at_top = db.Column(db.Boolean)
+    hide_quote = db.Column(db.Boolean)
     hide_self_help = db.Column(db.Boolean)
     hide_tasks = db.Column(db.Boolean)
     hide_journal = db.Column(db.Boolean)

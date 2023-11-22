@@ -924,6 +924,7 @@ def setting():
         player = "Zgomot Alb"
         homepage = "Pagina Principală"
         hidesecondhand = "Ascunde Mâna a Doua"
+        hidequote = "Ascunde Citatul Zilei"
     else:
         selectLanguage = "Select your preferred language:"
         title = "Settings"
@@ -954,7 +955,8 @@ def setting():
         player = "Noise Player"
         homepage = "Home Page"
         hidesecondhand = "Hide Second Hand"
-    return render_template("settings.html",user=current_user, 
+        hidequote = "Hide Quote of the Day"
+    return render_template("settings.html",user=current_user, hidequote=hidequote,
                            selectLanguage=selectLanguage, title=title, save=save, Categories=Categories, General=General, Accessibility=Accessibility,
                             changepass=changepass, currentpass=currentpass, newpass=newpass, confirmnewpass=confirmnewpass, 
                             selfhelp=selfhelp, tasks=tasks, dailycheckin=dailycheckin, reports=reports, hidefeatures=hidefeatures,
@@ -988,6 +990,15 @@ def update_hide_self_help():
     data = request.get_json()
     new_value = data.get('value')
     user.hide_self_help = new_value
+    db.session.commit()
+
+@views.route('/update_hide_quote', methods=['POST'])
+@login_required
+def update_hide_quote():
+    user = current_user
+    data = request.get_json()
+    new_value = data.get('value')
+    user.hide_quote = new_value
     db.session.commit()
 
 @views.route('/update_hide_second_hand', methods=['POST'])
