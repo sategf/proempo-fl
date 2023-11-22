@@ -307,7 +307,11 @@ startButton.addEventListener('click', () => {
 
   if (!selectedTaskId) {
     // User hasn't selected a task, show an alert or provide feedback
+    {% if user.language == 'ro' %}
+    alert('Cronometrul va începe fără o sarcină concretă stabilită. Este recomandat să alegeți o sarcină');
+    {% else %}
     alert('The timer will begin without a concrete set task. It is recommended that you choose a task');
+    {% endif %}
     return;
   }
 
