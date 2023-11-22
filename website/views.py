@@ -53,6 +53,7 @@ def home():
         currenttasks = "Sarcini curente:"
         notasks = "Nu aveți sarcini în prezent. Accesați sarcini pentru a face mai multe."
         journalComplete = "Bună treabă, ați completat azi check-in-ul zilnic!"
+        dueReminder = "Datorită:"
     else:
         welcome = "Welcome to ProEmPo, "
         currentDay = currentDay
@@ -62,13 +63,13 @@ def home():
         currenttasks = "Current Tasks:"
         notasks = "You have no tasks currently. Go to tasks to make more."
         journalComplete = "Good Job, you filled out your daily check-in today!"
-    
+        dueReminder = "Due:"
     entry_for_today = Journal.query.filter(Journal.date == today, Journal.user_id == current_user.id).first()
     tasks = Task.query.filter(Task.user_id == current_user.id).order_by(text(current_user.defaultsort))
 
     return render_template("home.html", tasks=tasks, notasks=notasks, currenttasks=currenttasks, user=current_user, qod=qod, currentDay=currentDay, welcome=welcome,
                             openNoisePlayer=openNoisePlayer, entry_for_today=entry_for_today, journalIncomplete=journalIncomplete, 
-                            clickJournal=clickJournal, journalComplete=journalComplete)
+                            dueReminder=dueReminder, clickJournal=clickJournal, journalComplete=journalComplete)
 
 today = date.today()
 
@@ -591,23 +592,24 @@ def reports():
         myHistory="Istoricul evaluării zilei mele"
         noDayRatings="Se pare că nu ați înregistrat nicio evaluare zilnică. Vă rugăm să adăugați aceste date pentru a vă putea genera raportul."
         no_goals_message="Se pare că nu ți-ai stabilit niciun obiectiv."
+        dayHistory = "Istoricul evaluării zilei mele"
     else:
         chart1Title="Amount of tasks I completed this week"
         goalsAchieved="Goals Achieved"
         latestCompletedGoals = "Latest Completed Goals"
-        mostFrequentDayRating="My mos frequent day rating"
+        mostFrequentDayRating="My most frequent day rating"
         myHistory="My Day Rating History"
         noDayRatings="It appears that you have not logged any day ratings. Please add this data so that we can generate your report."
         no_goals_message="It appears as if you have not set any goals."
-
+        dayHistory = "My Day Rating History"
     if goals_count > 0:
         return render_template("reports.html", user=current_user, reportsTitle=reportsTitle, finished_tasks=finished_tasks_json, goals_count=goals_count, latest_completed_goals=latest_completed_goals, most_popular_rating=most_popular_rating, day_rating_json=day_rating_json, 
                                chart1Title=chart1Title, goalsAchieved=goalsAchieved, latestCompletedGoals=latestCompletedGoals,
-                               mostFrequentDayRating=mostFrequentDayRating, myHistory=myHistory, noDayRatings=noDayRatings)
+                               mostFrequentDayRating=mostFrequentDayRating, myHistory=myHistory, noDayRatings=noDayRatings, dayHistory=dayHistory)
     else:
         return render_template("reports.html", user=current_user, reportsTitle=reportsTitle, finished_tasks=finished_tasks_json, goals_count=goals_count, no_goals_message=no_goals_message, most_popular_rating=most_popular_rating, day_rating_json=day_rating_json, 
                                chart1Title=chart1Title, goalsAchieved=goalsAchieved, latestCompletedGoals=latestCompletedGoals,
-                               mostFrequentDayRating=mostFrequentDayRating, myHistory=myHistory, noDayRatings=noDayRatings)
+                               mostFrequentDayRating=mostFrequentDayRating, myHistory=myHistory, noDayRatings=noDayRatings, dayHistory=dayHistory)
 
 
 @views.route('/journal', methods=['GET', 'POST'])
@@ -1135,6 +1137,7 @@ def show_flashcard():
 @login_required
 def new_flashcard():
      # gets all the lessons from the user
+     
     if request.method == "GET":
         all_lessons=current_user.lessons
         return render_template("createFlashcards.html", all_lessons=all_lessons, user=current_user)

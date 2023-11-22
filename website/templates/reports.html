@@ -107,16 +107,16 @@
     <h1 align="center">{{reportsTitle}}</h1>
     <div class="reports-container">
         <div>
-            <h5 align="center">Amount of tasks I completed this week</h5>
+            <h5 align="center">{{chart1Title}}</h5>
             <canvas id="taskChart" width="300" height="150"></canvas>
         </div>
         <div class="goals-and-frequent-container">
             <div class="goals-count-container">
-                <h5 align="center">Goals Achieved</h5>
+                <h5 align="center">{{goalsAchieved}}</h5>
                 <div id="goalsCount" class="goals-count">{{ goals_count }}</div>
                 <ul>
                     {% if latest_completed_goals %}
-                        <h6>Latest Completed <a href=/goals>Goals</a></h6>
+                        <h6>{{latestCompletedGoals}} <a href=/goals>Goals</a></h6>
                         {% for goal in latest_completed_goals %}
                             <li>{{ goal.specific }}</li>
                         {% endfor %}
@@ -126,7 +126,7 @@
                 </ul>
             </div>
             <div class="frequent-day-container">
-                <h5>My most frequent day rating</h5>
+                <h5>{{mostFrequentDayRating}}</h5>
                 <div id="dayFrequency" class="day-rate">
                     {% if most_popular_rating == 'Good' %}
                     <img src="../static/well.png" alt="Well">
@@ -138,12 +138,12 @@
                     <img src="../static/horrible.png" alt="Horrible">
                     {% else %}
                     <img src="../static/noMood.png" alt="No Mood Logged">
-                    <p>It appears that you have not logged any day ratings. Please add this data so that we can generate your report.</p>
+                    <p>{{noDayRatings}}</p>
                 {% endif %}</div>
             </div>
         </div>
         <div class="linearGraph">
-            <h5 align="center">My Day Rating History</h5>
+            <h5 align="center">{{dayHistory}}</h5>
             <canvas id="dayRatingChart" width="300" height="150"></canvas>
         </div>
         

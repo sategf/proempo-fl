@@ -164,7 +164,7 @@
            {% for task in tasks|reverse %}
            <ul style="font-size: 20px; margin-bottom:0;!important">
             <li style="font-size: 20px;">
-                {{ task.data }} {% if task.due_date != None %}<b style="color:rgb(255, 106, 106)">Due:{{task.due_date.strftime('%m/%d/%Y')}}</b>{% endif %} {% if task.starred != 0 %}{% if task.starred != None %} <i class="fa-solid fa-star" style="color: #ffd700;"></i> {% endif %}{% endif %}
+                {{ task.data }} {% if task.due_date != None %}<b style="color:rgb(255, 106, 106)">{{dueReminder}}{{task.due_date.strftime('%m/%d/%Y')}}</b>{% endif %} {% if task.starred != 0 %}{% if task.starred != None %} <i class="fa-solid fa-star" style="color: #ffd700;"></i> {% endif %}{% endif %}
             </li>
            </ul>
            {% endfor %}
