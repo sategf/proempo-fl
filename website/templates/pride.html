@@ -1,24 +1,24 @@
 {% extends "base.html" %} {% block title %}Accomplishments - ProEmPo{% endblock %} {% block content %}
 
 <div class="containerr">
-     <h2 id="title" align="center">Accomplishments</h2>
+     <h2 id="title" align="center">{{accomplishmentsTitle}}</h2>
 </div>
 <div class="container2">
     <div class="main" >
         <div class="explanation" style="text-align: center;">
-            <p>Take some time to reflect on the accomplishments and qualities that make you proud of yourself.</p>
-            <p>Embracing your journey is a unique and ongoing process, one that's all about you.</p>
-            <p>List up to 5 qualities that you are proud of below and come back to this page when you are feeling down.</p>
-            <p>Remember: you are capable of wonderful things.</p>
+            <p>{{accomplishmentsDescription1}}</p>
+            <p>{{accomplishmentsDescription2}}</p>
+            <p>{{accomplishmentsDescription3}}</p>
+            <p>{{accomplishmentsDescription4}}</p>
         </div>
 
         <div id="form">
             <form action="/accomplishments" method="POST" class="ui form">
 
-                <label id="proud" for="moment">What are you proud of?</label>
-                <textarea id="moment" name="moment" placeholder="List what you are proud of here..." class="form-control" rows="2" style="font-size: 22px" required autofocus></textarea>
+                <label id="proud" for="moment">{{accomplishmentsQuestion}}</label>
+                <textarea id="moment" name="moment" placeholder="{{placeholder}}" class="form-control" rows="2" style="font-size: 22px" required autofocus></textarea>
 
-                <button type="submit" class="btn btn-basic" id="save">Save</button>
+                <button type="submit" class="btn btn-basic" id="save">{{saveAccomplishments}}</button>
             </form>
         </div>
     </div>
@@ -40,7 +40,7 @@
             {% for entry in recent_accomplishments %}
             <div class="post-it" id="postit-{{ entry.id }}">
                 <div class="header">
-                    <h6>I am proud of...</h6>
+                    <h6>{{proud}}</h6>
                 </div>
                 <div class="moment">
                     {{ entry.moment }}
@@ -58,7 +58,7 @@
 <script>
 
     function confirmDeletePride(prideId) {
-        if (confirm("Are you sure you want to delete this post?")) {
+        if (confirm("{{accomplishmentsWarning}}")) {
 
             deletePride(prideId);
         }

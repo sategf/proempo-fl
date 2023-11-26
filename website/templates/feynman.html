@@ -4,22 +4,21 @@
 <div class="container">
     <div class="box">
       <div class="title-box">
-        <h1 id="title" align="center">Feynman Practice</h1>
+        <h1 id="title" align="center">{{title}}</h1>
       </div>
 <div class="container2">
 <div class="feynman-info">
-    <a id="feynmanInfoLink" href="#">How Do I Begin?</a>
+    <a id="feynmanInfoLink" href="#">{{question}}</a>
 </div>
     <div id="popup" class="popup">
     <div class="popup-content">
         <span class="close" id="closePopup">&times;</span>
-        <p>The Feynman Method has 4 easy steps:</p>
+        <p>{{explanation1}}</p>
         <img src="../static/feynman-description.avif" alt="image" class="feynman-description-img">
-        <p>After studying your topic, begin writing it down in simple language. Think of it as explaining your choosen
-            topic to a toddler. If there are gaps in your understanding, fill them in and try again. The core point 
-            is that if you are unable to explain it simply, you don't understand it well enough and need more practice. 
+        <p>
+        {{explanation2}}
         </p>
-        <p>Now, close this popup and begin. </p>
+        <p>{{explanation3}} </p>
     </div>
     </div>
 <div class="main">
@@ -30,14 +29,14 @@
                     {% if latest_entry and latest_entry.title %}
                         {{ latest_entry.title }}
                     {% else %}
-                        Write topic here
+                        {{writeTitle}}
                     {% endif %}
                 </h2>
                 <p class="editable" contenteditable="true" onfocus="clearPlaceholder(this)">
                     {% if latest_entry and latest_entry.description %}
                         {{ latest_entry.description | safe }}
                     {% else %}
-                        Write description here
+                        {{writeDescription}}
                     {% endif %}
                 </p>
             </div>
@@ -45,8 +44,8 @@
     </div>
     
 </div>
-<button onclick="startNewEntry()">Start New</button>
-<button onclick="saveToDatabase()">Remember my thoughts for next time</button>
+<button onclick="startNewEntry()">{{startNew}}</button>
+<button onclick="saveToDatabase()">{{RememberThoughts}}</button>
 </div>
 <style>
     h1 {

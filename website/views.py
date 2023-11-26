@@ -1433,7 +1433,28 @@ def get_iso_year_week(date):
 @views.route('/accomplishments', methods=['GET', 'POST'])
 @login_required
 def pride():
-
+    if current_user.language == "ro":
+        accomplishmentsTitle = "Realizări"
+        accomplishmentsDescription1 = "Fă-ți timp pentru a reflecta asupra realizărilor și calităților care te fac să fii mândru de tine."
+        accomplishmentsDescription2 = "Îmbrățișarea călătoriei tale este un proces unic și continuu, unul care se referă la tine."
+        accomplishmentsDescription3 = "Enumerați mai jos până la 5 calități de care sunteți mândru și reveniți pe această pagină când vă simțiți dezamăgiți."
+        accomplishmentsDescription4 = "Ține minte: ești capabil de lucruri minunate."
+        accomplishmentsQuestion = "De ce esti mandru?"
+        saveAccomplishments = "Salvați"
+        proud = "Sunt mândru de..."
+        placeholder = "Enumerați aici de ce sunteți mândru..."
+        accomplishmentsWarning = "Sigur vrei să ștergi această postare?"
+    else:
+        accomplishmentsTitle = "Accomplishments"
+        accomplishmentsDescription1 = "Take some time to reflect on the accomplishments and qualities that make you proud of yourself."
+        accomplishmentsDescription2 = "Embracing your journey is a unique and ongoing process, one that's all about you."
+        accomplishmentsDescription3 = "List up to 5 qualities that you are proud of below and come back to this page when you are feeling down."
+        accomplishmentsDescription4 = "Remember: you are capable of wonderful things."
+        accomplishmentsQuestion = "What are you proud of?"
+        saveAccomplishments = "Save"
+        proud = "I am proud of..."
+        placeholder = "List what you are proud of here..."
+        accomplishmentsWarning = "Are you sure you want to delete this post?"
     current_year, current_week_number = get_iso_year_week(today)
 
     recent_accomplishments = Pride.query.filter(
@@ -1476,7 +1497,12 @@ def pride():
         Pride.status == False
     ).all()
     
-    return render_template('pride.html', recent_accomplishments=recent_accomplishments, user=current_user)
+    return render_template('pride.html', recent_accomplishments=recent_accomplishments, 
+                           user=current_user, accomplishmentsTitle=accomplishmentsTitle, 
+                           accomplishmentsDescription1=accomplishmentsDescription1, accomplishmentsDescription2=accomplishmentsDescription2,
+                           accomplishmentsDescription3=accomplishmentsDescription3, accomplishmentsDescription4=accomplishmentsDescription4,
+                           accomplishmentsQuestion=accomplishmentsQuestion, saveAccomplishments=saveAccomplishments, proud=proud, 
+                           placeholder=placeholder, accomplishmentsWarning=accomplishmentsWarning)
     
 
 @views.route('/DeletePride/<int:pride_id>', methods=["POST"])
