@@ -1322,6 +1322,8 @@ def goals():
         explanation5="Relevant: Obiectivele ar trebui să se alinieze cu obiectivele și valorile dumneavoastră."
         explanation6="Oportune: obiectivele ar trebui să aibă un interval de timp definit"
         explanation7="Acest cadru îmbunătățește precizia și eficacitatea stabilirii obiectivelor."
+        answerhere = "Răspunde aici"
+        goalsAll = "Toate Golurile"
     else:
         mygoals="My Goals"
         specific = "Specific"
@@ -1344,14 +1346,15 @@ def goals():
         explanation5="Relevant: Goals should align with your objectives and values."
         explanation6=" Timely: Goals should have a defined time frame."
         explanation7="This framework enhances goal-setting precision and effectiveness."
-        
+        answerhere = "Answer here"
+        goalsAll = "All Goals"
     return render_template('goals.html', user=current_user, previous_goals=previous_goals, 
                            mygoals=mygoals, specific=specific, measurable=measurable, achievable=achievable, relevant=relevant, 
                            timely=timely, specificQ=specificQ, measurableQ=measurableQ, achievableQ=achievableQ, relevantQ=relevantQ,
                            timelyQ=timelyQ, saveGoal=saveGoal, goalCompleted=goalCompleted, seeAllGoals=seeAllGoals, 
                            explanation6=explanation6, explanation1=explanation1, explanation2=explanation2, 
                            explanation3=explanation3, explanation4=explanation4, explanation5 = explanation5, 
-                           explanation7 = explanation7)
+                           explanation7 = explanation7, answerhere=answerhere, goalsAll=goalsAll)
 
 
 
