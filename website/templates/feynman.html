@@ -14,14 +14,10 @@
     <div class="popup-content">
         <span class="close" id="closePopup">&times;</span>
         <p>{{explanation1}}</p>
-        {% if user.language == en %}
+        {% if user.language == 'en' %}
         <img src="../static/feynman-description.avif" alt="image" class="feynman-description-img">
         {% else %}
-        <p>
-        <b>1.</b> Alegeți un concept de învățat<br>
-        <b>2.</b> Învață-l pe tine sau pe altcineva<br>
-        <b>3.</b> Reveniți la materialul sursă dacă rămâneți blocat<br>
-        <b>4.</b> Simplificați-vă explicațiile și creați analogii<br></p>
+        <img src="../static/feynman-description-ro.png" alt="image" class="feynman-description-img">
         {% endif %}
         <p>
         {{explanation2}}
