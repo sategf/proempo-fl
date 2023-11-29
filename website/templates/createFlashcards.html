@@ -1,15 +1,15 @@
 {% extends "base.html" %} {% block title %}Create FlashCards - ProEmPo{% endblock %} {% block content %}
 
-<h1 id="title" align="center">Create Your Flashcards</h1>
+<h1 id="title" align="center">{% if user.language == 'ro' %}Creează-ți Cardurile Flash{% else %}Create Your Flashcards{% endif %}</h1>
 
 <body> 
     <div class="ui-container">
         <form action="/CreateFlashcards" method="POST" class="ui form">
 
             <div class="field">
-                <label for="lesson">Select an existing lesson:</label>
+                <label for="lesson">{% if user.language == 'ro' %}Selectați o lecție existentă:{% else%} Select an existing lesson:{%endif%}</label>
                 <select id="lesson" name="lesson">
-                    <option id="select" value=""> --Select--</option>
+                    <option id="select" value=""> {% if user.language == 'ro' %}--Selectați--{% else%} --Select--{%endif%}</option>
                     {% for lesson in all_lessons %}
                     <option id="option" value="{{ lesson.id }}">{{ lesson.name }}</option>
                     {% endfor %}
@@ -18,27 +18,27 @@
 
 
             <div class="field1">
-                <label for="new_lesson_name">Or Create a new Lesson</label>
+                <label for="new_lesson_name">{% if user.language == 'ro' %}Sau crează o lecție nouă:{% else%} Or Create a new Lesson{%endif%}</label>
                 <input class="new-lesson" id="cLesson" type="text" id="new_lesson_name" name="new_lesson_name">
             </div>
 
             <div class="field1">
-                <label for="question">Question:</label>
+                <label for="question">{% if user.language == 'ro' %}Întrebare{% else%} Question{%endif%}:</label>
                 <input id="question" type="text" name="question">
             </div>
 
             <div class="field1"> 
-                <label id="answer" for="answer">Answer:</label>
+                <label id="answer" for="answer">{% if user.language == 'ro' %}Răspuns:{% else%} Answer:{%endif%}</label>
                 <textarea name="answer" id="" cols="50" rows="10"></textarea>
             </div>
 
             <div class="button-container1">
-            <button type="submit" class="btn btn-basic" id="submit">Submit</button>
+            <button type="submit" class="btn btn-basic" id="submit">{% if user.language == 'ro' %}Salvează{% else%} Save {%endif%}</button>
             </div>
         </form>
         <br>
         <div class="button-container2">
-            <button class="btn btn-basic btn2" id="redirect" onclick="redirectToView()">View your Flashcards</button>
+            <button class="btn btn-basic btn2" id="redirect" onclick="redirectToView()">{% if user.language == 'ro' %}Vizualizați cardurile dvs{% else%} View your Flashcards {%endif%}</button>
         </div>
     </div>
 </body> 
