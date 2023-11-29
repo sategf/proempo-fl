@@ -1,94 +1,94 @@
-{% extends "base.html" %} {% block title %}Pomodoro - ProEmPo{% endblock %} {% block content
-    %}
-    <div class="container">
-            <div class="box">
-              <div class="title-box">
-                <h1 id="title" align="center">{% if user.language == 'ro' %}Cronometrul Pomodoro{% else %}Pomodoro Timer{% endif %}</h1>
-    </div>
-    <div class="timer-container">   
-        <div id="timer">25:00</div>
-        <div class="button-container">
-            <button id="startButton">Start</button>
-            <button id="pauseButton">{% if user.language == 'ro' %}Pauză{% else %}Pause{% endif %}</button>
-            <button id="resetButton">{% if user.language == 'ro' %}Resetați{% else %}Pause{% endif %}</button>
+{% extends "base.html" %}
+{% block title %}Pomodoro - ProEmPo{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="box">
+        <div class="title-box">
+            <h1 id="title" align="center">{% if user.language == 'ro' %}Cronometrul Pomodoro{% else %}Pomodoro Timer{% endif %}</h1>
         </div>
-    
-        <div class="time-inputs">
-            <div class="input-container">
-                <label for="workTime">{% if user.language == 'ro' %}Timp de lucru (min){% else %}Work Time (min){% endif %}</label>
-                <input type="number" id="workTime" value="25">
+        <div class="timer-container">
+            <div id="timer">25:00</div>
+            <div class="button-container">
+                <button id="startButton">Start</button>
+                <button id="pauseButton">{% if user.language == 'ro' %}Pauză{% else %}Pause{% endif %}</button>
+                <button id="resetButton">{% if user.language == 'ro' %}Resetați{% else %}Reset{% endif %}</button>
             </div>
-    
-            <div class="input-container">
-                <label for="shortBreakTime">{% if user.language == 'ro' %}Pauza scurta (min){% else %}Short Break (min){% endif %}</label>
-                <input type="number" id="shortBreakTime" value="5">
-            </div>
-    
-            <div class="input-container">
-                <label for="longBreakTime">{% if user.language == 'ro' %}Pauza lunga (min){% else %}Long Break (min){% endif %}</label>
-                <input type="number" id="longBreakTime" value="15">
-            </div>
-        </div>
 
-        <div>
-            <label for="taskSelection">{% if user.language == 'ro' %}În această sesiune voi lucra la:{% else %}In this session, I will work on:{% endif %}</label>
-            <select id="taskSelection">
-              <option value="" disabled selected>{% if user.language == 'ro' %}Selectați o sarcină{% else %}Select a task{% endif %}</option>
-              {% for task in uncompleted_tasks %}
-                <option value="{{ task.id }}">{{ task.data }}</option>
-              {% endfor %}
-            </select>
-        </div>
+            <div class="time-inputs">
+                <div class="input-container">
+                    <label for="workTime">{% if user.language == 'ro' %}Timp de lucru (min){% else %}Work Time (min){% endif %}</label>
+                    <input type="number" id="workTime" value="25">
+                </div>
 
-        <div class="pomodoro-info">
-            <a id="pomodoroInfoLink" href="#">{% if user.language == 'ro' %}Ce este Pomodoro?{% else %}What is Pomodoro?{% endif %}</a>
-        </div>
+                <div class="input-container">
+                    <label for="shortBreakTime">{% if user.language == 'ro' %}Pauza scurta (min){% else %}Short Break (min){% endif %}</label>
+                    <input type="number" id="shortBreakTime" value="5">
+                </div>
+
+                <div class="input-container">
+                    <label for="longBreakTime">{% if user.language == 'ro' %}Pauza lunga (min){% else %}Long Break (min){% endif %}</label>
+                    <input type="number" id="longBreakTime" value="15">
+                </div>
+            </div>
+
+            <div>
+                <label for="taskSelection">{% if user.language == 'ro' %}În această sesiune voi lucra la:{% else %}In this session, I will work on:{% endif %}</label>
+                <select id="taskSelection">
+                    <option value="" disabled selected>{% if user.language == 'ro' %}Selectați o sarcină{% else %}Select a task{% endif %}</option>
+                    {% for task in uncompleted_tasks %}
+                    <option value="{{ task.id }}">{{ task.data }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="pomodoro-info">
+                <a id="pomodoroInfoLink" href="#">{% if user.language == 'ro' %}Ce este Pomodoro?{% else %}What is Pomodoro?{% endif %}</a>
+            </div>
             <div id="popup" class="popup">
-            <div class="popup-content">
-                <span class="close" id="closePopup">&times;</span>
-                {% if user.language == 'ro' %}
-                <p>Tehnica Pomodoro este o metodă de gestionare a timpului care utilizează un cronometru pentru a descompune munca în intervale.</p>
-                <p>5 pași simpli:</p>
-                <p>1. Decideți sarcina pe care trebuie să o faceți</p>
-                <p>2. Setați timpul de lucru la 25 de minute (reglabil)</p>
-                <p>3. Lucrați la sarcina stabilită până când sună cronometrul</p>
-                <p>4. Luați o scurtă pauză de 5 minute (reglabilă)</p>
-                <p>5. După 4 cicluri, faceți o pauză mai lungă. </p>
-                {% else %}
-                <p>The Pomodoro Technique is a time management method that uses a timer to break down work in intervals.</p>
-                <p>5 easy steps:</p>
-                <p>1. Decide on the task that you need to do</p>
-                <p>2. Set the work time to 25 minutes (adjustable)</p>
-                <p>3. Work on the set task until the timer rings</p>
-                <p>4. Take a short 5 minute break (adjustable)</p>
-                <p>5. After 4 cycles, take a longer break. </p>
-                {% endif %}
+                <div class="popup-content">
+                    <span class="close" id="closePopup">&times;</span>
+                    {% if user.language == 'ro' %}
+                    <p>Tehnica Pomodoro este o metodă de gestionare a timpului care utilizează un cronometru pentru a descompune munca în intervale.</p>
+                    <p>5 pași simpli:</p>
+                    <p>1. Decideți sarcina pe care trebuie să o faceți</p>
+                    <p>2. Setați timpul de lucru la 25 de minute (reglabil)</p>
+                    <p>3. Lucrați la sarcina stabilită până când sună cronometrul</p>
+                    <p>4. Luați o scurtă pauză de 5 minute (reglabilă)</p>
+                    <p>5. După 4 cicluri, faceți o pauză mai lungă. </p>
+                    {% else %}
+                    <p>The Pomodoro Technique is a time management method that uses a timer to break down work in intervals.</p>
+                    <p>5 easy steps:</p>
+                    <p>1. Decide on the task that you need to do</p>
+                    <p>2. Set the work time to 25 minutes (adjustable)</p>
+                    <p>3. Work on the set task until the timer rings</p>
+                    <p>4. Take a short 5 minute break (adjustable)</p>
+                    <p>5. After 4 cycles, take a longer break. </p>
+                    {% endif %}
+                </div>
             </div>
         </div>
-        
     </div>
-    
-    
+</div>
+
 <style>
     body {
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-
-        }
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
 
     h1 {
-      background-color: rgba(152, 125, 209, 0.65);
-      margin-top: 40px;
-      margin-bottom: 0px;
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
-      padding: 10px;
-      color: #ffffff;
-      box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+        background-color: rgba(152, 125, 209, 0.65);
+        margin-top: 40px;
+        margin-bottom: 0px;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        padding: 10px;
+        color: #ffffff;
+        box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
     }
-        
+
     .timer-container {
         max-width: 1500px;
         border-bottom-left-radius: 20px;
@@ -123,9 +123,9 @@
     }
 
     input[type="number"]:focus {
-      outline: 2px solid #efddfb9c;
-      background-color: #efddfb9c;
-      border-radius: 2px;
+        outline: 2px solid #efddfb9c;
+        background-color: #efddfb9c;
+        border-radius: 2px;
     }
 
     .input-container {
@@ -147,6 +147,7 @@
         color: rgb(253, 244, 244);
         width: 78%;
     }
+
     label {
         display: block;
         font-size: 18px;
@@ -191,11 +192,11 @@
     }
 
     #taskSelection {
-            text-align: center;
-            margin-bottom: 30px; 
-        }
+        text-align: center;
+        margin-bottom: 30px;
+    }
 
-    </style>
+</style>
 
 <script>
     // JavaScript for handling the timer
@@ -214,8 +215,10 @@
         document.getElementById('timer').textContent = formattedTime;
     }
 
-    function startTimer() {
+    function startTimer(sessionType) {
         isPaused = false;
+
+
         timer = setInterval(() => {
             if (currentTime > 0) {
                 currentTime--;
@@ -232,17 +235,19 @@
                     }
                     playPingSound();
                     updateTimerDisplay();
-                    startTimer();
+                    startTimer(sessionType);
                 } else {
                     currentTime = longBreakTime;
                     cycleCount = 0;
                     playPingSound();
                     updateTimerDisplay();
-                    startTimer();
+                    startTimer('longBreak');
                 }
             }
         }, 1000);
     }
+
+
 
     function playPingSound() {
         const audio = new Audio("../static/subtle.mp3");
@@ -251,23 +256,22 @@
 
     document.getElementById('startButton').addEventListener('click', () => {
         if (isPaused) {
-            startTimer();
+            startTimer('work');
         } else {
             const workTimeInput = parseInt(document.getElementById('workTime').value, 10) * 60;
             const shortBreakTimeInput = parseInt(document.getElementById('shortBreakTime').value, 10) * 60;
             const longBreakTimeInput = parseInt(document.getElementById('longBreakTime').value, 10) * 60;
 
-            // Limit the input work time value to 300 minutes (5 hours)
             if (workTimeInput > 300 * 60) {
                 alert('Work time cannot exceed 300 minutes (5 hours).');
                 return;
             }
-            // Limit the input short break value to 120 minutes (2 hours)
+
             if (shortBreakTimeInput > 120 * 60) {
                 alert('Short break time cannot exceed 120 minutes (2 hours).');
                 return;
             }
-            // Limit the input long break value to 300 minutes (5 hours)
+
             if (longBreakTimeInput > 300 * 60) {
                 alert('Long break time cannot exceed 300 minutes (5 hours).');
                 return;
@@ -279,7 +283,7 @@
 
             currentTime = workTime;
             updateTimerDisplay();
-            startTimer();
+            startTimer('work');
         }
     });
 
@@ -294,37 +298,32 @@
         currentTime = workTime;
         updateTimerDisplay();
     });
-</script>
 
+</script>
 
 <script>
     // JavaScript for handling task selection
-const startButton = document.getElementById('startButton');
-const taskSelection = document.getElementById('taskSelection');
+    const startButton = document.getElementById('startButton');
+    const taskSelection = document.getElementById('taskSelection');
 
-startButton.addEventListener('click', () => {
-  const selectedTaskId = taskSelection.value;
+    startButton.addEventListener('click', () => {
+        const selectedTaskId = taskSelection.value;
 
-  if (!selectedTaskId) {
-    // User hasn't selected a task, show an alert or provide feedback
-    {% if user.language == 'ro' %}
-    alert('Cronometrul va începe fără o sarcină concretă stabilită. Este recomandat să alegeți o sarcină');
-    {% else %}
-    alert('The timer will begin without a concrete set task. It is recommended that you choose a task');
-    {% endif %}
-    return;
-  }
+        if (!selectedTaskId) {
+            {% if user.language == 'ro' %}
+            alert('Cronometrul va începe fără o sarcină concretă stabilită. Este recomandat să alegeți o sarcină');
+            {% else %}
+            alert('The timer will begin without a concrete set task. It is recommended that you choose a task');
+            {% endif %}
+            return;
+        }
 
-  // Now you can use selectedTaskId in your Pomodoro timer logic
-  // Start the timer for the selected task
-  startPomodoro(selectedTaskId);
-});
+        startPomodoro(selectedTaskId);
+    });
 
-function startPomodoro(taskId) {
-  // Implement Pomodoro timer logic here, change code!!!!!!!!!!! 
-    // MUST UPDATE CODE LOGIC!!!!!!!!!! 
-  // Start the timer for the selected task
-}
+    function startPomodoro(taskId) {
+        startTimer('work');
+    }
 
 </script>
 
@@ -334,19 +333,17 @@ function startPomodoro(taskId) {
     const popup = document.getElementById('popup');
     const closePopup = document.getElementById('closePopup');
 
-    // Initially hide the popup
     popup.style.display = 'none';
 
-    // Show the popup when clicking the "What is Pomodoro?" link
     pomodoroInfoLink.addEventListener('click', (event) => {
         event.preventDefault();
         popup.style.display = 'block';
     });
 
-    // Close the popup when clicking the close button (x)
     closePopup.addEventListener('click', () => {
         popup.style.display = 'none';
     });
-;
 </script>
-    {% endblock %}
+
+{% endblock %}
+
