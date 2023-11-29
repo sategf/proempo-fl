@@ -141,7 +141,7 @@ def help():
         flashcards = "Carduri Flash"
         flashcardsDescription = "Folosiți carduri pentru a memora informații în mod eficient."
         create = "Crează"
-        view = "Arată răspunsul"
+        view = "Arată"
         feynmanDescription = "Stăpânește subiecte complexe explicând-o unei entități mai mici în termeni simpli."
         iSelfWork = "Munca De Sine"
         accomplishments = "Realizări"

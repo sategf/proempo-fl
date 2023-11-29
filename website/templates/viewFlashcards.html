@@ -1,20 +1,20 @@
 {% extends "base.html" %} {% block title %}View Flashcards - ProEmPo{% endblock %} {% block content %}
 
 <div class="container">
-    <h2 id="title" align="center">Study Your Flashcards</h2>
+    <h2 id="title" align="center">{% if user.language == 'ro' %}Studiați-vă Cardurile Flash{% else%} Study Your Flashcards{%endif%}</h2>
 </div>
 <div class="container2">
 <form action="/ViewFlashcards" method="POST" class="ui-form">
     <div class="ui-selection-dropdown">
         <div class="field">
-            <label for "lesson" id="lable-lesson"> Select your Lesson:</label>
+            <label for "lesson" id="lable-lesson"> {% if user.language == 'ro' %}Selectați-vă lecția{% else%} Select your Lesson{%endif%}:</label>
             <select id="lesson" name="lesson">
-                <option id="select" value="all"> --All Cards--</option>
+                <option id="select" value="all">--{% if user.language == 'ro' %}Toate Cardurile{% else%} All Cards{%endif%}: --</option>
                 {% for select_lesson in all_lessons %}
                 <option id="cLesson" value="{{ select_lesson.id }}">--{{ select_lesson.name }}--</option>
                 {% endfor %}
             </select>
-            <button type="submit" class="btn btn-basic" id="filter">Filter</button>
+            <button type="submit" class="btn btn-basic" id="filter">{% if user.language == 'ro' %}Filtrează{% else%} Filter{%endif%}</button>
         </div>
     </div>
 </form>
@@ -22,23 +22,23 @@
 <div class="flashcard-container">
     {% for card in cards %}
     <div class="flashcard" id="flashcard-{{ card.id }}">
-        <h3>Lesson: {{ card.lessons.name }}</h3>
+        <h3>{% if user.language == 'ro' %}Lecție:{% else%} Lesson:{%endif%}: {{ card.lessons.name }}</h3>
         <div class="question">
-            <p>Question: {{ card.question }}</p>
+            <p>{% if user.language == 'ro' %}Întrebare{% else%} Question{%endif%}: {{ card.question }}</p>
         </div>
         <div class="answer" style="display: none;">
-            <p>Answer: {{ card.answer }}</p>
+            <p>{% if user.language == 'ro' %}Răspuns:{% else%} Answer:{%endif%} {{ card.answer }}</p>
         </div>
-        <button class="btn btn-info" id="show-answer" onclick="toggleAnswer('flashcard-{{ card.id }}')"><span aria-hidden="true" class="fa fa-eye"></span> Toggle Answer</button>
-        <button class="btn btn-success" id="show-card" onclick="redirectToFlashcard('{{ card.id }}')"><span aria-hidden="true" class="fa fa-pencil"></span> View/Edit </button>
-        <button class="btn btn-danger" id="delete-card" onclick="confirmDeleteFlashcard('{{ card.id }}')"><span aria-hidden="true" class="fa fa-trash"></span> Delete </button>
+        <button class="btn btn-info" id="show-answer" onclick="toggleAnswer('flashcard-{{ card.id }}')"><span aria-hidden="true" class="fa fa-eye"></span> {% if user.language == 'ro' %}Arată Răspunsul:{% else%} Toggle Answer:{%endif%}</button>
+        <button class="btn btn-success" id="show-card" onclick="redirectToFlashcard('{{ card.id }}')"><span aria-hidden="true" class="fa fa-pencil"></span>{% if user.language == 'ro' %}Arată/Editează{% else%} View/Edit{%endif%} </button>
+        <button class="btn btn-danger" id="delete-card" onclick="confirmDeleteFlashcard('{{ card.id }}')"><span aria-hidden="true" class="fa fa-trash"></span> {% if user.language == 'ro' %}Șterge{% else%} Delete{%endif%} </button>
     </div>
     {% endfor %}
 </div>
 
 <br>
 
-<button class="btn btn-basic" id="redirect" onclick="redirectToCreate()">Create More Flashcards</button>
+<button class="btn btn-basic" id="redirect" onclick="redirectToCreate()">{% if user.language == 'ro' %}Creează mai multe carduri{% else%} Create more Flashcards{%endif%}</button>
 </div>
 
 <script>
