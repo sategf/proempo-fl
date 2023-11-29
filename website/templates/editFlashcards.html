@@ -1,13 +1,14 @@
 {% extends "base.html" %} {% block title %}Edit Flashcard - ProEmPo{% endblock %}
 {% block content %}
 
-<h2>Edit Flashcard</h2>
+<div class="mainContainer">
+<h2>{% if user.language == 'ro' %}Editează Cardul{% else%} Edit Card{%endif%}</h2>
 
 <div class="container">
     <form action="/EditFlashcard/{{ card.id }}" method="POST">
 
         <div class="field">
-            <label for="lesson">Lesson:</label>
+            <label for="lesson">{% if user.language == 'ro' %}Lecție:{% else%} Lesson:{%endif%}</label>
             <select class="form" id="lesson" name="lesson">
                 <option id ="select" value="" disabled selected>--Select a lesson--</option>
                 {% for lesson in lessons %}
@@ -20,23 +21,20 @@
         </div>
 
         <div class="field">
-            <label for="question">Question:</label>
+            <label for="question">{% if user.language == 'ro' %}Întrebare{% else%} Question{%endif%}:</label>
             <input type="text" class="form" id="question" name="question" value="{{ card.question }}">
         </div>
 
         <div class="field">
-            <label for="answer">Answer:</label>
+            <label for="answer">{% if user.language == 'ro' %}Răspuns:{% else%} Answer:{%endif%}</label>
             <textarea class="form" id="answer" name="answer" rows="5">{{ card.answer }}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-basic" id="submit">Save Changes</button>
+        <button type="submit" class="btn btn-basic" id="submit">{% if user.language == 'ro' %}Salvează Schimbările{% else%} Save Changes{%endif%}</button>
     </form>
 </div>
-
+</div>
 <style>
-
-    
-
     h2 {
         background-color: rgba(152, 125, 209, 0.65);
         margin-top: 40px;
@@ -45,26 +43,30 @@
         border-top-right-radius: 30px;
         padding: 10px;
         color: #ffffff;
-        box-shadow: 0 0 50px rgba(172, 123, 196, 0.5);
+        box-shadow: 0 0 50px rgba(214, 197, 222, 0.5);
         text-align: center;
     }
 
-    .container {
-        max-width: 1500px;
+    .mainContainer {
+        max-width: 1000px;
         background-color: white;
-        padding: 10px;
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;
-        box-shadow: 0 0 50px rgba(206, 186, 217, 0.5);
-        
-
+        box-shadow: 0 0 50px rgba(212, 195, 221, 0.5);
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
+        padding-bottom: 20px;
     }
 
+    
+
     #submit {
+        text-align: center;
         background-color: #a751bb;
         border: black;
-        margin-bottom: 20px;
+        margin: 20px auto;
         color: white;
+        display: block;
     }
 
     #submit:hover {
@@ -102,7 +104,8 @@
     }
 
     .field{
-        margin-top: 10px;
+        margin-top: 20px;
+        padding-left: 25px;
     }
         
 </style>
