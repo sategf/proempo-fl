@@ -1086,7 +1086,7 @@ def accessibility():
 @views.route('/Support', methods=['GET'])
 def support():
     if current_user.language == "ro":
-        supportTitle = "A Sustine"
+        supportTitle = "Asistență"
 
     else:
         supportTitle = "Support"

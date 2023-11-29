@@ -69,6 +69,7 @@
     </table>
   </ul>
 {% else %}
+{% if user.language == 'en' %}
 <p>We value your feedback and are always here to listen. If you have any questions, concerns, or feedback, please don't hesitate to get in touch with us.</p>
 <p>Contact our support team at: <a href="mailto:proempohelpdesk@gmail.com">proempohelpdesk@gmail.com</a></p> <!--support email added-->
 <h2>Contact Form</h2>
@@ -88,6 +89,27 @@
     <button type="submit" class="btn btn-primary">Submit</button>
     <button type="button" class="btn btn-secondary" onclick="location.href='/Support'">Cancel</button>
 </form>
+{% else %}
+<p>Apreciem feedback-ul tău și suntem întotdeauna aici să ascultăm. Dacă ai întrebări, nelămuriri sau feedback, te rugăm să nu ezitați să iei legătura cu noi.</p>
+<p>Contactează echipa noastră de suport la: <a href="mailto:proempohelpdesk@gmail.com">proempohelpdesk@gmail.com</a></p> <!--suport email adăugat-->
+<h2>Formular de Contact</h2>
+<form action="/submit_support" method="post">
+    <div class="form-group">
+        <label for="issue_title">Titlu Problema</label>
+        <input type="text" class="form-control" id="issue_title" name="issue_title" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Adresa ta de Email</label>
+        <input type="text" class="form-control" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="description">Descriere Problema</label>
+        <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Trimite</button>
+    <button type="button" class="btn btn-secondary" onclick="location.href='/Suport'">Anulează</button>
+</form>
+{% endif %}
 {% endif %}
 </section>
 {% endblock %}
